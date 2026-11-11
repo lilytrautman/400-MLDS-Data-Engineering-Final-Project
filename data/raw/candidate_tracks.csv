@@ -1,0 +1,565 @@
+track_id,name,artist_ids,artist_names,album_id,album,album_type,album_total_tracks,release_date,release_date_precision,track_number,duration_ms,explicit,isrc,source,seed_artist
+2j7wI9QWrP8cjKDdOLVQTU,Babylon,06HL4z0CvFAxyc27GXpf02,Taylor Swift,4hF2gTGuPYlykYuphDxi8J,The Life of a Showgirl: The Encore,album,16,2026-09-25,day,4,219365,False,USUG12609685,candidate,Taylor Swift
+11hcBLPtbMp4aQI6zGQLub,Patient Zero,06HL4z0CvFAxyc27GXpf02,Taylor Swift,4hF2gTGuPYlykYuphDxi8J,The Life of a Showgirl: The Encore,album,16,2026-09-25,day,1,225868,False,USUG12602391,candidate,Taylor Swift
+3hUxzQpSfdDqwM3ZTFQY0K,august,06HL4z0CvFAxyc27GXpf02,Taylor Swift,2fenSS68JI1h4Fo296JfGr,folklore,album,16,2020-07-24,day,8,261922,False,USUG12002842,candidate,Taylor Swift
+3gyJbNBTRVRdZDA1yO3clm,Pink Clouding,06HL4z0CvFAxyc27GXpf02,Taylor Swift,4hF2gTGuPYlykYuphDxi8J,The Life of a Showgirl: The Encore,album,16,2026-09-25,day,3,190690,False,USUG12609684,candidate,Taylor Swift
+4lIxdJw6W3Fg4vUIYCB0S5,Style,06HL4z0CvFAxyc27GXpf02,Taylor Swift,2QJmrSgbdM35R67eoGQo4j,1989,album,13,2014-10-27,day,3,231000,False,USCJY1431319,candidate,Taylor Swift
+7uxkx8HPBYkJKcimOyggUM,Cleveland!,06HL4z0CvFAxyc27GXpf02,Taylor Swift,4hF2gTGuPYlykYuphDxi8J,The Life of a Showgirl: The Encore,album,16,2026-09-25,day,2,206164,False,USUG12609683,candidate,Taylor Swift
+5uPaqMMt59KGrdKIitDRqa,"I Knew It, I Knew You - From ""Toy Story 5""",06HL4z0CvFAxyc27GXpf02,Taylor Swift,3ZLIShtR6Fjs4nTWFpBUB6,"I Knew It, I Knew You (From ""Toy Story 5"")",single,1,2026-06-05,day,1,178186,False,USWD12641055,candidate,Taylor Swift
+5enxwA8aAbwZbf5qCHORXi,All Too Well (10 Minute Version) (Taylor's Version) (From The Vault),06HL4z0CvFAxyc27GXpf02,Taylor Swift,6kZ42qRrzov54LcAk4onW9,Red (Taylor's Version),album,30,2021-11-12,day,30,613026,True,USUG12103690,candidate,Taylor Swift
+6NFyWDv5CjfwuzoCkw47Xf,Delicate,06HL4z0CvFAxyc27GXpf02,Taylor Swift,6DEjYFkNZh67HP7R9PSZvv,reputation,album,15,2017-11-10,day,5,232253,False,USCJY1750007,candidate,Taylor Swift
+59HjlYCeBsxdI0fcm3zglw,Wildest Dreams,06HL4z0CvFAxyc27GXpf02,Taylor Swift,2QJmrSgbdM35R67eoGQo4j,1989,album,13,2014-10-27,day,9,220440,False,USCJY1431379,candidate,Taylor Swift
+4R2kfaDFhslZEMJqAFNpdd,cardigan,06HL4z0CvFAxyc27GXpf02,Taylor Swift,2fenSS68JI1h4Fo296JfGr,folklore,album,16,2020-07-24,day,2,239560,False,USUG12002836,candidate,Taylor Swift
+1jgTiNob5cVyXeJ3WgX5bL,Elizabeth Taylor,06HL4z0CvFAxyc27GXpf02,Taylor Swift,4a6NzYL1YHRUgx9e3YZI6I,The Life of a Showgirl,album,12,2025-10-03,day,2,208291,False,USUG12506437,candidate,Taylor Swift
+49JeKZqejPtqJKpK7x9Ew4,Patient Zero,06HL4z0CvFAxyc27GXpf02,Taylor Swift,3r3lR28Ybv6d5N5DPWfQ1L,Patient Zero,single,1,2026-09-25,day,1,225868,False,USUG12602391,candidate,Taylor Swift
+3yWuTOYDztXjZxdE2cIRUa,Opalite,06HL4z0CvFAxyc27GXpf02,Taylor Swift,4a6NzYL1YHRUgx9e3YZI6I,The Life of a Showgirl,album,12,2025-10-03,day,3,235355,False,USUG12506438,candidate,Taylor Swift
+1R0a2iXumgCiFb7HEZ7gUE,Don’t Blame Me,06HL4z0CvFAxyc27GXpf02,Taylor Swift,6DEjYFkNZh67HP7R9PSZvv,reputation,album,15,2017-11-10,day,4,236413,False,USCJY1750006,candidate,Taylor Swift
+6oVxXO5oQ4pTpO8RSnkzvv,Dress,06HL4z0CvFAxyc27GXpf02,Taylor Swift,6DEjYFkNZh67HP7R9PSZvv,reputation,album,15,2017-11-10,day,12,230373,False,USCJY1750013,candidate,Taylor Swift
+1MgV7FIyNxIG7WzMRJV5HC,my tears ricochet,06HL4z0CvFAxyc27GXpf02,Taylor Swift,2fenSS68JI1h4Fo296JfGr,folklore,album,16,2020-07-24,day,5,255893,False,USUG12002839,candidate,Taylor Swift
+53iuhJlwXhSER5J2IYYv1W,The Fate of Ophelia,06HL4z0CvFAxyc27GXpf02,Taylor Swift,4a6NzYL1YHRUgx9e3YZI6I,The Life of a Showgirl,album,12,2025-10-03,day,1,226073,False,USUG12506436,candidate,Taylor Swift
+0VE4kBnHJUgtMf0dy6DRmW,Getaway Car,06HL4z0CvFAxyc27GXpf02,Taylor Swift,6DEjYFkNZh67HP7R9PSZvv,reputation,album,15,2017-11-10,day,9,233626,False,USCJY1750010,candidate,Taylor Swift
+1BxfuPKGuaTgP7aM0Bbdwr,Cruel Summer,06HL4z0CvFAxyc27GXpf02,Taylor Swift,1NAmidJlEaVgA3MpcPFYGq,Lover,album,18,2019-08-23,day,2,178426,False,USUG11901472,candidate,Taylor Swift
+0Jlcvv8IykzHaSmj49uNW8,the 1,06HL4z0CvFAxyc27GXpf02,Taylor Swift,2fenSS68JI1h4Fo296JfGr,folklore,album,16,2020-07-24,day,1,210251,True,USUG12002835,candidate,Taylor Swift
+1p80LdxRV74UKvL8gnD7ky,Blank Space,06HL4z0CvFAxyc27GXpf02,Taylor Swift,2QJmrSgbdM35R67eoGQo4j,1989,album,13,2014-10-27,day,2,231826,False,USCJY1431309,candidate,Taylor Swift
+2yLa0QULdQr0qAIvVwN6B5,...Ready For It?,06HL4z0CvFAxyc27GXpf02,Taylor Swift,6DEjYFkNZh67HP7R9PSZvv,reputation,album,15,2017-11-10,day,1,208186,False,USCJY1750003,candidate,Taylor Swift
+3GCL1PydwsLodcpv0Ll1ch,You Belong With Me,06HL4z0CvFAxyc27GXpf02,Taylor Swift,2dqn5yOQWdyGwOpOIi9O4x,Fearless,album,13,2008-11-11,day,6,231133,False,USCJY0803328,candidate,Taylor Swift
+55n9yjI6qqXh5F2mYvUc2y,I Don’t Wanna Live Forever (Fifty Shades Darker),5ZsFI1h6hIdQRw2ti0hz81|06HL4z0CvFAxyc27GXpf02,ZAYN|Taylor Swift,1MPAXuTVL2Ej5x0JHiSPq8,reputation Stadium Tour Surprise Song Playlist,album,46,2017-11-09,day,10,247160,False,USQ4E1602586,candidate,Taylor Swift
+4bDlONk2X1TMBHKaf8tjCn,Minibar,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,4BZydSQMfJNphTFZzyIxh5,Daughter from Hell,album,16,2026-07-17,day,11,120340,False,USUG12603192,candidate,Gracie Abrams
+61Oyg0lrAOMjBpEStqfOZ1,Hit the Wall,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,4BZydSQMfJNphTFZzyIxh5,Daughter from Hell,album,16,2026-07-17,day,1,194376,False,USUG12603693,candidate,Gracie Abrams
+4Yf6QS1hjFWT1qMqvpzNcK,Look at My Life,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,4BZydSQMfJNphTFZzyIxh5,Daughter from Hell,album,16,2026-07-17,day,5,190533,False,USUG12603697,candidate,Gracie Abrams
+0PLhwCmQ7cC3ThRGPn3HxF,Mess It Up,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,6VnfHoGb1PKxRPmjNBmeMf,Mess It Up,single,1,2021-05-07,day,1,171280,False,USUG12001931,candidate,Gracie Abrams
+5wbg8kepMFoMzHOEuxiI0q,Close To You,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,4XXTsu7r9865VvXdvF2iQP,The Secret of Us,album,13,2024-06-20,day,13,225973,False,USUG12401775,candidate,Gracie Abrams
+2zUjgk6YpHn78MCzkj4R5B,"Here You Come, There You Go",4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,2Qj0IRHX4YllH22PNlmaBQ,"Here You Come, There You Go",single,1,2026-10-29,day,1,170582,False,USUG12610237,candidate,Gracie Abrams
+51rfRCiUSvxXlCSCfIztBy,"I Love You, I'm Sorry",4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,56bdWeO40o3WfAD2Lja4dl,The Secret of Us,album,13,2024-06-21,day,4,157146,True,USUG12401766,candidate,Gracie Abrams
+5JiU3gLHz9AvUnrhXgOmos,Risk,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,4XXTsu7r9865VvXdvF2iQP,The Secret of Us,album,13,2024-06-20,day,2,191586,False,USUG12401764,candidate,Gracie Abrams
+4nyF5lmSziBAt7ESAUjpbx,"I miss you, I’m sorry",4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,2UZw04wDxLVceADw2Gi1Qy,minor,single,7,2020-07-14,day,5,167538,False,USUG11903591,candidate,Gracie Abrams
+745JbQYxoYIegHzHTUxETp,"Everywhere, Everything (with Gracie Abrams)",2RQXRUsr4IW1f3mKyKsy4B|4tuJ0bMpJh08umKkEXKUI5,Noah Kahan|Gracie Abrams,3qBWNcWifNhUKJAWzswdJY,Stick Season (Forever),album,30,2024-02-09,day,27,257668,False,USUM72317571,candidate,Gracie Abrams
+11GUkH18CKNFLKCHORkceJ,Good Reason,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,4BZydSQMfJNphTFZzyIxh5,Daughter from Hell,album,16,2026-07-17,day,6,248164,False,USUG12603698,candidate,Gracie Abrams
+35IcAVSMsU9qzHfpPbvC8A,Feels Like,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,7l2g05NyprwonSFIs2y8at,This Is What It Feels Like,single,12,2021-11-12,day,1,152317,False,USUG12001932,candidate,Gracie Abrams
+33uKUpu9ZXsHhcxRLoxnWI,I know it won't work,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,78YYcghEDz2dHRx0EcDGXZ,Good Riddance (Deluxe),album,16,2023-06-16,day,2,245629,False,USUG12202348,candidate,Gracie Abrams
+7ne4VBA60CxGM75vw0EYad,That’s So True,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,0hBRqPYPXhr1RkTDG3n4Mk,The Secret of Us (Deluxe),album,20,2024-10-18,day,15,166300,True,USUG12406903,candidate,Gracie Abrams
+4wkhV8JcGfy1z1inN5C61D,I Told You Things,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,7ce3IkZzM0jPo2KfB7iDVU,The Secret of Us (Deluxe),album,20,2024-10-16,day,16,221207,False,USUG12406904,candidate,Gracie Abrams
+0hhzNPE68LWLfgZwdpxVdR,us. (feat. Taylor Swift),4tuJ0bMpJh08umKkEXKUI5|06HL4z0CvFAxyc27GXpf02,Gracie Abrams|Taylor Swift,56bdWeO40o3WfAD2Lja4dl,The Secret of Us,album,13,2024-06-21,day,5,242666,True,USUG12401767,candidate,Gracie Abrams
+18JiNe32mvOL72aysWL2ob,Death Wish,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,4BZydSQMfJNphTFZzyIxh5,Daughter from Hell,album,16,2026-07-17,day,2,215157,False,USUG12603694,candidate,Gracie Abrams
+5meVa5klVlJalupZTvv5XX,21,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,2UZw04wDxLVceADw2Gi1Qy,minor,single,7,2020-07-14,day,2,185172,False,USUG11903590,candidate,Gracie Abrams
+4PRdeh2zIyM1pvY4x5luLe,"Everywhere, Everything (with Gracie Abrams)",2RQXRUsr4IW1f3mKyKsy4B|4tuJ0bMpJh08umKkEXKUI5,Noah Kahan|Gracie Abrams,0kOisOp4b7xNUNs7aSMSno,"Everywhere, Everything (with Gracie Abrams)",single,1,2023-12-01,day,1,257668,False,USUM72317571,candidate,Gracie Abrams
+0MIJFuEJpmgSjNjkbq29TQ,Blowing Smoke,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,4XXTsu7r9865VvXdvF2iQP,The Secret of Us,album,13,2024-06-20,day,3,232280,False,USUG12401765,candidate,Gracie Abrams
+7mFhyM0k5ZKG8jxcwmPVYl,Let It Happen,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,56bdWeO40o3WfAD2Lja4dl,The Secret of Us,album,13,2024-06-21,day,6,260946,True,USUG12401768,candidate,Gracie Abrams
+0rHAvHeAeCDaiZ8cHVefna,Men Like You,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,4BZydSQMfJNphTFZzyIxh5,Daughter from Hell,album,16,2026-07-17,day,7,243495,False,USUG12603188,candidate,Gracie Abrams
+5HO2RD12vZ5NcIdAULo43M,Best,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,78YYcghEDz2dHRx0EcDGXZ,Good Riddance (Deluxe),album,16,2023-06-16,day,1,233499,False,USUG12202347,candidate,Gracie Abrams
+2bl81llf715VEEbAx03yvB,Close To You,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,56bdWeO40o3WfAD2Lja4dl,The Secret of Us,album,13,2024-06-21,day,13,225973,False,USUG12401775,candidate,Gracie Abrams
+5a6p56me3eFdKXcWnsPtLE,The Knife,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,4BZydSQMfJNphTFZzyIxh5,Daughter from Hell,album,16,2026-07-17,day,3,216175,False,USUG12603695,candidate,Gracie Abrams
+5V6mK1pEu22104f22m8KkX,I Told You Things,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,0hBRqPYPXhr1RkTDG3n4Mk,The Secret of Us (Deluxe),album,20,2024-10-18,day,16,221207,False,USUG12406904,candidate,Gracie Abrams
+7yogqG9VriSe2gE9RKZKwG,Daughter from Hell,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,4BZydSQMfJNphTFZzyIxh5,Daughter from Hell,album,16,2026-07-17,day,4,244866,False,USUG12603696,candidate,Gracie Abrams
+6nN8W5zHOii0P61I8eSdR3,Free Now,4tuJ0bMpJh08umKkEXKUI5,Gracie Abrams,4XXTsu7r9865VvXdvF2iQP,The Secret of Us,album,13,2024-06-20,day,12,214080,False,USUG12401774,candidate,Gracie Abrams
+6Rziv0VoPnBg13i7iJJQeY,Do What You Gotta Do,6d4jrmreCmsenscuieJERc,The Band CAMINO,3qE3tGZxXzTvhhI92csWfN,NeverAlways (Vol. 2),album,11,2026-05-22,day,4,206040,False,USAT22600952,candidate,The Band CAMINO
+6vk9NZ4eAC1heZiGp7QG2d,Daphne Blue,6d4jrmreCmsenscuieJERc,The Band CAMINO,01F7Pyok7UR0JbWGK7J24n,Daphne Blue (Acoustic),single,2,2019-12-13,day,2,184422,False,USAT21902463,candidate,The Band CAMINO
+2QwpEi3eNToZCCMMRcOj0u,2 / 14,6d4jrmreCmsenscuieJERc,The Band CAMINO,6itEtMM5U5hc5klRxnDvBx,My Thoughts On You,single,5,2016-04-01,day,1,163690,False,USAT22003223,candidate,The Band CAMINO
+1pJzl0YsxaWj6BbPs1mUuQ,See Through,6d4jrmreCmsenscuieJERc,The Band CAMINO,6rbqqMTScIBxRBlM7DayP1,tryhard,single,8,2019-08-23,day,5,181420,False,USAT21902679,candidate,The Band CAMINO
+6yOxL1xfPkv9Z9zvpNrMDU,I Think I Like You,6d4jrmreCmsenscuieJERc,The Band CAMINO,1N5ZRHDLAv92FHZ4fRYhCi,The Band CAMINO,album,14,2021-09-10,day,4,182658,True,USAT22102892,candidate,The Band CAMINO
+57As4lhkpp6tB422daefKK,What I Want,6d4jrmreCmsenscuieJERc,The Band CAMINO,6rbqqMTScIBxRBlM7DayP1,tryhard,single,8,2019-08-23,day,1,230793,False,USAT21904255,candidate,The Band CAMINO
+4yT3UMHdi1p0xkmLuwOu6f,Haunted,6d4jrmreCmsenscuieJERc,The Band CAMINO,6rbqqMTScIBxRBlM7DayP1,tryhard,single,8,2019-08-23,day,6,263284,False,USAT21904257,candidate,The Band CAMINO
+5l60Z7gXN9MhAyhdZdy3uA,Never A Good Time,5jAMCwdNHWr7JThxtMuEyy|6d4jrmreCmsenscuieJERc,NOTD|The Band CAMINO,6AMjHESQyOiW52JfQC8PEm,NOTED...EP,single,6,2022-09-09,day,6,167232,False,SEUM72101755,candidate,The Band CAMINO
+4zxQeZ8bwNnYHhPqYGtl6i,Holly!,6d4jrmreCmsenscuieJERc,The Band CAMINO,3qE3tGZxXzTvhhI92csWfN,NeverAlways (Vol. 2),album,11,2026-05-22,day,1,190533,False,USAT22600950,candidate,The Band CAMINO
+48f7LOHWir3VQoO06yoc95,Song About You,6d4jrmreCmsenscuieJERc,The Band CAMINO,1N5ZRHDLAv92FHZ4fRYhCi,The Band CAMINO,album,14,2021-09-10,day,10,158948,False,USAT22102895,candidate,The Band CAMINO
+2PEv0vkVsJeFCVUAn8CNDL,Afterthought,6d4jrmreCmsenscuieJERc,The Band CAMINO,3qE3tGZxXzTvhhI92csWfN,NeverAlways (Vol. 2),album,11,2026-05-22,day,3,260440,False,USAT22508857,candidate,The Band CAMINO
+1LUR4BDM0OGG9L7F3O8FNX,Baggy Jeans,6d4jrmreCmsenscuieJERc,The Band CAMINO,2wVrxbonp8UA9ebuMREm4q,NeverAlways (Vol. 1),album,11,2025-07-25,day,5,194426,False,USAT22503518,candidate,The Band CAMINO
+0lGXV07d4gUxpnRhWv4pog,Stupid Questions,6d4jrmreCmsenscuieJERc,The Band CAMINO,2wVrxbonp8UA9ebuMREm4q,NeverAlways (Vol. 1),album,11,2025-07-25,day,9,172733,False,USAT22503732,candidate,The Band CAMINO
+0OkMj0czyhrDCIhOSLFpHK,My Thoughts on You,6d4jrmreCmsenscuieJERc,The Band CAMINO,4un3pLJoCw3WCaSwsTyBXh,Heaven,single,4,2017-06-02,day,3,211108,False,USAT21904905,candidate,The Band CAMINO
+2FhJvFKyZng57iVQmFayVw,Daphne Blue,6d4jrmreCmsenscuieJERc,The Band CAMINO,6rbqqMTScIBxRBlM7DayP1,tryhard,single,8,2019-08-23,day,3,182840,False,USAT21902463,candidate,The Band CAMINO
+1nonPxrZoz42XGsKtLo3mg,1 Last Cigarette,6d4jrmreCmsenscuieJERc,The Band CAMINO,1N5ZRHDLAv92FHZ4fRYhCi,The Band CAMINO,album,14,2021-09-10,day,9,185832,True,USAT22100087,candidate,The Band CAMINO
+4D7hWrWdoVToQ7Kpy0alI1,Less Than I Do,6d4jrmreCmsenscuieJERc,The Band CAMINO,4XvZuXstRqzTDiwm6ubGw4,Less Than I Do,single,1,2018-12-13,day,1,211694,False,USAT22003884,candidate,The Band CAMINO
+3rrv1sQftMszpL7vxLSvX2,Berenstein,6d4jrmreCmsenscuieJERc,The Band CAMINO,3gPPf4S556zVsGQUOMK9hX,Berenstein,single,1,2017-12-15,day,1,276685,False,USAT22003881,candidate,The Band CAMINO
+3ePeWP6f8ccQtF7wayoNrD,Hush Hush,6d4jrmreCmsenscuieJERc,The Band CAMINO,6rbqqMTScIBxRBlM7DayP1,tryhard,single,8,2019-08-23,day,2,177919,False,USAT21904256,candidate,The Band CAMINO
+7AD6ULp5286NhXlMOulpaH,Mascara,6d4jrmreCmsenscuieJERc,The Band CAMINO,3qE3tGZxXzTvhhI92csWfN,NeverAlways (Vol. 2),album,11,2026-05-22,day,2,226253,False,USAT22600951,candidate,The Band CAMINO
+61noMxtCbfnzewtJmUIQ13,What Am I Missing?,6d4jrmreCmsenscuieJERc,The Band CAMINO,6S2FI6xzGq3INs2WnlB9ou,The Dark,album,11,2023-08-11,day,2,172714,False,USAT22303103,candidate,The Band CAMINO
+4p4oxFJZg6Cw7E6cQfdYNp,12:34,6d4jrmreCmsenscuieJERc,The Band CAMINO,3qE3tGZxXzTvhhI92csWfN,NeverAlways (Vol. 2),album,11,2026-05-22,day,8,196706,False,USAT22507129,candidate,The Band CAMINO
+0PCtDCMDypMnUhVrLyOQZs,See You Later,6d4jrmreCmsenscuieJERc,The Band CAMINO,6S2FI6xzGq3INs2WnlB9ou,The Dark,album,11,2023-08-11,day,7,155733,False,USAT22303108,candidate,The Band CAMINO
+561WtF4saXolXokGjeVPYJ,Novocaine,6d4jrmreCmsenscuieJERc,The Band CAMINO,6S2FI6xzGq3INs2WnlB9ou,The Dark,album,11,2023-08-11,day,9,174996,False,USAT22303110,candidate,The Band CAMINO
+3Q8u1ugsmi8ZLq8vVoL6uI,Roses,6d4jrmreCmsenscuieJERc,The Band CAMINO,1N5ZRHDLAv92FHZ4fRYhCi,The Band CAMINO,album,14,2021-09-10,day,2,181673,False,USAT22007312,candidate,The Band CAMINO
+6cQyo1wAkYYeFZKn2e3S5W,Damage,6d4jrmreCmsenscuieJERc,The Band CAMINO,1N5ZRHDLAv92FHZ4fRYhCi,The Band CAMINO,album,14,2021-09-10,day,11,209722,False,USAT22102896,candidate,The Band CAMINO
+3Hzeq1HTQidguDEOqhvY82,I Think I Like You - Live in Memphis,6d4jrmreCmsenscuieJERc,The Band CAMINO,63hcWv7myWXKL9vFhDiVpw,I Think I Like You (Live in Memphis),single,2,2026-11-09,day,1,211500,True,USAT22607931,candidate,The Band CAMINO
+1F4f9YO3at5eKrEQrITBa8,Farsighted,6d4jrmreCmsenscuieJERc,The Band CAMINO,6rbqqMTScIBxRBlM7DayP1,tryhard,single,8,2019-08-23,day,7,191720,False,USAT21904258,candidate,The Band CAMINO
+7LnHRFNlStUPe0tAxR7GV0,Honest,6d4jrmreCmsenscuieJERc,The Band CAMINO,6rbqqMTScIBxRBlM7DayP1,tryhard,single,8,2019-08-23,day,4,200957,False,USAT21903840,candidate,The Band CAMINO
+4EC2ceNpCH31qOwiuaBVrU,Hates Me Yet (222),6d4jrmreCmsenscuieJERc,The Band CAMINO,2wVrxbonp8UA9ebuMREm4q,NeverAlways (Vol. 1),album,11,2025-07-25,day,7,184546,False,USAT22503734,candidate,The Band CAMINO
+4T0coc4p1MJK8xdlcik8tQ,Infinity,6d4jrmreCmsenscuieJERc,The Band CAMINO,2wVrxbonp8UA9ebuMREm4q,NeverAlways (Vol. 1),album,11,2025-07-25,day,11,194373,False,USAT22502770,candidate,The Band CAMINO
+3jmDuSgKsIbfmaHhwBf42D,What You Can’t Have,6d4jrmreCmsenscuieJERc,The Band CAMINO,2wVrxbonp8UA9ebuMREm4q,NeverAlways (Vol. 1),album,11,2025-07-25,day,3,195106,False,USAT22503728,candidate,The Band CAMINO
+4R4VFcQAg4fRomKHXL4zab,Nostalgia,6d4jrmreCmsenscuieJERc,The Band CAMINO,1WbBP3rMhWfX441jq8wBQ9,Bruises,single,3,2024-05-17,day,2,193133,False,USAT22403036,candidate,The Band CAMINO
+2bpWY9SVsWt5etz8xJfQIU,Do What You Gotta Do,6d4jrmreCmsenscuieJERc,The Band CAMINO,3vQwZL77edVIs2uAvJqUaf,Do What You Gotta Do,single,4,2026-05-20,day,1,206040,False,USAT22600952,candidate,The Band CAMINO
+239RFmkTfBL2VmExbgkuBm,Underneath My Skin,6d4jrmreCmsenscuieJERc,The Band CAMINO,1N5ZRHDLAv92FHZ4fRYhCi,The Band CAMINO,album,14,2021-09-10,day,3,193407,True,USAT22102891,candidate,The Band CAMINO
+6rlCtwow78KOeQFkSQhQwy,Holly!,6d4jrmreCmsenscuieJERc,The Band CAMINO,4pMhDFwae5Udlg8MTn4BGg,Holly!,single,3,2026-04-17,day,1,190533,False,USAT22600950,candidate,The Band CAMINO
+7dnoDyysjq8Kvu8ZZGrQSx,Start Over,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,5PZaqv1kmnGYMvO8lS0Cqs,EVERYONE'S A STAR! (Fully Evolved),album,16,2025-11-17,day,13,191103,False,USUG12507998,candidate,5 Seconds of Summer
+2bjUEg4jBtKBlPdNrTAppI,Easier,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,46K4raQPIGem3N031upNj9,CALM,album,13,2020-03-27,day,4,158098,False,USUG11901520,candidate,5 Seconds of Summer
+1MhXdlCQPnO56T57MfmaRm,Ghost Of You,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,2D0Hi3Jj6RFnpWDcSa0Otu,Youngblood (Deluxe),album,16,2018-06-15,day,13,197411,False,GBUM71800863,candidate,5 Seconds of Summer
+1gugDOSMREb34Xo0c1PlxM,She Looks So Perfect,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,2LkWHNNHgD6BRNeZI2SL1L,5 Seconds Of Summer,album,16,2014-06-27,day,1,202496,False,GBUM71400377,candidate,5 Seconds of Summer
+2iUXsYOEPhVqEBwsqP70rE,Youngblood,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,2D0Hi3Jj6RFnpWDcSa0Otu,Youngblood (Deluxe),album,16,2018-06-15,day,1,203417,False,GBUM71800366,candidate,5 Seconds of Summer
+6QcOEPC0bX799hITIgj3vU,Bad Omens,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,6aPyqaE53xagYyLIYZjB1e,5SOS5,album,19,2022-09-23,day,3,215734,False,QMRSZ2200651,candidate,5 Seconds of Summer
+2hCVZaN1R3yS0U4LffcjEw,I'm Scared I’ll Never Sleep Again,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,0zkgIyTdpvOpV5z4oK7c2j,EVERYONE'S A STAR!,album,12,2025-11-14,day,6,169696,True,USUG12507985,candidate,5 Seconds of Summer
+1JCCdiru7fhstOIF4N7WJC,Amnesia,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,2LkWHNNHgD6BRNeZI2SL1L,5 Seconds Of Summer,album,16,2014-06-27,day,12,237247,False,GBUM71401926,candidate,5 Seconds of Summer
+5fsQSDifYpjfbCqvZKPVBj,She's Kinda Hot,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,43v9cUsP5K0hvu9iyuAzmZ,Sounds Good Feels Good (Deluxe),album,17,2015-10-23,day,2,216454,False,GBUM71504046,candidate,5 Seconds of Summer
+3NxWJWftvkstyxvb1pZlFo,Teeth,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,46K4raQPIGem3N031upNj9,CALM,album,13,2020-03-27,day,5,205502,False,USUG11902528,candidate,5 Seconds of Summer
+0RI68moXX6jjEjcIxAb0Uo,NOT OK,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,0zkgIyTdpvOpV5z4oK7c2j,EVERYONE'S A STAR!,album,12,2025-11-14,day,2,206040,False,USUG12507980,candidate,5 Seconds of Summer
+3Ge5d1wjVb8yrMl9Yt9PVt,English Love Affair,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,5wyvhfOpVW7QdOSpToTB7I,5 Seconds Of Summer (B-Sides And Rarities),album,10,2014-06-27,day,3,180922,False,GBUM71401924,candidate,5 Seconds of Summer
+2JgwHnrqubIzSSlwVlu9mY,Telephone Busy,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,0zkgIyTdpvOpV5z4oK7c2j,EVERYONE'S A STAR!,album,12,2025-11-14,day,3,195806,False,USUG12507981,candidate,5 Seconds of Summer
+2fVHrSxsQbJUuj9MW9zG1e,Who Do You Love,69GGBxA162lTqCwzJG5jLp|5Rl15oVamLq7FbSb0NNBNy,The Chainsmokers|5 Seconds of Summer,01GR4NL5O5CZM51k0aejKD,World War Joy,album,10,2019-12-06,day,10,226733,True,USQX91803661,candidate,5 Seconds of Summer
+26wLOs3ZuHJa2Ihhx6QIE6,Teeth,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,1zbH0DnpYxaoqTojXNLQb6,13 Reasons Why (Season 3),compilation,18,2019-08-23,day,1,204887,False,USUG11902528,candidate,5 Seconds of Summer
+7skjp6YGT0NV2FZfSodNS2,You Don’t Go To Parties,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,6aPyqaE53xagYyLIYZjB1e,5SOS5,album,19,2022-09-23,day,9,195821,False,QMRSZ2200656,candidate,5 Seconds of Summer
+1A1PKRd7QNAuZTVFVowK5G,Everyone’s A Star!,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,0zkgIyTdpvOpV5z4oK7c2j,EVERYONE'S A STAR!,album,12,2025-11-14,day,1,195229,False,USUG12507979,candidate,5 Seconds of Summer
+1GYD0A2nWDmEB0lZp1GvSM,Evolve,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,0zkgIyTdpvOpV5z4oK7c2j,EVERYONE'S A STAR!,album,12,2025-11-14,day,10,202613,True,USUG12507991,candidate,5 Seconds of Summer
+6woglPpa9CWG2WsPrjzS1P,No. 1 Obsession,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,0zkgIyTdpvOpV5z4oK7c2j,EVERYONE'S A STAR!,album,12,2025-11-14,day,5,185720,False,USUG12507984,candidate,5 Seconds of Summer
+288li8gcr0oOAHDwAERZHS,Red Desert,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,46K4raQPIGem3N031upNj9,CALM,album,13,2020-03-27,day,1,229557,False,USUG12000293,candidate,5 Seconds of Summer
+04uYkJJJWUVebGXtJ8aEnG,istillfeelthesame,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,0zkgIyTdpvOpV5z4oK7c2j,EVERYONE'S A STAR!,album,12,2025-11-14,day,7,150315,False,USUG12507987,candidate,5 Seconds of Summer
+66vUuzBvVOfMjWnsABs0jm,More,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,2D0Hi3Jj6RFnpWDcSa0Otu,Youngblood (Deluxe),album,16,2018-06-15,day,9,194128,False,GBUM71800867,candidate,5 Seconds of Summer
+57MOpbjOIoWMZnstWOtfm6,Don't Stop,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,2LkWHNNHgD6BRNeZI2SL1L,5 Seconds Of Summer,album,16,2014-06-27,day,2,169935,False,GBUM71401467,candidate,5 Seconds of Summer
+1Syt2nYW6cgyCZLSJ9yn3j,Evolve - CLUBSOS VOL. 1,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,1BXkdv57gA22obRXoYc5hH,CLUBSOS VOL. 1,single,6,2026-10-30,day,1,194649,True,USUG12608128,candidate,5 Seconds of Summer
+55S2PQgSMYAhgoTCcGCDfw,Youngblood,5Rl15oVamLq7FbSb0NNBNy,5 Seconds of Summer,16Qs4jnIyXe7jprnMNRddy,Youngblood,single,1,2018-04-12,day,1,203417,False,GBUM71800366,candidate,5 Seconds of Summer
+6Hdc3IQeyCxG5d14uAcwQW,u + me = <3,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,3WZZF72ihlKPZBS4zSsNHl,you seem pretty sad for a girl so in love,album,13,2026-06-12,day,5,247586,True,USUG12601726,candidate,Olivia Rodrigo
+55pBIZO1cqoldeqpp5WR7H,the cure,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,3WZZF72ihlKPZBS4zSsNHl,you seem pretty sad for a girl so in love,album,13,2026-06-12,day,8,297090,True,USUG12601729,candidate,Olivia Rodrigo
+22l7ocwYpEYGvYpM9T2C5K,maggots for brains,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,3WZZF72ihlKPZBS4zSsNHl,you seem pretty sad for a girl so in love,album,13,2026-06-12,day,4,240100,False,USUG12601725,candidate,Olivia Rodrigo
+4LfCY65LvojKjWEnU7fNN4,stupid song,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,3WZZF72ihlKPZBS4zSsNHl,you seem pretty sad for a girl so in love,album,13,2026-06-12,day,2,209680,False,USUG12601723,candidate,Olivia Rodrigo
+49j6SvuvWfbEKZKzsHCdLJ,stupid song,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,18qJgKH8dyYe2RRp6TbnNY,you seem pretty sad for a girl so in love,album,13,2026-06-11,day,2,209680,False,USUG12601723,candidate,Olivia Rodrigo
+3XmwAZpIMNpTJy8faw3ajD,expectations (feat. Chappell Roan),1McMsnEElThX1knmY4oliG|7GlBOeep6PqTfFi59PTUUN,Olivia Rodrigo|Chappell Roan,1q9LM9xC5ebSY216u31FOx,expectations (feat. Chappell Roan),single,2,2026-10-16,day,1,223935,False,USUG12609027,candidate,Olivia Rodrigo
+25nbeJzxF3dwvtTq57QKZi,expectations,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,3WZZF72ihlKPZBS4zSsNHl,you seem pretty sad for a girl so in love,album,13,2026-06-12,day,12,221958,False,USUG12601733,candidate,Olivia Rodrigo
+1W7023CuJrWPbD4q2Sipoh,what’s wrong with me,1McMsnEElThX1knmY4oliG|6G7P2EzH5A36ujN9VPm4B0,Olivia Rodrigo|Robert Smith,3WZZF72ihlKPZBS4zSsNHl,you seem pretty sad for a girl so in love,album,13,2026-06-12,day,10,224906,False,USUG12601731,candidate,Olivia Rodrigo
+4Ilw2lD6z4WBqh65vUUZUf,my way,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,3WZZF72ihlKPZBS4zSsNHl,you seem pretty sad for a girl so in love,album,13,2026-06-12,day,6,180720,True,USUG12601727,candidate,Olivia Rodrigo
+3fRCAPMMZ8l8P9YKI6OCzD,drop dead,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,18qJgKH8dyYe2RRp6TbnNY,you seem pretty sad for a girl so in love,album,13,2026-06-11,day,1,224998,False,USUG12601721,candidate,Olivia Rodrigo
+0e4u0sFRGxHL4U2iFBrUvZ,cigarette smoke,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,3WZZF72ihlKPZBS4zSsNHl,you seem pretty sad for a girl so in love,album,13,2026-06-12,day,13,340942,True,USUG12601734,candidate,Olivia Rodrigo
+0yO9QD2Ga7eUzqnNYsSSPo,drop dead,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,3WZZF72ihlKPZBS4zSsNHl,you seem pretty sad for a girl so in love,album,13,2026-06-12,day,1,224998,False,USUG12601721,candidate,Olivia Rodrigo
+5JCoSi02qi3jJeHdZXMmR8,favorite crime,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,6s84u2TUpR3wdUv4NgKA2j,SOUR,album,11,2021-05-21,day,10,152666,False,USUG12101249,candidate,Olivia Rodrigo
+6jfiwkcwt8iYCdkbLukxeI,maggots for brains,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,18qJgKH8dyYe2RRp6TbnNY,you seem pretty sad for a girl so in love,album,13,2026-06-11,day,4,240100,False,USUG12601725,candidate,Olivia Rodrigo
+4bkClAuofJULiaIZsuL3gT,expectations,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,18qJgKH8dyYe2RRp6TbnNY,you seem pretty sad for a girl so in love,album,13,2026-06-11,day,12,221958,False,USUG12601733,candidate,Olivia Rodrigo
+407LgLkk1uM3wMO6jVRe0a,honeybee,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,3WZZF72ihlKPZBS4zSsNHl,you seem pretty sad for a girl so in love,album,13,2026-06-12,day,3,223013,False,USUG12601724,candidate,Olivia Rodrigo
+5CscrLqFBgPfZR8fGtikov,making the bed,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,1xJHno7SmdVtZAtXbdbDZp,GUTS,album,12,2023-09-08,day,6,198866,False,USUG12304097,candidate,Olivia Rodrigo
+6HU7h9RYOaPRFeh0R3UeAr,deja vu,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,6s84u2TUpR3wdUv4NgKA2j,SOUR,album,11,2021-05-21,day,5,215506,True,USUG12101240,candidate,Olivia Rodrigo
+1kuGVB7EU95pJObxwvfwKS,vampire,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,1xJHno7SmdVtZAtXbdbDZp,GUTS,album,12,2023-09-08,day,3,219724,True,USUG12304091,candidate,Olivia Rodrigo
+2e3YJ6Hm8tR5L5Zy8HzOtv,what’s wrong with me,1McMsnEElThX1knmY4oliG|6G7P2EzH5A36ujN9VPm4B0,Olivia Rodrigo|Robert Smith,18qJgKH8dyYe2RRp6TbnNY,you seem pretty sad for a girl so in love,album,13,2026-06-11,day,10,224906,False,USUG12601731,candidate,Olivia Rodrigo
+4XYCWx98N3h7Y4FtDFmpd5,purple,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,3WZZF72ihlKPZBS4zSsNHl,you seem pretty sad for a girl so in love,album,13,2026-06-12,day,7,240115,False,USUG12601728,candidate,Olivia Rodrigo
+5CZ40GBx1sQ9agT82CLQCT,traitor,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,6s84u2TUpR3wdUv4NgKA2j,SOUR,album,11,2021-05-21,day,2,229226,False,USUG12101243,candidate,Olivia Rodrigo
+3BnMfPPWs59CVfcQ8CcdfR,begged,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,3WZZF72ihlKPZBS4zSsNHl,you seem pretty sad for a girl so in love,album,13,2026-06-12,day,9,217869,False,USUG12601730,candidate,Olivia Rodrigo
+3IX0yuEVvDbnqUwMBB3ouC,bad idea right?,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,1xJHno7SmdVtZAtXbdbDZp,GUTS,album,12,2023-09-08,day,2,184783,True,USUG12304094,candidate,Olivia Rodrigo
+4EoJ151oQ5jY48z4RhSE96,the cure,1McMsnEElThX1knmY4oliG,Olivia Rodrigo,6zme2NwcaBxbn3mWOcMY8y,the cure,single,2,2026-05-22,day,1,297090,True,USUG12601729,candidate,Olivia Rodrigo
+35po0dhj4pRkbVDeooNVBW,Staying Still,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,0TSynllAnze7KMhv6J7W18,The Great Divide: The Last Of The Bugs,album,21,2026-04-25,day,7,268822,False,USUM72600236,candidate,Noah Kahan
+3iU2qsthCTo5EeTE03l3Si,Doors,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,2fnkyn9EybagIoFJ7a13oz,The Great Divide,album,17,2026-04-24,day,2,231086,True,USUM72512347,candidate,Noah Kahan
+0mflMxspEfB0VbI1kyLiAv,Stick Season,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,50ZenUP4O2Q5eCy2NRNvuz,Stick Season,album,14,2022-10-14,day,2,182346,False,USUM72212470,candidate,Noah Kahan
+4O2rRsoSPb5aN7N3tG6Y3v,Northern Attitude,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,50ZenUP4O2Q5eCy2NRNvuz,Stick Season,album,14,2022-10-14,day,1,267256,True,USUM72217167,candidate,Noah Kahan
+4ck9vo0gEmjVHWUb5q2rYe,The Great Divide,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,2fnkyn9EybagIoFJ7a13oz,The Great Divide,album,17,2026-04-24,day,6,317961,True,USUM72600177,candidate,Noah Kahan
+07UFnnK3uPIuKv5Rs9TmXl,Orange Juice,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,50ZenUP4O2Q5eCy2NRNvuz,Stick Season,album,14,2022-10-14,day,8,297103,False,USUM72217174,candidate,Noah Kahan
+6pk6E0SZxILzfaAGFngxEs,Willing and Able,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,2fnkyn9EybagIoFJ7a13oz,The Great Divide,album,17,2026-04-24,day,8,297262,True,USUM72600179,candidate,Noah Kahan
+4nHJcUtNSUVjXRnjdP29Bk,You’re Gonna Go Far,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,1pb3je8gXTs5dpRRTKhHRC,Stick Season (We'll All Be Here Forever),album,21,2023-06-09,day,20,286369,True,USUM72307687,candidate,Noah Kahan
+7ByxizhA4GgEf7Sxomxhze,All My Love,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,50ZenUP4O2Q5eCy2NRNvuz,Stick Season,album,14,2022-10-14,day,3,251510,False,USUM72217168,candidate,Noah Kahan
+77fL8ATR0dpUDLI0XLmDBV,Orbiter,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,0TSynllAnze7KMhv6J7W18,The Great Divide: The Last Of The Bugs,album,21,2026-04-25,day,20,286967,False,USUM72600237,candidate,Noah Kahan
+5KTcGJKm4HgLhLt8Tc7EQ5,Draw You Out - From The Hunger Games: Sunrise on the Reaping - The Album,2RQXRUsr4IW1f3mKyKsy4B|6UdECsev3yuXe2rfLrdDiF,Noah Kahan|The Hunger Games,6AAZV1VyL6Y6HC4hbPg3Cr,Draw You Out,single,1,2026-10-02,day,1,255984,False,USUG12608043,candidate,Noah Kahan
+3Z2anmIVG8b1GelyeFQdnP,Maine,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,7rAXvbNQSxnAnVl3taoMLj,Cape Elizabeth,single,5,2020-05-01,day,5,232618,False,USUM72009076,candidate,Noah Kahan
+6PdWPdgPoVCT9WLFMVnhxx,The View Between Villages,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,50ZenUP4O2Q5eCy2NRNvuz,Stick Season,album,14,2022-10-14,day,14,215341,False,USUM72217181,candidate,Noah Kahan
+4fEUmNN8KK5sNqvKjBstKg,End of August,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,2fnkyn9EybagIoFJ7a13oz,The Great Divide,album,17,2026-04-24,day,1,317232,True,USUM72600173,candidate,Noah Kahan
+745JbQYxoYIegHzHTUxETp,"Everywhere, Everything (with Gracie Abrams)",2RQXRUsr4IW1f3mKyKsy4B|4tuJ0bMpJh08umKkEXKUI5,Noah Kahan|Gracie Abrams,3qBWNcWifNhUKJAWzswdJY,Stick Season (Forever),album,30,2024-02-09,day,27,257668,False,USUM72317571,candidate,Noah Kahan
+4W6yulge3h7FSy0zGFrNKs,Orbiter,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,01HMeEWI4jOmTIDHGaGI1n,The Great Divide: The Last Of The Bugs,album,21,2026-04-25,day,20,286967,False,USUM72600237,candidate,Noah Kahan
+1M39ETXmej4g9EMSeXPUgj,New Perspective,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,50ZenUP4O2Q5eCy2NRNvuz,Stick Season,album,14,2022-10-14,day,6,256871,False,USUM72217171,candidate,Noah Kahan
+32iNr3J93tqFkxaMYwdRYi,"Everywhere, Everything",2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,50ZenUP4O2Q5eCy2NRNvuz,Stick Season,album,14,2022-10-14,day,7,257668,False,USUM72217173,candidate,Noah Kahan
+6rlU0kRQNjMZ7t5I92yCIi,Dashboard,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,2fnkyn9EybagIoFJ7a13oz,The Great Divide,album,17,2026-04-24,day,9,230787,True,USUM72600180,candidate,Noah Kahan
+7N3d1hsZZpmmnovfAtnVFU,Porch Light,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,2fnkyn9EybagIoFJ7a13oz,The Great Divide,album,17,2026-04-24,day,11,262726,True,USUM72600182,candidate,Noah Kahan
+3qlUIPzkFzIm3Ouzg0AoiH,Doors,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,0TSynllAnze7KMhv6J7W18,The Great Divide: The Last Of The Bugs,album,21,2026-04-25,day,2,231086,True,USUM72512347,candidate,Noah Kahan
+22VHOlVYBqytsrAqV8yXBK,Dial Drunk (with Post Malone),2RQXRUsr4IW1f3mKyKsy4B|246dkjvS1zLTtiykXe5h60,Noah Kahan|Post Malone,4XahqkOmEsKLKEhBpX8DAe,Dial Drunk (with Post Malone),single,1,2023-07-18,day,1,213817,True,USUM72308676,candidate,Noah Kahan
+0jkzxxDG8z3Y5OmfNl1VM0,Homesick,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,50ZenUP4O2Q5eCy2NRNvuz,Stick Season,album,14,2022-10-14,day,12,194416,True,USUM72217180,candidate,Noah Kahan
+3yn01PcU95PTbiZ3xvop2j,Call Your Mom,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,1pb3je8gXTs5dpRRTKhHRC,Stick Season (We'll All Be Here Forever),album,21,2023-06-09,day,19,278670,False,USUM72307686,candidate,Noah Kahan
+5eZT30V5rwLbsal1MMkOxD,American Cars,2RQXRUsr4IW1f3mKyKsy4B,Noah Kahan,0TSynllAnze7KMhv6J7W18,The Great Divide: The Last Of The Bugs,album,21,2026-04-25,day,3,272084,True,USUM72600174,candidate,Noah Kahan
+5UqTWnG7YZAbj1SYMvnGsU,Scarlett,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,17XDDX3RYaIu56inOJzAWO,Can You Afford To Lose Me?,album,11,2022-10-24,day,3,196226,False,GBUM72102851,candidate,Holly Humberstone
+35fi0WcdAVM8w2znoNsD2x,Cruel World,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,43TBVIMYFCJNsKSJK6H6TU,Cruel World,album,12,2026-04-10,day,4,206530,False,GBUM72506604,candidate,Holly Humberstone
+0rjGD5jVtVbj131wDsfbJG,White Noise,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,43TBVIMYFCJNsKSJK6H6TU,Cruel World,album,12,2026-04-10,day,6,225985,False,GBUM72506867,candidate,Holly Humberstone
+6WP61cbYBHtyXMQZ5zaxY0,Falling Asleep At The Wheel,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,17XDDX3RYaIu56inOJzAWO,Can You Afford To Lose Me?,album,11,2022-10-24,day,10,203247,False,UKW522000002,candidate,Holly Humberstone
+4qpOmcLuLFjaSvmbQIq4ft,To Love Somebody,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,43TBVIMYFCJNsKSJK6H6TU,Cruel World,album,12,2026-04-10,day,3,237952,True,GBUM72506603,candidate,Holly Humberstone
+5iZbOxJZ2Rmo2ECMXRHU9a,Too Cute To Be Lonely,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,7wlMyVNmOTncgwr0SCifSY,Too Cute To Be Lonely,single,1,2026-09-30,day,1,196509,False,GBUM72600837,candidate,Holly Humberstone
+5WMA8AmXGff8wo450I3Ecn,Dive,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,1bSqgLKbe0KMX9RcjYvtkX,Dive,single,1,2024-02-15,day,1,239394,False,GBUM72307330,candidate,Holly Humberstone
+3EVLd2B0qKPCGItoVz9onn,Die Happy,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,43TBVIMYFCJNsKSJK6H6TU,Cruel World,album,12,2026-04-10,day,5,229420,False,GBUM72506119,candidate,Holly Humberstone
+6z3o8dAIjtnkXFNErciWHS,The Walls Are Way Too Thin,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,17XDDX3RYaIu56inOJzAWO,Can You Afford To Lose Me?,album,11,2022-10-24,day,9,221933,True,GBUM72102517,candidate,Holly Humberstone
+6TmbMdvb4n2JPqvtab7pKU,Red Chevy,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,43TBVIMYFCJNsKSJK6H6TU,Cruel World,album,12,2026-04-10,day,8,180342,True,GBUM72506865,candidate,Holly Humberstone
+5NCNm0wqVcmeG0JBiEYR72,Down Swinging,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,2dBv8d4WbvtT4ZUxlri7A5,work in progress,single,4,2024-03-15,day,3,176805,False,GBUM72307331,candidate,Holly Humberstone
+17LuVd2gBc7UvcgZbm1cFV,To Love Somebody,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,0YZQHiFydiWcBpISxOCFdc,To Love Somebody,single,2,2026-01-23,day,1,237952,True,GBUM72506603,candidate,Holly Humberstone
+5rqQv5jUcg58xsi1nuZDl9,Falling Asleep At The Wheel,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,359BMiYkEMDC70gvpCVljg,Falling Asleep At The Wheel,single,1,2020-03-19,day,1,203247,False,UKW522000002,candidate,Holly Humberstone
+08Adtuu7bqT9j4u3kojEzO,at least you got To Love Somebody,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,1my50kfCWILSC6UKkEgn9q,it’s a real Cruel World,single,4,2026-06-05,day,2,243000,True,GBUM72601770,candidate,Holly Humberstone
+4TpzhjLWWM5r4EShwPf6Ci,Blue Dream,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,43TBVIMYFCJNsKSJK6H6TU,Cruel World,album,12,2026-04-10,day,11,200874,True,GBUM72506860,candidate,Holly Humberstone
+1eTD6LXZ233IaiyI5fvtJa,Overkill,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,17XDDX3RYaIu56inOJzAWO,Can You Afford To Lose Me?,album,11,2022-10-24,day,2,186568,False,UKW522000003,candidate,Holly Humberstone
+5shlpXnm6qvjMd92I0JJ9P,Make It All Better,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,43TBVIMYFCJNsKSJK6H6TU,Cruel World,album,12,2026-04-10,day,2,237184,True,GBUM72506863,candidate,Holly Humberstone
+7Ktbhp8YaAxKYiYbwjg9rg,I Would Die 4 U,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,1HZRStmbvsQjdC98QOd7I4,I Would Die 4 U,single,1,2022-02-25,day,1,140566,False,GBUM72102920,candidate,Holly Humberstone
+7l08BThIPzarJCQ80CU6oQ,Cigarettes & Wine,0xPoVNPnxIIUS1vrxAYV00|0nnYdIpahs41QiZ9MWp5Wx,Del Water Gap|Holly Humberstone,2jyjGU1rxqNH4UAe5sShHF,Cigarettes & Wine,single,1,2024-01-31,day,1,181666,False,USQE92400002,candidate,Holly Humberstone
+390rTowRCM4fY7XNNvkwSE,it’s just White Noise,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,7a6MlcuS6BtHHwSzIxGiH3,it’s a real Cruel World,single,4,2026-06-05,day,1,237000,False,GBUM72603730,candidate,Holly Humberstone
+3DXEbjIftmPeBj638CxyJD,Deep End,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,4nbcHRQuErLlToxQWa9eRc,Deep End,single,1,2020-01-31,day,1,171662,False,UKW522000001,candidate,Holly Humberstone
+6dIU41Lx5NqUncAnPOJDco,Scarlett,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,3fnXTtLgkjHv2HmqOODSW8,The Walls Are Way Too Thin,single,6,2021-11-12,day,5,196226,False,GBUM72102851,candidate,Holly Humberstone
+3RaG1pAMRHFiCAqcE9KKNo,Into Your Room (with MUNA),0nnYdIpahs41QiZ9MWp5Wx|6xdRb2GypJ7DqnWAI2mHGn,Holly Humberstone|MUNA,5xoc8PmIs7xsuxaA7t4Oun,Into Your Room (with MUNA),single,2,2023-12-01,day,1,211235,False,GBUM72310315,candidate,Holly Humberstone
+40GKeaD28h2nN9ap6qKC68,Deep End,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,17XDDX3RYaIu56inOJzAWO,Can You Afford To Lose Me?,album,11,2022-10-24,day,5,171662,False,UKW522000001,candidate,Holly Humberstone
+5bvK9yntY8XIcNkTKSSNYr,Beauty Pageant,0nnYdIpahs41QiZ9MWp5Wx,Holly Humberstone,43TBVIMYFCJNsKSJK6H6TU,Cruel World,album,12,2026-04-10,day,12,195627,False,GBUM72506859,candidate,Holly Humberstone
+6D8y7Bck8h11byRY88Pt2z,Houdini,6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,1Mo92916G2mmG7ajpmSVrc,Radical Optimism,album,11,2024-05-03,day,2,185917,False,GBAHT2301246,candidate,Dua Lipa
+4rPkN1FMzQyFNP9cLUGIIB,Love Again,6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,7fJJK56U9fHixgO0HQkhtI,Future Nostalgia,album,11,2020-03-27,day,8,258004,False,GBAHT1901302,candidate,Dua Lipa
+0QUM7hk4Koc6oyUGKmtik9,IDGAF,6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,3SXqs6UQiQyIOnk1TeodLo,Dua Lipa (Deluxe),album,17,2015,year,5,218173,True,GBAHT1600317,candidate,Dua Lipa
+5b5cPscqVEMChvDqscVw26,Training Season,6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,1Mo92916G2mmG7ajpmSVrc,Radical Optimism,album,11,2024-05-03,day,3,209487,False,GBAHT2301078,candidate,Dua Lipa
+1vYXt7VSjH9JIM5oRRo7vA,Dance The Night - From Barbie The Album,6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,5cH7FqB7JD5q1tJXJ7FHYu,Dance The Night (From Barbie The Album),single,1,2023-05-25,day,1,176579,False,USAT22305457,candidate,Dua Lipa
+5q0EXnBYyeCdXD72FzJxH0,Illusion,6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,1Mo92916G2mmG7ajpmSVrc,Radical Optimism,album,11,2024-05-03,day,7,188143,False,GBAHT2400114,candidate,Dua Lipa
+3AzjcOeAmA57TIOr9zF1ZW,Physical,6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,7fJJK56U9fHixgO0HQkhtI,Future Nostalgia,album,11,2020-03-27,day,4,193829,False,GBAHT1901298,candidate,Dua Lipa
+39LLxExYz6ewLAcYrzQQyP,Levitating,6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,7fJJK56U9fHixgO0HQkhtI,Future Nostalgia,album,11,2020-03-27,day,5,203807,False,GBAHT1901299,candidate,Dua Lipa
+3PfIrDoz19wz7qK7tYeu62,Don't Start Now,6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,7fJJK56U9fHixgO0HQkhtI,Future Nostalgia,album,11,2020-03-27,day,2,183290,False,GBAHT1901121,candidate,Dua Lipa
+5nujrmhLynf4yMoMtj8AQF,Levitating (feat. DaBaby),6M2wZ9GZgrQXHCFfjv46we|4r63FhuTkUYltbVAg5TQnk,Dua Lipa|DaBaby,5lKlFlReHOLShQKyRv6AL9,Future Nostalgia,album,13,2020-03-27,day,12,203064,False,GBAHT2000942,candidate,Dua Lipa
+7b6sWLSnbZhSIeqNGrJ4py,These Walls,6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,1Mo92916G2mmG7ajpmSVrc,Radical Optimism,album,11,2024-05-03,day,4,217783,True,GBAHT2400111,candidate,Dua Lipa
+76cy1WJvNGJTj78UqeA5zr,IDGAF,6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,01sfgrNbnnPUEyz6GZYlt9,Dua Lipa (Deluxe),album,17,2017-06-02,day,5,217946,True,GBAHT1600301,candidate,Dua Lipa
+4jiOgEp2ZPjzoUF5DxaOjG,Training Season (Live from the Royal Albert Hall),6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,2zSqnTr0gSXrSlPbHzLfJS,Dua Lipa - Live from the Royal Albert Hall,album,20,2024-12-06,day,4,220937,False,GBAHT2400726,candidate,Dua Lipa
+017PF4Q3l4DBUiWoXk4OWT,Break My Heart,6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,7fJJK56U9fHixgO0HQkhtI,Future Nostalgia,album,11,2020-03-27,day,9,221820,False,GBAHT1901303,candidate,Dua Lipa
+48QmG1dfvMuYLxMPt7KSRA,No Lie,3Isy6kedDrgPYoTS1dazA9|6M2wZ9GZgrQXHCFfjv46we,Sean Paul|Dua Lipa,5xrOcCoO3jkXRjHQjfESM6,Mad Love The Prequel,album,9,2018-06-29,day,9,221176,False,GBUM71604557,candidate,Dua Lipa
+6Qb7YsAqH4wWFUMbGsCpap,Training Season,6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,3sqC2sXZc0b9r7WM9z3784,Training Season,single,4,2024-02-15,day,1,209487,False,GBAHT2301078,candidate,Dua Lipa
+3ebXMykcMXOcLeJ9xZ17XH,Scared to Be Lonely,60d24wfXkVzDSfLS6hyCjZ|6M2wZ9GZgrQXHCFfjv46we,Martin Garrix|Dua Lipa,2v9rQe4F8fVSh5v8bAq0jF,Scared to Be Lonely,single,1,2017-01-27,day,1,220883,False,NLM5S1600025,candidate,Dua Lipa
+2ekn2ttSfGqwhhate0LSR0,New Rules,6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,01sfgrNbnnPUEyz6GZYlt9,Dua Lipa (Deluxe),album,17,2017-06-02,day,10,209320,False,GBAHT1600310,candidate,Dua Lipa
+1u5WAP1xPjbQu78BcoXfVx,Be the One,6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,3SXqs6UQiQyIOnk1TeodLo,Dua Lipa (Deluxe),album,17,2015,year,4,204840,False,GBAHT1600316,candidate,Dua Lipa
+5fVcK4ibJpRsjvG5aIYTb7,New Rules,6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,3SXqs6UQiQyIOnk1TeodLo,Dua Lipa (Deluxe),album,17,2015,year,10,212000,False,GBAHT1600327,candidate,Dua Lipa
+6DXZiYUbrYgrVIhfX3U9Z2,Pretty Please,6M2wZ9GZgrQXHCFfjv46we,Dua Lipa,7fJJK56U9fHixgO0HQkhtI,Future Nostalgia,album,11,2020-03-27,day,6,194607,True,GBAHT1901300,candidate,Dua Lipa
+7ef4DlsgrMEH11cDZd32M6,One Kiss (with Dua Lipa),7CajNmpbOovFoOoasH2HaY|6M2wZ9GZgrQXHCFfjv46we,Calvin Harris|Dua Lipa,7GEzhoTiqcPYkOprWQu581,One Kiss (with Dua Lipa),single,1,2018-04-06,day,1,214846,False,GBARL1800368,candidate,Dua Lipa
+2Oycxb8QbPkpHTo8ZrmG0B,Prisoner (feat. Dua Lipa),5YGY8feqx7naU7z4HrwZM6|6M2wZ9GZgrQXHCFfjv46we,Miley Cyrus|Dua Lipa,5BRhg6NSEZOj0BR6Iz56fR,Plastic Hearts,album,15,2020-11-27,day,4,169338,False,USRC12003364,candidate,Dua Lipa
+7rglLriMNBPAyuJOMGwi39,Cold Heart - PNAU Remix,3PhoLpVuITZKcymswpck5b|6M2wZ9GZgrQXHCFfjv46we|6n28c9qs9hNGriNa72b26u,Elton John|Dua Lipa|PNAU,7wHczdY0ek3FHnfVhk10om,The Lockdown Sessions,album,16,2021-10-22,day,1,202735,False,GBUM72104705,candidate,Dua Lipa
+76dIZzTdrNO15mGBrU3MHi,One Kiss (with Dua Lipa),7CajNmpbOovFoOoasH2HaY|6M2wZ9GZgrQXHCFfjv46we,Calvin Harris|Dua Lipa,1CfqWSAyfmYzHU9ktHxUqd,96 Months,album,17,2024-08-08,day,5,214846,False,GBARL1800368,candidate,Dua Lipa
+0sNgYHZwEVHxjXGcJQ1j4Y,Season Of Us,7naAJDAh7AZnf18YYfQruM,Christian French,0KWGaSW0e0HXaFF6RAhxOC,Season Of Us,single,1,2026-08-14,day,1,167081,False,QZSYP2608587,candidate,Christian French
+3LgrUngffML2PJWDTp5qi9,love ride,7naAJDAh7AZnf18YYfQruM,Christian French,6b3iaqOHTYSVUvcXN7Wj6f,love ride,single,1,2017-11-16,day,1,234215,False,QZANL1746330,candidate,Christian French
+1RlmAzI27AlIpvoRN3u6Iy,avalanche,7naAJDAh7AZnf18YYfQruM,Christian French,0ISJeQO2OoleGkf5ZxNyuE,avalanche,single,1,2021-06-25,day,1,199512,False,USRC12101287,candidate,Christian French
+36d4GIYKnTr37URimc6FSP,Meet Me At Our Spot,7naAJDAh7AZnf18YYfQruM,Christian French,7yYIY5ZSptEn9CBm9QhW5O,Meet Me At Our Spot,single,1,2022-11-18,day,1,137508,True,USRC12204290,candidate,Christian French
+0notHsCzg527gLasPkiw5M,send it my way,7naAJDAh7AZnf18YYfQruM,Christian French,3SO3u6dMOH9criZfNzeLmG,the nostalgia tapes,album,12,2026-03-20,day,2,155363,False,QZVEM2564329,candidate,Christian French
+3IFZtGIo5E24qTkv1SN67v,shoulda coulda woulda,7naAJDAh7AZnf18YYfQruM,Christian French,4ZvByXl1eumWZA9gsiqyK6,shoulda coulda woulda,single,1,2026-10-16,day,1,235944,False,QZQAY2616932,candidate,Christian French
+1nDOeWBfRKA5YNQ8bKWzMM,head first,7naAJDAh7AZnf18YYfQruM,Christian French,6WytX96LU58H2AV4IVQBvj,head first,single,1,2019-05-17,day,1,154960,False,USQX91901186,candidate,Christian French
+6PTlI1K4PgGBGhcR8to5tw,Punch The Brakes,7naAJDAh7AZnf18YYfQruM,Christian French,0wXNuYmkAisVmIztydcc24,Punch The Brakes,single,5,2024-06-26,day,1,213533,False,QM24S2403526,candidate,Christian French
+1y90XHF7xM8e9OwQtb7kP9,Someone To Love,7naAJDAh7AZnf18YYfQruM,Christian French,2kgouBqDfEBw2X6G4aQxzc,Someone To Love,single,3,2024-05-31,day,1,189047,False,QM24S2403176,candidate,Christian French
+2zkhW5YaOPPaPgNWXmjTjF,Come Around,382aq8Pij5V2nE2JMHMoxl|7naAJDAh7AZnf18YYfQruM,Hoodie Allen|Christian French,17T8CV4M48fbpx0npYM3HY,Whatever USA,album,9,2019-08-16,day,2,166695,True,SE5VF1906500,candidate,Christian French
+2VkPfL3qQ2adxShD3rNvoV,good things take time,7naAJDAh7AZnf18YYfQruM,Christian French,2mkkParuvbYcJOt2ofZLNl,good things take time,single,7,2020-09-18,day,1,156506,False,USRC12002025,candidate,Christian French
+4NN9QVbke19b0YOE7TWPnP,By Myself,7naAJDAh7AZnf18YYfQruM|4JkUnoB56NQIMK4BK9NRtp,Christian French|Triegy,56E3hwVgr1fmozSeFZS291,By Myself,single,1,2017-05-26,day,1,184624,False,TCADB1756375,candidate,Christian French
+6wFqLYmiXyGvprbWa4ogm8,i think too much,7naAJDAh7AZnf18YYfQruM,Christian French,57KCk6H2jdmgHeh0JNW95b,i think too much,single,1,2020-04-17,day,1,202779,False,USQX92000712,candidate,Christian French
+42F0VBQuGWMUj4pjO8rYiq,superstars,7naAJDAh7AZnf18YYfQruM,Christian French,2tTCFuLBBltJkzVrGr6s9Y,superstars,single,1,2018-06-01,day,1,199872,False,QZB4J1888734,candidate,Christian French
+4xP5bdGofMzMQyH1TDFPp8,golden years,7naAJDAh7AZnf18YYfQruM,Christian French,09knoNCuy7aCw2Ze6g5lBt,golden years,single,1,2022-05-27,day,1,169744,False,USRC12201691,candidate,Christian French
+3zqJeoPm4r354MOX7mebtZ,blue skies and open roads,7naAJDAh7AZnf18YYfQruM,Christian French,3SO3u6dMOH9criZfNzeLmG,the nostalgia tapes,album,12,2026-03-20,day,8,205754,False,QZPEW2515923,candidate,Christian French
+2Zq6HL3bAUvruRj20qJKzu,golden years,7naAJDAh7AZnf18YYfQruM,Christian French,5YtPkDvaUpJ58lIo86AhBp,The Space Between,album,7,2023-09-02,day,1,169746,False,USRC12201691,candidate,Christian French
+47WG9BcXtJeh4rmkMaO3Op,sweet heat,7naAJDAh7AZnf18YYfQruM,Christian French,3SO3u6dMOH9criZfNzeLmG,the nostalgia tapes,album,12,2026-03-20,day,4,167671,False,QT4K52527603,candidate,Christian French
+7AKztUdI3U1Sf1J0eEKxGr,big dreamer,7naAJDAh7AZnf18YYfQruM,Christian French,3SO3u6dMOH9criZfNzeLmG,the nostalgia tapes,album,12,2026-03-20,day,5,188685,False,QZVEM2665534,candidate,Christian French
+2ykO3pT3YRTt4dSPlCcqdE,Fall for You,7naAJDAh7AZnf18YYfQruM|4JkUnoB56NQIMK4BK9NRtp,Christian French|Triegy,78OhH2N4fzQS59954FSuYc,Fall for You,single,1,2016-10-24,day,1,240011,False,TCACS1680816,candidate,Christian French
+5r4G5w8ujwefEnrCT5uzoX,bright side of the moon,7naAJDAh7AZnf18YYfQruM,Christian French,2oD4BvnapvypZEBsrNRqY3,bright side of the moon,single,6,2019-08-09,day,1,190661,False,USQX91901820,candidate,Christian French
+1PHrFmnB9t0UogP38xzZq1,easy,7naAJDAh7AZnf18YYfQruM,Christian French,3SO3u6dMOH9criZfNzeLmG,the nostalgia tapes,album,12,2026-03-20,day,3,203200,False,QT62U2549733,candidate,Christian French
+3jGlOBjMJiNDWhdqRJl5dK,hungover sunday,7naAJDAh7AZnf18YYfQruM,Christian French,5UeQ6n7MrjoThJkklnNU1a,hungover sunday,single,1,2019-07-12,day,1,180402,False,USQX91900826,candidate,Christian French
+1ISqxcKx6GHXjomB4NfkpF,thank god,7naAJDAh7AZnf18YYfQruM,Christian French,2ImBrGMid90VfbhErSEL7w,thank god,single,1,2023-02-17,day,1,159076,True,USRC12300416,candidate,Christian French
+2sfYIKz3J8eZkBdTh25KyK,OH WELL,7naAJDAh7AZnf18YYfQruM,Christian French,2AGtYibeIFAnUVQadCVr16,OH WELL,single,1,2021-11-12,day,1,174914,True,USRC12102567,candidate,Christian French
+6CzhJJTrQUxbVB4wNf4U1q,deja blues,7naAJDAh7AZnf18YYfQruM,Christian French,3SO3u6dMOH9criZfNzeLmG,the nostalgia tapes,album,12,2026-03-20,day,1,151552,False,QZVEM2665533,candidate,Christian French
+65rcllOhsYoCKyP6Y4eooM,blue skies and open roads,7naAJDAh7AZnf18YYfQruM,Christian French,31TnDB0qUMm5UFWL9LSVXn,blue skies and open roads,single,1,2025-01-24,day,1,205754,False,QZPEW2515923,candidate,Christian French
+1LkKQf9u7Ey6xSOtNPdxOO,sweet heat,7naAJDAh7AZnf18YYfQruM,Christian French,4n1BsC5gdihN9qaJy2q8DH,the nostalgia tapes 3,single,3,2025-06-27,day,1,167671,False,QT4K52527603,candidate,Christian French
+6oPY6kNFFkgViDDYkrRM96,Hold On Tight,7naAJDAh7AZnf18YYfQruM,Christian French,4ytAsi4C0cCiKpJL9iOlSm,Hold On Tight,single,1,2026-06-05,day,1,140140,True,QZSYP2679850,candidate,Christian French
+0DpCrXFRwEYVl8dmlj4fzr,Done from the Start,7naAJDAh7AZnf18YYfQruM|4JkUnoB56NQIMK4BK9NRtp,Christian French|Triegy,5d9munv2ZnZvAmuGacJTik,Done from the Start,single,1,2017-08-31,day,1,238743,True,TCADF1790531,candidate,Christian French
+5R8Sv6T9i1pmhmVaA8QXGe,caught in the middle,7naAJDAh7AZnf18YYfQruM,Christian French,3SO3u6dMOH9criZfNzeLmG,the nostalgia tapes,album,12,2026-03-20,day,7,156094,False,QZVEM1875334,candidate,Christian French
+2Yhet3TFvAzE0RvTIB8OVy,sweet home,7naAJDAh7AZnf18YYfQruM,Christian French,73OWaEdMUaG4MpELewXQ8M,sweet home,single,1,2018-08-01,day,1,166891,False,QZDA61880630,candidate,Christian French
+6e3ASsTnmBCD9Xc8yozBDu,crowded room,7naAJDAh7AZnf18YYfQruM,Christian French,03zDUuyCoXfI0uPNdgshjK,crowded room,single,1,2020-03-06,day,1,172630,False,USQX91903306,candidate,Christian French
+13d6t1p2Jg5a6DMUngy9Kj,head first - Young Bombs remix,7naAJDAh7AZnf18YYfQruM|4LKB1IkCINDDjEX8iS7glI,Christian French|Young Bombs,7Bx1J98ZtcqBq6x6GucBrf,head first (remixes),single,4,2020-07-03,day,4,222992,False,USRC12002211,candidate,Christian French
+2nXtGLBgSu60upR05CGEBN,butterfly fields,7naAJDAh7AZnf18YYfQruM,Christian French,0gUWXiPPG13Zao8Nbqr1fa,butterfly fields,single,1,2022-08-05,day,1,208749,False,USRC12202515,candidate,Christian French
+15605LNVSpT3Chvx8jWYm8,thank god,7naAJDAh7AZnf18YYfQruM,Christian French,5YtPkDvaUpJ58lIo86AhBp,The Space Between,album,7,2023-09-02,day,4,159080,True,USRC12300416,candidate,Christian French
+1k2vG8YFTDjuzASy1hKGdA,too shady,7naAJDAh7AZnf18YYfQruM,Christian French,3SO3u6dMOH9criZfNzeLmG,the nostalgia tapes,album,12,2026-03-20,day,10,127678,False,QZVEM1875333,candidate,Christian French
+0rlIR8E7lCdNJIwZmbCptv,easy,7naAJDAh7AZnf18YYfQruM,Christian French,0ZL4xA09iYq2grk8BIyTq3,easy,single,1,2025-11-07,day,1,203200,False,QT62U2549733,candidate,Christian French
+2Lm0zTyVto9JsTwcjIuZcw,lonely,7naAJDAh7AZnf18YYfQruM,Christian French,4WtLTJCmLuJ1XQHHt4jOcy,lonely,single,1,2023-03-24,day,1,128131,False,USRC12203393,candidate,Christian French
+7cqlE9HPKAPpszcj5qlsqc,There It Goes,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,7HCjmINu53BcKbTetdgERo,The Good Witch,album,15,2023-06-23,day,14,225266,False,GBAHS2300121,candidate,Maisie Peters
+58VF5ob7qRB3yUzOYEAhyf,Lost The Breakup,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,7HCjmINu53BcKbTetdgERo,The Good Witch,album,15,2023-06-23,day,8,189413,True,GBAHS2300115,candidate,Maisie Peters
+4RpzbwarDmGs02dgNMlKJG,My Regards,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,0MOWqwwatV0LXDxhBZg5qO,Florescence,album,15,2026-05-22,day,8,191840,False,GBAHS2501484,candidate,Maisie Peters
+0eaFxL9uBQJlbt1mKXAdZI,Questions,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,0MOWqwwatV0LXDxhBZg5qO,Florescence,album,15,2026-05-22,day,12,187120,False,GBAHS2501487,candidate,Maisie Peters
+7ijN634pExtKjNIm7vvvAa,History Of Man,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,7HCjmINu53BcKbTetdgERo,The Good Witch,album,15,2023-06-23,day,15,208280,False,GBAHS2300122,candidate,Maisie Peters
+54iSfkh69fxhnSNrgvTEBp,Worst of You,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,4apk5d5EnIhcko0WGOpLtM,Worst of You,single,1,2018-05-11,day,1,197369,False,GBAHS1800325,candidate,Maisie Peters
+3eMo73vmAMBNGLH7k3L8U9,Say My Name In Your Sleep,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,0MOWqwwatV0LXDxhBZg5qO,Florescence,album,15,2026-05-22,day,3,192173,False,GBAHS2501479,candidate,Maisie Peters
+4fUaCRjZ2GP8OIGM36oy7H,Kingmaker (with Julia Michaels),2RVvqRBon9NgaGXKfywDSs|0ZED1XzwlLHW4ZaG4lOT6m,Maisie Peters|Julia Michaels,0MOWqwwatV0LXDxhBZg5qO,Florescence,album,15,2026-05-22,day,6,188106,True,GBAHS2501482,candidate,Maisie Peters
+74oH7J5xrPqIxadQ05pQLW,Audrey Hepburn,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,0MOWqwwatV0LXDxhBZg5qO,Florescence,album,15,2026-05-22,day,2,186560,False,GBAHS2501280,candidate,Maisie Peters
+4379I4VvaDdpT6HJ9pw8uM,Girl’s Just Flying,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,0MOWqwwatV0LXDxhBZg5qO,Florescence,album,15,2026-05-22,day,13,222893,False,GBAHS2501488,candidate,Maisie Peters
+52CDVCBt7tQI29r9ovQOJt,My Regards,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,5j242B2iACKvvgwUFs60t2,My Regards,single,1,2026-02-06,day,1,191840,False,GBAHS2501484,candidate,Maisie Peters
+4JdBpvPdmds2xRsitakvaW,Old Fashioned,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,0MOWqwwatV0LXDxhBZg5qO,Florescence,album,15,2026-05-22,day,4,184946,True,GBAHS2501480,candidate,Maisie Peters
+3qzc3xyTxHCvsT55a7xPGw,"Hands On Me (from the Netflix Series ""Nobody Wants This"" Season 3)",2RVvqRBon9NgaGXKfywDSs,Maisie Peters,2PdHMHluDWLNCyG5GUpeoT,"Hands On Me (from the Netflix Series ""Nobody Wants This"" Season 3)",single,1,2026-10-22,day,1,193538,False,USAT22607680,candidate,Maisie Peters
+7hoPbfGuOZe6FKBlwB2d21,Audrey Hepburn,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,2IHW6rf6xGNhT1HuMEG5Pu,You You You / Audrey Hepburn,single,2,2025-10-09,day,2,186549,False,GBAHS2501280,candidate,Maisie Peters
+2ssoZC0efjR26dTe6hVqcH,You You You,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,0MOWqwwatV0LXDxhBZg5qO,Florescence,album,15,2026-05-22,day,9,166986,False,GBAHS2501386,candidate,Maisie Peters
+1fakpebHxymPP31rz3WlxL,Hands On Me,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,3NxKJiRAZkeZTJ6JvcHK0b,Nobody Wants This: Season 3 (Soundtrack from the Netflix Series),album,17,2026-10-23,day,5,193538,False,USAT22607696,candidate,Maisie Peters
+6q0xuMnc64pDLSE67pQy7e,Body Better,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,7HCjmINu53BcKbTetdgERo,The Good Witch,album,15,2023-06-23,day,4,189493,False,GBAHS2201504,candidate,Maisie Peters
+7Fjs7JsEuGMnNgp87RbtkQ,I’m Trying (Not Friends),2RVvqRBon9NgaGXKfywDSs,Maisie Peters,1X1EZB1hCoymZ9gU8JKv86,You Signed Up For This,album,14,2021-08-27,day,2,163946,True,GBAHS2100354,candidate,Maisie Peters
+43pulC9QdGwabXUtVHYnjY,Not Another Rockstar,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,1kiowmIzvFyO1hXi1Wyqkn,Not Another Rockstar,single,1,2022-10-07,day,1,149053,True,GBAHS2201157,candidate,Maisie Peters
+5yDVOzmgF2jVaz7ilmm7IY,Vampire Time,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,0MOWqwwatV0LXDxhBZg5qO,Florescence,album,15,2026-05-22,day,7,200013,False,GBAHS2501483,candidate,Maisie Peters
+4DLDYb6q1DKyXDdLCjDQFG,You’re Just A Boy (And I’m Kinda The Man),2RVvqRBon9NgaGXKfywDSs,Maisie Peters,7HCjmINu53BcKbTetdgERo,The Good Witch,album,15,2023-06-23,day,7,185653,False,GBAHS2300114,candidate,Maisie Peters
+1rY5sQ6hjIWP6juaRCs455,John Hughes Movie,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,1X1EZB1hCoymZ9gU8JKv86,You Signed Up For This,album,14,2021-08-27,day,3,216493,False,GBAHS2100022,candidate,Maisie Peters
+2Gs2mHNQF2Lt7a9iIarcji,Psycho,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,1X1EZB1hCoymZ9gU8JKv86,You Signed Up For This,album,14,2021-08-27,day,6,184640,False,GBAHS2100331,candidate,Maisie Peters
+3kTCyZKME2O8YatQ3Fjb72,Love Him I Don’t,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,1X1EZB1hCoymZ9gU8JKv86,You Signed Up For This,album,14,2021-08-27,day,5,195546,False,GBAHS2100356,candidate,Maisie Peters
+12zzqWVkgNwlMf8BJ577I7,Say My Name In Your Sleep,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,4hClukIu7dTzWcMTYT0Aoz,Say My Name In Your Sleep,single,1,2025-11-19,day,1,192173,False,GBAHS2501479,candidate,Maisie Peters
+6Tmj9k9HeZhP5CdLHcj81h,Blonde,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,4U9tk0sbiMp8PuHY7rsfCI,Blonde,single,1,2022-08-05,day,1,181667,True,GBAHS2200938,candidate,Maisie Peters
+03J86w1TqVSwYdw7b7v3ae,Flat Earther,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,0MOWqwwatV0LXDxhBZg5qO,Florescence,album,15,2026-05-22,day,11,214093,False,GBAHS2501486,candidate,Maisie Peters
+4xQ6weGXjibzUUGs8BR0dh,The Good Witch,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,7HCjmINu53BcKbTetdgERo,The Good Witch,album,15,2023-06-23,day,1,157826,False,GBAHS2300109,candidate,Maisie Peters
+2uOXn6ugllgy5hQMnpAWMb,Yoko,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,0YniOccoeVuymVK8Lpb7VR,The Good Witch (Deluxe),album,21,2023-10-27,day,17,254213,False,GBAHS2301254,candidate,Maisie Peters
+5bUcjB7nT5sDHw3nMPpC1z,If You Let Me (with Marcus Mumford),2RVvqRBon9NgaGXKfywDSs|3bYcjbVAN3rAuU3TMzw2mB,Maisie Peters|Marcus Mumford,0MOWqwwatV0LXDxhBZg5qO,Florescence,album,15,2026-05-22,day,10,193906,False,GBAHS2501485,candidate,Maisie Peters
+0AuTF7wstRdyKERhTemuH4,You Then Me Now,2RVvqRBon9NgaGXKfywDSs,Maisie Peters,0MOWqwwatV0LXDxhBZg5qO,Florescence,album,15,2026-05-22,day,14,210680,False,GBAHS2501489,candidate,Maisie Peters
+4yYixO4SqiqqWqWA9uSXDq,Best I Ever Had,6y6iXD929Jqq0xc6lgwhl1,LAUREL,0sGQtJGb7Sz4AbsSvUYmcW,Best I Ever Had,single,1,2020-10-13,day,1,243533,False,GB6TW2000155,candidate,LAUREL
+4CBfY6tYGrm6o5wluoPKaT,Scream Drive Faster,6y6iXD929Jqq0xc6lgwhl1,LAUREL,2Sr4PjxeH0SrquSDMPZF7m,Scream Drive Faster,single,1,2020-08-11,day,1,240666,False,GB6TW2000154,candidate,LAUREL
+1Rt87iKLqiKPBhJ81yqNrA,Change,6y6iXD929Jqq0xc6lgwhl1,LAUREL,3LMLD6B9TRhcs2rlrWsaQo,PALPITATIONS,album,11,2024-06-14,day,7,222133,True,GB6TW2300045,candidate,LAUREL
+1mCvM05OlYWQd77RDxCTLD,Life Worth Living,6y6iXD929Jqq0xc6lgwhl1,LAUREL,6CIanwE77USA9tyvHJ5TZF,DOGVIOLET,album,12,2018-08-24,day,1,244561,False,GBKPL1663866,candidate,LAUREL
+7J0kkgb99OIb3a7IJb6SDT,Staring At The Sun,1VJ0briNOlXRtJUAzoUJdt|6y6iXD929Jqq0xc6lgwhl1,FISHER|LAUREL,4uUYfu9Qtnt5RiTZnPDceK,Staring At The Sun,single,1,2026-10-16,day,1,201255,False,QT47L2600228,candidate,LAUREL
+2LC05eWnoUgeQaTK7mGZgp,French Kiss,6y6iXD929Jqq0xc6lgwhl1,LAUREL,704OaJFjAJpcWmraZTxgZo,French Kiss,single,1,2026-08-07,day,1,168600,False,QZTLA2619524,candidate,LAUREL
+6oZTcTHrex7BsoG5NvaoTE,Crying on the Tennis Court,6y6iXD929Jqq0xc6lgwhl1,LAUREL,4khdaETpvrw5fFgfifCqAv,Crying on the Tennis Court,single,2,2026-09-18,day,1,264080,False,QZSYP2680678,candidate,LAUREL
+06njIRwBH8XekJjlffyYKZ,South Coast,6y6iXD929Jqq0xc6lgwhl1,LAUREL,6CIanwE77USA9tyvHJ5TZF,DOGVIOLET,album,12,2018-08-24,day,4,237593,False,GBCFB1800137,candidate,LAUREL
+6rqicO2m83wiLH6HcTRkZu,I Can't Tell (feat. LAUREL),6nxWCVXbOlEVRexSbLsTer|6y6iXD929Jqq0xc6lgwhl1,Flume|LAUREL,6SZtno2XqSmfr5MKsNeXmC,Palaces,album,13,2022-05-20,day,5,231803,False,AUFF02200005,candidate,LAUREL
+0sdx7g8ff4pLdivhf2JUa8,i kno',33hj9n9Y19jGhXk8m7ezKR,Destin Laurel,3qWFFEdowMoUlbbuWcwBYb,"MERCY""",album,12,2025-09-03,day,5,177232,False,QT4K52544474,candidate,LAUREL
+5VbH21TVJrKIsDpNbpTi7B,Appetite,6y6iXD929Jqq0xc6lgwhl1,LAUREL,2dAk99NhCCyRdko6BPPe9q,PETROL BLOOM,single,5,2020-12-03,day,3,212280,False,GB6TW2000156,candidate,LAUREL
+6qhN7bWD0XJ6TmsXgwdXds,45 Degrees,6y6iXD929Jqq0xc6lgwhl1,LAUREL,3LMLD6B9TRhcs2rlrWsaQo,PALPITATIONS,album,11,2024-06-14,day,1,192320,False,GB6TW2300306,candidate,LAUREL
+2VaNLMpaw7HjpVBk1uKdYl,snowflakes,08SzjkwPk23BWqKL6LMHMj,Laurel Hoh,5mBHwS8uFhTybziuXqPm12,snowflakes,single,1,2025-09-26,day,1,127187,False,SEXGF2595215,candidate,LAUREL
+4p3KmvOtErmAtS4CP7k27h,Picture Book,08SzjkwPk23BWqKL6LMHMj,Laurel Hoh,2Jz6tkLyFQwm5bfu7FSWdb,Picture Book,single,1,2025-11-14,day,1,112903,False,SEXGF2595247,candidate,LAUREL
+3L2GzGgNOzPwhKlu2ZKx14,depth,0D4IT1f1VhnbLSluIogLkk|3rnRik46TfCZnejgHgnCRQ,laurel green|Andy Feldman,76Dlnxb2BrK4G8fnleBHSX,depth,single,1,2025-02-07,day,1,149125,False,US3DF2503869,candidate,LAUREL
+0bHxsWh2w4WcXzShcaYLd3,Wild Side,6y6iXD929Jqq0xc6lgwhl1,LAUREL,0IUs5sRSykLZ7YAdVCFkjS,LIMBO CHERRY,single,5,2021-06-22,day,4,223333,False,GB6TW2100030,candidate,LAUREL
+2rF3bQNVKNGKZgc8mmzeQd,Bow Down,6y6iXD929Jqq0xc6lgwhl1,LAUREL,6mZs1ZFXkv9Bv8VfergGlU,Bow Down,single,1,2026-11-05,day,1,246392,False,QZQAY2609564,candidate,LAUREL
+6i8GYF6u5R5iA7GZCustS9,All Star,6y6iXD929Jqq0xc6lgwhl1,LAUREL,6CIanwE77USA9tyvHJ5TZF,DOGVIOLET,album,12,2018-08-24,day,2,204130,True,GBCFB1800135,candidate,LAUREL
+7IToTV3ZrhWrGk5xlYXulg,Fire Breather,6y6iXD929Jqq0xc6lgwhl1,LAUREL,5sKsjMjbZl6H3txYjkArzT,"New Moons, Vol. 1",compilation,21,2014-01-01,day,12,196554,False,QMBZ91344292,candidate,LAUREL
+6hEvwYmN6eDINAGAYEjG6E,Same Mistakes,6y6iXD929Jqq0xc6lgwhl1,LAUREL,6CIanwE77USA9tyvHJ5TZF,DOGVIOLET,album,12,2018-08-24,day,3,265542,False,GBCFB1800136,candidate,LAUREL
+2dX54iHhHsd1or5112UHYS,crescent,0D4IT1f1VhnbLSluIogLkk,laurel green,2dR8H1Wb8Yo3spWSYa8nwy,crescent,single,1,2024-08-23,day,1,148189,False,USANG2431947,candidate,LAUREL
+6ft0inzWHeplPAyjyImuov,intertwined,0D4IT1f1VhnbLSluIogLkk,laurel green,049KItLbgFEzziLdZqlf9z,intertwined,single,1,2024-11-15,day,1,128297,False,USANG2474005,candidate,LAUREL
+7jndctfe9veSwDZDtuwW4L,flora,0D4IT1f1VhnbLSluIogLkk,laurel green,3XwBZsx5av9m2uoAqAq0MC,flora,single,1,2024-05-10,day,1,166339,False,US3DF2440409,candidate,LAUREL
+7tseUrR7rx0v9iXZtj19og,Wild Things,6y6iXD929Jqq0xc6lgwhl1,LAUREL,3LMLD6B9TRhcs2rlrWsaQo,PALPITATIONS,album,11,2024-06-14,day,2,216733,False,GB6TW2300387,candidate,LAUREL
+1nFAKpWV2MkqsT4keSdYpL,Coming Back For More,6y6iXD929Jqq0xc6lgwhl1,LAUREL,3LMLD6B9TRhcs2rlrWsaQo,PALPITATIONS,album,11,2024-06-14,day,8,153160,False,GB6TW2300392,candidate,LAUREL
+4ybRt3hxuF9esPwD1JxAlj,Hold Tight,6y6iXD929Jqq0xc6lgwhl1,LAUREL,6CIanwE77USA9tyvHJ5TZF,DOGVIOLET,album,12,2018-08-24,day,5,224502,False,GBCFB1800138,candidate,LAUREL
+7LwLxil5ucG4qXcsxrkWEn,Adored,6y6iXD929Jqq0xc6lgwhl1,LAUREL,6CIanwE77USA9tyvHJ5TZF,DOGVIOLET,album,12,2018-08-24,day,6,214681,True,GBCFB1800139,candidate,LAUREL
+1ucLr8unhoIDpNUrm3veN8,Blue Blood,6y6iXD929Jqq0xc6lgwhl1,LAUREL,2vlAzXF3mxSsTLT1Q5aNyv,Blue Blood,single,1,2015-07-08,day,1,236208,False,UK9C51500013,candidate,LAUREL
+2jgCeM3IjLBPS5drRytGFV,twilight,0D4IT1f1VhnbLSluIogLkk|3rnRik46TfCZnejgHgnCRQ,laurel green|Andy Feldman,5CD4lvfMM6IC3dyKy3xRl7,twilight,single,1,2023-11-03,day,1,120120,False,QMANG2212886,candidate,LAUREL
+0zlrhw8qa1Pu6kmUAWnrJ4,simple,0D4IT1f1VhnbLSluIogLkk,laurel green,0P4cQCkxE4qgwymLrKoOe3,simple,single,1,2023-12-15,day,1,128076,False,QMANG2240559,candidate,LAUREL
+7iOhbTOlMljoBvXvoGPqL4,growing,0D4IT1f1VhnbLSluIogLkk,laurel green,7toDCmXaDO2oGcx6puLhJC,growing,single,1,2024-02-16,day,1,157343,False,US3DF2403992,candidate,LAUREL
+6QAQRjnpDuviPufOSx4kLi,wilderness,0D4IT1f1VhnbLSluIogLkk,laurel green,5sUiRzR5C1wYQ6h7rYZVy1,wilderness,single,1,2024-10-25,day,1,177857,False,USANG2472735,candidate,LAUREL
+1xgf2QEkPmD8gPNKSNrqLE,My Secret Place,08SzjkwPk23BWqKL6LMHMj,Laurel Hoh,5MT1OH2BkiLxkB7UbyWHvL,My Secret Place,single,1,2023-03-31,day,1,109500,False,SEXGF2395123,candidate,LAUREL
+2sFepQNyl1WjpROruP8bJ0,Housewife,45dkTj5sMRSjrmBSBeiHym,Tate McRae,6JvmSyocXef7RZDZFaymNl,Housewife,single,1,2026-10-15,day,1,208810,False,USRC12601916,candidate,Tate McRae
+51hyZpbJlIgZIaX3TtMxmu,run for the hills,45dkTj5sMRSjrmBSBeiHym,Tate McRae,0OUOx6rJXtL66AzTnP9KUE,THINK LATER,album,14,2023-12-08,day,3,143940,True,USRC12302981,candidate,Tate McRae
+541sN2qNfIlllGn9nGOQoC,Revolving door,45dkTj5sMRSjrmBSBeiHym,Tate McRae,3w32SV56JvtJXsrYtThwzP,So Close To What,album,15,2025-02-21,day,3,180032,True,USRC12403577,candidate,Tate McRae
+6A18pcBX8QZGwI8EkR7aIP,Siren sounds (bonus),45dkTj5sMRSjrmBSBeiHym,Tate McRae,07V9HO6Djetw5j5lXPylLd,So Close To What,album,16,2025-02-20,day,15,183747,False,USRC12500271,candidate,Tate McRae
+5UJbgR4XF4y1DvbkxEqe8S,Sports car,45dkTj5sMRSjrmBSBeiHym,Tate McRae,07V9HO6Djetw5j5lXPylLd,So Close To What,album,16,2025-02-20,day,6,165045,False,USRC12403580,candidate,Tate McRae
+7l9IqDtVWJurTvkQHq1BGh,she's all i wanna be,45dkTj5sMRSjrmBSBeiHym,Tate McRae,5fhTetHew6Eph6HfQ9O5gJ,i used to think i could fly,album,13,2022-05-27,day,8,207123,False,USRC12103120,candidate,Tate McRae
+3OfqwyE7RrZrtuxCRixfII,It's ok I'm ok,45dkTj5sMRSjrmBSBeiHym,Tate McRae,3w32SV56JvtJXsrYtThwzP,So Close To What,album,15,2025-02-21,day,11,156642,True,USRC12402692,candidate,Tate McRae
+4E63weMCaNZuGPEFMnuEi8,exes,45dkTj5sMRSjrmBSBeiHym,Tate McRae,0OUOx6rJXtL66AzTnP9KUE,THINK LATER,album,14,2023-12-08,day,7,159400,True,USRC12302756,candidate,Tate McRae
+1dByUyyoRKL99fJJ6VCQzb,TIT FOR TAT,45dkTj5sMRSjrmBSBeiHym,Tate McRae,4AIX5TN8oT656mgxRwDevJ,SO CLOSE TO WHAT??? (deluxe),album,21,2025-11-21,day,5,177208,True,USRC12502004,candidate,Tate McRae
+2yWlGEgEfPot0lv3OAjuG3,Just Keep Watching (From F1® The Movie),45dkTj5sMRSjrmBSBeiHym|3aly4xJOy3LVznzvRIvFYC,Tate McRae|F1 The Album,5aWEjuULckx3nnpAM9w6gY,Just Keep Watching (From F1® The Movie),single,1,2025-05-30,day,1,142550,False,USAT22503497,candidate,Tate McRae
+04a44cx2PJthIbN2aLMXhl,TIT FOR TAT,45dkTj5sMRSjrmBSBeiHym,Tate McRae,1ks1k7zln4TyBjn1CF3vCz,TIT FOR TAT,single,1,2025-09-26,day,1,177208,True,USRC12502004,candidate,Tate McRae
+2zOmS55knKWSgScYPTNmGQ,Sports car,45dkTj5sMRSjrmBSBeiHym,Tate McRae,1fOTqAU8mRMHlmOaHMqsge,Sports car,single,3,2025-01-24,day,1,165045,False,USRC12403580,candidate,Tate McRae
+6qmvAJSUfVGMubvI2awW7p,uh oh,45dkTj5sMRSjrmBSBeiHym,Tate McRae,0m9hqW0RDEHPNXxhiFUGSq,uh oh,single,1,2022-09-30,day,1,169721,True,USRC12203443,candidate,Tate McRae
+66tlRqExpkn4kRyuxelzs5,ANYTHING BUT LOVE,45dkTj5sMRSjrmBSBeiHym,Tate McRae,4AIX5TN8oT656mgxRwDevJ,SO CLOSE TO WHAT??? (deluxe),album,21,2025-11-21,day,2,147293,True,USRC12502272,candidate,Tate McRae
+7CmQjA7j6CxyPBkH3tP95W,Dear god,45dkTj5sMRSjrmBSBeiHym,Tate McRae,07V9HO6Djetw5j5lXPylLd,So Close To What,album,16,2025-02-20,day,4,171014,False,USRC12403579,candidate,Tate McRae
+181yGUB8xEh4LfK8KhC4Wa,Siren sounds (bonus),45dkTj5sMRSjrmBSBeiHym,Tate McRae,6KaEpgeZQF6ZVVAmSoZUrb,So Close To What,album,16,2025-02-24,day,15,183747,False,USRC12500271,candidate,Tate McRae
+7AxXJXqJOMRqkgZxvG3r6E,TRYING ON SHOES,45dkTj5sMRSjrmBSBeiHym,Tate McRae,4AIX5TN8oT656mgxRwDevJ,SO CLOSE TO WHAT??? (deluxe),album,21,2025-11-21,day,1,182017,True,USRC12502273,candidate,Tate McRae
+3rUGC1vUpkDG9CZFHMur1t,greedy,45dkTj5sMRSjrmBSBeiHym,Tate McRae,3UOV8XvCwMKaATRNXrYCjN,greedy,single,1,2023-09-15,day,1,131872,True,USRC12301932,candidate,Tate McRae
+2wIcebwzceIwgonsDICx6P,guilty conscience,45dkTj5sMRSjrmBSBeiHym,Tate McRae,0OUOx6rJXtL66AzTnP9KUE,THINK LATER,album,14,2023-12-08,day,12,152049,True,USRC12302996,candidate,Tate McRae
+04emojnbYkrRmv5qtJcgVP,What I Want (feat. Tate McRae),4oUHIQIBe0LHzYfvXNW4QM|45dkTj5sMRSjrmBSBeiHym,Morgan Wallen|Tate McRae,5IZ8sY5FjtL9hloXpv0XbD,I’m The Problem,album,37,2025-05-16,day,4,184517,False,USUG12501601,candidate,Tate McRae
+0B7tnohfi83RQquo2JRHrL,2 hands,45dkTj5sMRSjrmBSBeiHym,Tate McRae,3w32SV56JvtJXsrYtThwzP,So Close To What,album,15,2025-02-21,day,2,182740,True,USRC12403001,candidate,Tate McRae
+2oPCpj9ezVq5D6IJNAGkL2,NOBODY'S GIRL,45dkTj5sMRSjrmBSBeiHym,Tate McRae,4AIX5TN8oT656mgxRwDevJ,SO CLOSE TO WHAT??? (deluxe),album,21,2025-11-21,day,3,168134,False,USRC12502262,candidate,Tate McRae
+4l0RmWt52FxpVxMNni6i63,you broke me first,45dkTj5sMRSjrmBSBeiHym,Tate McRae,1BaHo66NCQNx6ku0hPn9bR,TOO YOUNG TO BE SAD,single,6,2021-03-26,day,5,170234,True,USRC12000832,candidate,Tate McRae
+3B2ZpJeewPvhAkjXtTkdtJ,NOBODY'S GIRL,45dkTj5sMRSjrmBSBeiHym,Tate McRae,4bqOY8Atag3UhL95HuskxU,SO CLOSE TO WHAT??? (deluxe),album,21,2025-11-19,day,3,168134,False,USRC12502262,candidate,Tate McRae
+1TmqxQwvEDGYOTm1fPJJbT,Purple lace bra,45dkTj5sMRSjrmBSBeiHym,Tate McRae,07V9HO6Djetw5j5lXPylLd,So Close To What,album,16,2025-02-20,day,5,191132,False,USRC12403552,candidate,Tate McRae
+6H04e80F8rydKb6fUFg95h,Goner - Demo,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,2l4rOoHRee6NXHJalXIvpy,Tracks of the High Line (Deluxe),album,10,2023-09-15,day,9,210750,False,TCAHJ2378804,candidate,Kids That Fly
+1VPWPBWtpRtLeB4kHkddZb,Dead Beat City,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,3zEsj1P1EJGu67rUKLVbWl,Dead Beat City,single,4,2024-12-13,day,1,233496,False,QZVEM1883848,candidate,Kids That Fly
+3bdxjX5Gx2rd8OePXL5MQo,For The Night,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,0au5bz3vWHsNCN71CF18dl,For The Night,single,1,2021-09-23,day,1,221250,False,TCAFT2132688,candidate,Kids That Fly
+43MiHyAHTSAVCCrkfwXmGN,Kiss Her You Fool,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,19hRlSHfMeV23xEvyU5uac,Kiss Her You Fool,single,1,2019-11-20,day,1,163448,False,QZ93L1969677,candidate,Kids That Fly
+5pIhJw8uAX7Zvz2rnA3OZ9,Sunday In London,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,73mopXszd4r3Ut81VGnbNj,Sunday In London,single,1,2020-03-04,day,1,181874,False,QZ93L2006966,candidate,Kids That Fly
+3Eo6YJWJmXsYYcF0kT4wmx,High Line,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,2l4rOoHRee6NXHJalXIvpy,Tracks of the High Line (Deluxe),album,10,2023-09-15,day,1,245000,False,TCAGN2276450,candidate,Kids That Fly
+3Jo4A9pGm3PWRWPr230ap2,THE BOXER,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,16R25jopo0YiyeU1bPsi9f,THE BOXER,single,1,2026-03-06,day,1,199524,False,QM24S2600830,candidate,Kids That Fly
+6lKPkGqlpr1BT32pAgh4PF,Goner,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,2l4rOoHRee6NXHJalXIvpy,Tracks of the High Line (Deluxe),album,10,2023-09-15,day,4,275000,False,TCAGQ2254370,candidate,Kids That Fly
+3cEUz0wuUfuC78lwvTebX1,Heart Away,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,2l4rOoHRee6NXHJalXIvpy,Tracks of the High Line (Deluxe),album,10,2023-09-15,day,3,212954,False,TCAGQ2254367,candidate,Kids That Fly
+3A211Et7prcrv82QbP4vks,Little Bit of Time,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,4SASgSSrzQyTBC0NCDDQwE,Little Bit of Time,single,1,2024-06-26,day,1,205312,False,QZPEW2478542,candidate,Kids That Fly
+76j1KGN8HKnjoI3fbNQOGj,Feel it Love,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,0chaDzbQWjJ1YSXPLUZikd,Feel it Love,single,1,2024-02-09,day,1,247153,False,QZVEM2394250,candidate,Kids That Fly
+7KD6zlzuJMe9kbPX1Vn0As,Dreams,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,474zvW2DjU9e7h2yqjchZB,Between the Lines,single,5,2020-04-29,day,3,207434,False,QZ93L2012878,candidate,Kids That Fly
+0UaXRNTfyyTASf0oJ9OjCu,See You Dancing,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,36becajpuSM6scGomf1gjE,See You Dancing,single,2,2026-05-15,day,1,234993,False,QM24S2602268,candidate,Kids That Fly
+1bkv9NuUpyGigCRt8lort9,Hazel,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,474zvW2DjU9e7h2yqjchZB,Between the Lines,single,5,2020-04-29,day,4,198834,False,QZ93L2018036,candidate,Kids That Fly
+57kVBtuPwR5BVN05EHBo7K,Too Many People,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,755vy8O1H6kkxQ1L5DoGBv,Too Many People,single,3,2026-07-03,day,1,220944,False,QM24S2603079,candidate,Kids That Fly
+3bzyu7ACw3wlkOqez8EAqq,"Calm Down, Come Down",1qChcfwij4nN6hsCLTKBJX,Kids That Fly,4m1yvzSe3boeXSNhX86r4t,"Calm Down, Come Down",single,3,2026-10-16,day,1,197651,False,QM24S2605603,candidate,Kids That Fly
+5njCqgvMYTOGPViHfl0i1q,If You Wanna (Take Me Home),1qChcfwij4nN6hsCLTKBJX,Kids That Fly,0xmyPREgBnRYRREyYCR4sR,If You Wanna (Take Me Home),single,1,2024-09-27,day,1,196002,False,QT2VB2402141,candidate,Kids That Fly
+0dRyKxPs2as3FteTiZvXy9,Dead Beat City - Retro Mix,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,6ho0khqT5Vs3Bru36Js8QE,Dead Beat City (Retro Mix),single,2,2025-12-12,day,1,237187,False,QT62V2564983,candidate,Kids That Fly
+177aXPJ6gRGJmJmQdRercO,Look in Your Eyes,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,2l4rOoHRee6NXHJalXIvpy,Tracks of the High Line (Deluxe),album,10,2023-09-15,day,5,234586,False,TCAGQ2254375,candidate,Kids That Fly
+3AYF5Syjxh7I6YElZ8SzI8,Madeline,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,05xxdjdT7mflaFjtWYAFwO,Madeline,single,4,2026-08-28,day,1,234908,False,QM24S2604759,candidate,Kids That Fly
+0JjWI04BGfMu7hrU92GKOA,Can You Hold That Tight?,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,72MhWq9kBh5RABXLGupSdl,Can You Hold That Tight?,single,1,2025-06-20,day,1,219511,False,QZTAX2539386,candidate,Kids That Fly
+5Dvm3Hxxtm4u4Fnuf1soqw,Talk of the Town,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,2l4rOoHRee6NXHJalXIvpy,Tracks of the High Line (Deluxe),album,10,2023-09-15,day,2,216496,False,TCAGQ2254364,candidate,Kids That Fly
+3byH36g4qHRTcw9fZrPREw,Madeline,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,4m1yvzSe3boeXSNhX86r4t,"Calm Down, Come Down",single,3,2026-10-16,day,2,234908,False,QM24S2604759,candidate,Kids That Fly
+05Bt9dt7eqD1EvWiN6Ss2M,Too Many People,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,4m1yvzSe3boeXSNhX86r4t,"Calm Down, Come Down",single,3,2026-10-16,day,3,220944,False,QM24S2603079,candidate,Kids That Fly
+0HdQFIex0SHULCcR0V0Cke,Feel It Love,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,3zEsj1P1EJGu67rUKLVbWl,Dead Beat City,single,4,2024-12-13,day,3,247153,False,QZVEM2394250,candidate,Kids That Fly
+1UlOG9qvvJ1PSpd98GlCgi,Girl Like Her,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,3MReM34Wgc4sGgx9haVkKP,Girl Like Her,single,2,2025-09-10,day,1,188950,False,NL8RL2551704,candidate,Kids That Fly
+4jPKQ6Wj0vZfndUSvsr42G,It’s True,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,6mUolLiQ7mvyNLV2jYYhQQ,Lovesick,single,6,2019-04-05,day,2,260038,False,QZDA61964629,candidate,Kids That Fly
+7tgrbq58jzdNSW57vmYKZN,Trouble,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,1dsfNOjMILCjVPgB3lVo4X,Trouble,single,1,2021-05-14,day,1,246333,False,QZ93L2115430,candidate,Kids That Fly
+0T8qAGt84bHZKXMwNf4WoF,If You Wanna (Take Me Home),1qChcfwij4nN6hsCLTKBJX,Kids That Fly,3zEsj1P1EJGu67rUKLVbWl,Dead Beat City,single,4,2024-12-13,day,2,196002,False,QT2VB2402141,candidate,Kids That Fly
+0bk5xmmPIk6y8UIXBDsfNY,Little Bit of Time,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,3zEsj1P1EJGu67rUKLVbWl,Dead Beat City,single,4,2024-12-13,day,4,205312,True,QZPEW2478542,candidate,Kids That Fly
+4cxEcQDYS8r7RQ6hLDR3m2,THE BOXER,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,05xxdjdT7mflaFjtWYAFwO,Madeline,single,4,2026-08-28,day,4,199524,False,QM24S2600830,candidate,Kids That Fly
+6H5KvhIg2SuxtdoVliSHXs,Kiss Her You Fool,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,1oh2MTHkqUjse4MSaohYX8,Hopeful Romantic Mix,single,4,2024-08-30,day,1,163448,False,QZ93L1969677,candidate,Kids That Fly
+5yqpm9T9s3ijHhnfEXdRjk,Too Many People,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,05xxdjdT7mflaFjtWYAFwO,Madeline,single,4,2026-08-28,day,2,220944,False,QM24S2603079,candidate,Kids That Fly
+31iFg3HzdPMIUhBtiTdJZF,See You Dancing,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,05xxdjdT7mflaFjtWYAFwO,Madeline,single,4,2026-08-28,day,3,234993,False,QM24S2602268,candidate,Kids That Fly
+2KBq0SGbsUxLNRJt8HIPaF,See You Dancing,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,755vy8O1H6kkxQ1L5DoGBv,Too Many People,single,3,2026-07-03,day,2,234993,False,QM24S2602268,candidate,Kids That Fly
+3LXidLrwK6qgUBZyT19piO,Again,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,6mUolLiQ7mvyNLV2jYYhQQ,Lovesick,single,6,2019-04-05,day,3,188534,False,QZDA61964630,candidate,Kids That Fly
+4YYWul5KKFMInym6VgPwW7,Nothing’s Built to Last,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,6mUolLiQ7mvyNLV2jYYhQQ,Lovesick,single,6,2019-04-05,day,5,288738,False,QZDA61964633,candidate,Kids That Fly
+7zDK9LMYy3kB2Vpx4Yv51g,Lovesick,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,6mUolLiQ7mvyNLV2jYYhQQ,Lovesick,single,6,2019-04-05,day,1,216990,False,QZDA61964628,candidate,Kids That Fly
+4IlHZZI31PhKzxcPcEac6I,For the Night,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,1oh2MTHkqUjse4MSaohYX8,Hopeful Romantic Mix,single,4,2024-08-30,day,4,221250,False,TCAFT2132688,candidate,Kids That Fly
+37uTvcVJZde6JMP4DlnLKJ,Too Young,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,6mUolLiQ7mvyNLV2jYYhQQ,Lovesick,single,6,2019-04-05,day,6,252931,False,QZDA61964632,candidate,Kids That Fly
+0HFsYp47EojGseeJPrZ479,20 Hours Notice,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,6mUolLiQ7mvyNLV2jYYhQQ,Lovesick,single,6,2019-04-05,day,4,201297,False,QZDA61964631,candidate,Kids That Fly
+2ikNCgFIKYT3QW8UGhb3Hp,Maybe,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,474zvW2DjU9e7h2yqjchZB,Between the Lines,single,5,2020-04-29,day,5,173458,False,QZ93L2018037,candidate,Kids That Fly
+01his7cwYiXiUlua2NzDOh,THE BOXER,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,755vy8O1H6kkxQ1L5DoGBv,Too Many People,single,3,2026-07-03,day,3,199524,False,QM24S2600830,candidate,Kids That Fly
+1bfFZRLcxjVOnqrzRhZlGm,THE BOXER,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,36becajpuSM6scGomf1gjE,See You Dancing,single,2,2026-05-15,day,2,199524,False,QM24S2600830,candidate,Kids That Fly
+3SOk8A6sWao0VJhPWnplea,Kiss Her You Fool,1qChcfwij4nN6hsCLTKBJX,Kids That Fly,474zvW2DjU9e7h2yqjchZB,Between the Lines,single,5,2020-04-29,day,1,163448,False,QZ93L1969677,candidate,Kids That Fly
+6mADjHs6FXdroPzEGW6KVJ,bloody valentine,6TIYQ3jFPwQSRmorSezPxX,mgk,57lgFncHBYu5E3igZnuCJK,Tickets To My Downfall,album,15,2020-09-25,day,4,205158,True,USUM72005714,candidate,mgk
+7kDUspsoYfLkWnZR7qwHZl,my ex's best friend (with blackbear),6TIYQ3jFPwQSRmorSezPxX|2cFrymmkijnjDg9SS92EPM,mgk|blackbear,57lgFncHBYu5E3igZnuCJK,Tickets To My Downfall,album,15,2020-09-25,day,11,139460,True,USUM72014730,candidate,mgk
+0vrWrwDcDb78lyHyFTvxx2,cliché,6TIYQ3jFPwQSRmorSezPxX,mgk,3gtFto6wKOkOdRdpGIs1Vi,lost americana,album,14,2025-08-07,day,2,176242,False,USUG12503219,candidate,mgk
+2gTdDMpNxIRFSiu7HutMCg,I Think I'm OKAY (with YUNGBLUD & Travis Barker),6TIYQ3jFPwQSRmorSezPxX|6Ad91Jof8Niiw0lGLLi3NW|4exLIFE8sISLr28sqG1qNX,mgk|YUNGBLUD|Travis Barker,0bJIHF1Or1YBLFBMwv53K2,Hotel Diablo,album,14,2019-07-05,day,14,169397,True,USUM71909845,candidate,mgk
+1PSBzsahR2AKwLJgx8ehBj,Bad Things (with Camila Cabello),6TIYQ3jFPwQSRmorSezPxX|4nDoRrQiYLoBzwC5BhVJzF,mgk|Camila Cabello,3yWRq9Dd2UO5xyqxTjLDmp,bloom,album,13,2017-05-12,day,10,239293,False,USUM71609854,candidate,mgk
+1VSuFS7PahCN3SWbOcQ98m,forget me too (feat. Halsey),6TIYQ3jFPwQSRmorSezPxX|26VFTg2z8YR0cCuwLzESi2,mgk|Halsey,57lgFncHBYu5E3igZnuCJK,Tickets To My Downfall,album,15,2020-09-25,day,5,171620,True,USUM72014954,candidate,mgk
+25wdC7CJmCJPgnKw9rYquJ,maybe (feat. Bring Me The Horizon),6TIYQ3jFPwQSRmorSezPxX|1Ffb6ejR6Fe5IamqA5oRUF,mgk|Bring Me The Horizon,3sKZHtQoq3tPtkXbT8PJAc,mainstream sellout,album,16,2022-03-25,day,3,170133,True,USUM72112368,candidate,mgk
+3Rfre3qkrhwdZZ7dyznwbN,Lonely Road (with Jelly Roll),6TIYQ3jFPwQSRmorSezPxX|19k8AgwwTSxeaxkOuCQEJs,mgk|Jelly Roll,4tU0FNnuiBD1P6IRTARHww,Lonely Road (with Jelly Roll),single,1,2024-07-26,day,1,189356,False,USUG12404647,candidate,mgk
+0OI7AFifLSoGzpb8bdBLLV,"Home (with Machine Gun Kelly, X Ambassadors & Bebe Rexha)",6TIYQ3jFPwQSRmorSezPxX|3NPpFNZtSTHheNBaWC82rB|64M6ah0SkkRsnPGtGiRAbb,mgk|X Ambassadors|Bebe Rexha,3U1X1wd3lX7EteWYhS2hpT,"Home (with Machine Gun Kelly, X Ambassadors & Bebe Rexha) [From Bright: The Album]",single,1,2017-11-18,day,1,202804,False,USAT21704829,candidate,mgk
+3o3pJq8QHzUuBQ4cK6aKRp,Crash First (with mgk),5LvRazQ7EDZLfQU4HYc6XF|6TIYQ3jFPwQSRmorSezPxX,honestav|mgk,1sLaHkB4BUfhjvD6amkhub,Sweet American Boy,album,16,2026-06-19,day,2,223666,True,QZTLA2643777,candidate,mgk
+3k0YJnqMKRZb8swo86vCkq,drunk face,6TIYQ3jFPwQSRmorSezPxX,mgk,57lgFncHBYu5E3igZnuCJK,Tickets To My Downfall,album,15,2020-09-25,day,3,143900,True,USUM72007119,candidate,mgk
+5dy6n47eRz62MXVLthoxK8,starman,6TIYQ3jFPwQSRmorSezPxX,mgk,3gtFto6wKOkOdRdpGIs1Vi,lost americana,album,14,2025-08-07,day,9,217102,False,USUG12503216,candidate,mgk
+281WTjbEGjNvjzqJlTbDuJ,vampire diaries,6TIYQ3jFPwQSRmorSezPxX,mgk,3gtFto6wKOkOdRdpGIs1Vi,lost americana,album,14,2025-08-07,day,5,155347,False,USUG12504418,candidate,mgk
+0c34ovpXiMWWUbKX0IavIH,"F*CK YOU, GOODBYE (feat. Machine Gun Kelly)",2tIP7SsRs7vjIcLrU85W8J|6TIYQ3jFPwQSRmorSezPxX,The Kid LAROI|mgk,576UTio7xgY7YUxrHMzxeI,F*CK LOVE 3+: OVER YOU,album,35,2021-07-27,day,6,144860,True,USSM12006585,candidate,mgk
+48axmFD7PUPnTOdSFMYrvj,WHO I WAS,6fOMl44jA4Sp5b9PpYCkzz|6TIYQ3jFPwQSRmorSezPxX,NF|mgk,65NFxecxqhjUb18ggBJ473,WHO I WAS,single,1,2025-11-13,day,1,180953,False,USUM72510183,candidate,mgk
+5NnHfx430GU4gpG7Q285hZ,iris,6TIYQ3jFPwQSRmorSezPxX|5yvGiZLSWJTPBlZpVbPnEZ,mgk|Julia Wolf,3zPK1g3Cctift1J1G8EHBs,iris,single,1,2025-05-13,day,1,196875,False,USUG12503231,candidate,mgk
+1YFUI8vmek5XtbON2ZW892,sun to me,6TIYQ3jFPwQSRmorSezPxX,mgk,5rWYslg1tfIO46bDK7xXPW,sun to me,single,1,2024-06-28,day,1,158446,False,USUG12404255,candidate,mgk
+0YP8kt3sAYTj6eEyesreQH,Glass House (feat. Naomi Wild),6TIYQ3jFPwQSRmorSezPxX|5EBlHXi71tDXnFtroEh7Rg,mgk|Naomi Wild,0bJIHF1Or1YBLFBMwv53K2,Hotel Diablo,album,14,2019-07-05,day,4,201740,True,USUM71909858,candidate,mgk
+59AziPyNm2kHqyd9lH9cSr,Sick and Tired (feat. Machine Gun Kelly & Travis Barker),6ASri4ePR7RlsvIQgWPJpS|6TIYQ3jFPwQSRmorSezPxX|4exLIFE8sISLr28sqG1qNX,iann dior|mgk|Travis Barker,3MZ9DaqqNeedTrOsfYH93Q,I'm Gone,album,9,2020-06-12,day,6,144000,False,QZJ842000212,candidate,mgk
+5KoNZJsXDXoQrgCMoHY6FO,Crash First (with mgk),5LvRazQ7EDZLfQU4HYc6XF|6TIYQ3jFPwQSRmorSezPxX,honestav|mgk,4KDBHNs6XR1OqZETv8QXPi,Crash First,single,3,2026-06-12,day,1,223666,True,QZTLA2643777,candidate,mgk
+50eJOxJiGmJ7PBZaTKpje1,make up sex (feat. blackbear),6TIYQ3jFPwQSRmorSezPxX|2cFrymmkijnjDg9SS92EPM,mgk|blackbear,3sKZHtQoq3tPtkXbT8PJAc,mainstream sellout,album,16,2022-03-25,day,7,122570,True,USUM72112363,candidate,mgk
+5eRw3f5z5ekR149yaSEKK7,girl next door,6TIYQ3jFPwQSRmorSezPxX|137W8MRPWKqSmrBGDBFSop,mgk|Wiz Khalifa,0luMDIjG1HiinBas3na7vc,blog era boyz,album,9,2026-05-22,day,5,197706,True,USUG12604397,candidate,mgk
+3tBZ60j1jQ7NJm8IjelyQe,emo girl (feat. WILLOW),6TIYQ3jFPwQSRmorSezPxX|3rWZHrfrsPBxVy692yAIxF,mgk|WILLOW,3sKZHtQoq3tPtkXbT8PJAc,mainstream sellout,album,16,2022-03-25,day,8,159096,True,USUM72112365,candidate,mgk
+0zcU626JV9kV61raS5sGu4,FIX UR FACE (with Fred Durst),6TIYQ3jFPwQSRmorSezPxX|6xs3t4VrfszbO3YJg2wLPa,mgk|Fred Durst,5V2DOzyXq1zx7yRgebZZIv,FIX UR FACE (with Fred Durst),single,1,2026-04-21,day,1,199068,True,USUG12603087,candidate,mgk
+6xo1OuIGQQqATJcsGrYNGD,goddamn,6TIYQ3jFPwQSRmorSezPxX,mgk,6Bz4WHgKsGonYa1Uo97mRC,lost americana,album,14,2025-08-08,day,4,187083,True,USUG12503217,candidate,mgk
+3D110t9ctcoOoylXsc3iR8,Thick And Thin,49tQo2QULno7gxHutgccqF,LANY,6SWmGozzQDUaczHXMuE8Za,Malibu Nights,album,9,2018-10-05,day,1,212002,False,GBUM71805352,candidate,LANY
+2VhY69P0Q15rHfEKaMlR5x,dancing in the kitchen,49tQo2QULno7gxHutgccqF,LANY,20tgAhlplT42WnAAC8Xndk,gg bb xx,album,12,2021-09-03,day,7,208808,False,GBUM72103516,candidate,LANY
+0Eqg0CQ7bK3RQIMPw1A7pl,Malibu Nights,49tQo2QULno7gxHutgccqF,LANY,6SWmGozzQDUaczHXMuE8Za,Malibu Nights,album,9,2018-10-05,day,9,286928,False,GBUM71805799,candidate,LANY
+2btKtacOXuMtC9WjcNRvAA,ILYSB,49tQo2QULno7gxHutgccqF,LANY,0HiwsXForePsWdIZW6EEkK,LANY,album,16,2017-06-30,day,7,211149,False,TCABY1418887,candidate,LANY
+6mXdCcFnPKQznj4CmMRmHC,Mean It,5JZ7CnR6gTvEMKX4g70Amv|49tQo2QULno7gxHutgccqF,Lauv|LANY,3ZuE680xhR1A4bCFGvL8mi,~how i'm feeling~,album,21,2020-03-06,day,10,232853,False,GBKPL1969288,candidate,LANY
+0GfWxo8gFJKgQ96tBrq3qo,Stuck,49tQo2QULno7gxHutgccqF,LANY,2gfh9js0PqxJnWctC4au5k,Soft,album,10,2025-10-10,day,4,183803,False,USA2P2536902,candidate,LANY
+22ZcJxQkzIL6EU692kAFWY,cowboy in LA,49tQo2QULno7gxHutgccqF,LANY,6tmSIFaEjxAtuYwPq9FaFP,mama's boy,album,14,2020-10-02,day,2,213800,False,GBUM72003712,candidate,LANY
+6BZ6pl5bczDc3cMF1kBaOy,pink skies,49tQo2QULno7gxHutgccqF,LANY,42jFcn7WDz3hkdkEUUQaM7,kinda,single,6,2016-06-24,day,3,185922,False,GBUM71603332,candidate,LANY
+6OcCk1dbAb7XNHsC098oEM,I Quit Drinking,3RqBeV12Tt7A8xH3zBDDUF|49tQo2QULno7gxHutgccqF,Kelsea Ballerini|LANY,5c5S9cyjHKBQRm1DGU1E8J,I Quit Drinking,single,1,2021-06-09,day,1,171200,False,QM6P42178163,candidate,LANY
+3Gk6bI1kJDkEftel3suQSa,"Younger You (featuring Lainey Wilson) - From the ""Hannah Montana 20th Anniversary Special""",5YGY8feqx7naU7z4HrwZM6|6tPHARSq45lQ8BSALCfkFC,Miley Cyrus|Lainey Wilson,3vClILXGeaZyBu4IqdpDAG,"Younger You (featuring Lainey Wilson) [From the ""Hannah Montana 20th Anniversary Special""]",single,1,2026-04-17,day,1,167800,False,USHR12653076,candidate,LANY
+5f9Nt75lq1MLzf5F2xJwTI,Prettiest Thing I’ve Ever Seen,49tQo2QULno7gxHutgccqF,LANY,1HLPrsMA3hNam0blTZ8Kte,Soft 2,album,15,2026-03-13,day,2,248470,False,USA2P2608491,candidate,LANY
+7GbAp0HKPQW7WnFJAzMoRk,Thru These Tears,49tQo2QULno7gxHutgccqF,LANY,6SWmGozzQDUaczHXMuE8Za,Malibu Nights,album,9,2018-10-05,day,8,204515,False,GBUM71804234,candidate,LANY
+4ejDIKJgiukea84koZCHOk,When Did You Stop Loving Me?,49tQo2QULno7gxHutgccqF,LANY,1HLPrsMA3hNam0blTZ8Kte,Soft 2,album,15,2026-03-13,day,4,230521,False,USA2P2608493,candidate,LANY
+15ahYSiHAIMxAnujlXVtta,Super Far,49tQo2QULno7gxHutgccqF,LANY,0HiwsXForePsWdIZW6EEkK,LANY,album,16,2017-06-30,day,3,203650,False,GBUM71700710,candidate,LANY
+0WOvSEVpUGkNufX0w0M06F,13,49tQo2QULno7gxHutgccqF,LANY,0HiwsXForePsWdIZW6EEkK,LANY,album,16,2017-06-30,day,8,234818,False,GBUM71700717,candidate,LANY
+3YRvnftfueV3fwhWIQvri2,up to me,49tQo2QULno7gxHutgccqF,LANY,20tgAhlplT42WnAAC8Xndk,gg bb xx,album,12,2021-09-03,day,2,167960,False,GBUM72103660,candidate,LANY
+1DNXCTUHCGcr9kJ6LynYEC,'Cause You Have To,49tQo2QULno7gxHutgccqF,LANY,198gsVHJBnvsKSdLbucwVI,a beautiful blur,album,13,2023-09-29,day,11,250595,False,QM24S2304027,candidate,LANY
+1NAyq9TrQIpLHWStUX4xAQ,ex i never had,49tQo2QULno7gxHutgccqF,LANY,20tgAhlplT42WnAAC8Xndk,gg bb xx,album,12,2021-09-03,day,8,201442,False,GBUM72103655,candidate,LANY
+2McTSCNNzxgDtAqiuibhPI,dna,49tQo2QULno7gxHutgccqF,LANY,20tgAhlplT42WnAAC8Xndk,gg bb xx,album,12,2021-09-03,day,4,177382,False,GBUM72103656,candidate,LANY
+7ArrTJ1LwcGAlEO65LUQ7i,I Don't Wanna Love You Anymore,49tQo2QULno7gxHutgccqF,LANY,6SWmGozzQDUaczHXMuE8Za,Malibu Nights,album,9,2018-10-05,day,4,201197,False,GBUM71805674,candidate,LANY
+2kMKmb60xVUIWW2Out8ypz,Good Girls,49tQo2QULno7gxHutgccqF,LANY,0HiwsXForePsWdIZW6EEkK,LANY,album,16,2017-06-30,day,11,249379,False,GBUM71700720,candidate,LANY
+40jpNp3gXTVn2HbLlTdFFR,care less,49tQo2QULno7gxHutgccqF,LANY,20tgAhlplT42WnAAC8Xndk,gg bb xx,album,12,2021-09-03,day,10,198595,False,GBUM72103657,candidate,LANY
+3WZKQtvz5nUiOBBYcQzftX,cowboy in LA,49tQo2QULno7gxHutgccqF,LANY,6ZsCg58PZj6jFALfiB5ZtX,mama's boy (deluxe),album,17,2021-02-05,day,2,213800,False,GBUM72003712,candidate,LANY
+4kFbxA8gCGx47zJrZ9KiQT,XXL,49tQo2QULno7gxHutgccqF,LANY,198gsVHJBnvsKSdLbucwVI,a beautiful blur,album,13,2023-09-29,day,1,206706,False,QM24S2304035,candidate,LANY
+3Dkvp3L4w0uJFYfIPa8E9H,ILYSB - STRIPPED,49tQo2QULno7gxHutgccqF,LANY,4sldmS76FbpIaO2sEsZlBh,Make Out,single,6,2015-12-11,day,6,244820,False,GBUM71507521,candidate,LANY
+0Aii1ZdrQwkas2lrRFz6ZY,anything 4 u,49tQo2QULno7gxHutgccqF,LANY,6tmSIFaEjxAtuYwPq9FaFP,mama's boy,album,14,2020-10-02,day,11,194573,False,GBUM72003707,candidate,LANY
+3bsRMvQja4huvPWo1S5ONc,if this is the last time,49tQo2QULno7gxHutgccqF,LANY,6tmSIFaEjxAtuYwPq9FaFP,mama's boy,album,14,2020-10-02,day,4,203853,False,GBUM72003217,candidate,LANY
+07ZQLYn9x4x3L3vxStc1zr,Stacy,3ApUX1o6oSz321MMECyIYd,Quinn XCII,1dVw3jSdgZp7PfGhCEo32t,A Letter To My Younger Self,album,12,2020-07-10,day,2,168986,False,USSM11903856,candidate,Quinn XCII
+7cM9Kqto11iJpY2RwgVJSq,Flare Guns,3ApUX1o6oSz321MMECyIYd|5JMLG56F1X5mFmWNmS0iAp,Quinn XCII|Chelsea Cutler,7j7cqgeWmYH9PbKe3S5oJj,The Story of Us,album,11,2017-09-15,day,4,240013,False,USSM11705903,candidate,Quinn XCII
+0TfMitxzrMd2NTLxNXL2Hu,Georgia Peach,3ApUX1o6oSz321MMECyIYd,Quinn XCII,68ht4TaMromCg26Fu3fBB0,The People's Champ (Extended Version),album,13,2023-04-14,day,1,141363,False,USUG12302104,candidate,Quinn XCII
+6Xy7bkDe5xz2f7vtlUIjQE,Another Day in Paradise,3ApUX1o6oSz321MMECyIYd,Quinn XCII,0f0urvIhwe83ExM04JyRVI,Change of Scenery,single,5,2015-04-28,day,5,255000,False,USHM21578602,candidate,Quinn XCII
+2tOOcDDYkh0PSjr6GwPEAJ,Love Me Less (feat. Quinn XCII),1bqxdqvUtPWZri43cKHac8|3ApUX1o6oSz321MMECyIYd,MAX|Quinn XCII,0BHgyJ3dblyBOmxV8pRmGg,Love Me Less (feat. Quinn XCII),single,1,2019-04-05,day,1,177669,False,USQX91900537,candidate,Quinn XCII
+7kTlHVCARylJAqm40yVoWE,Stay Next To Me (with Chelsea Cutler),3ApUX1o6oSz321MMECyIYd|5JMLG56F1X5mFmWNmS0iAp,Quinn XCII|Chelsea Cutler,6B3LAqHoBKmSN9HLbyy0Ro,Change of Scenery II,album,12,2021-03-05,day,7,206045,False,USSM12006556,candidate,Quinn XCII
+3a1Zmq0P1E6W80x8EOcVNP,Tough (feat. Noah Kahan),3ApUX1o6oSz321MMECyIYd|2RQXRUsr4IW1f3mKyKsy4B,Quinn XCII|Noah Kahan,7zGPSFi3LOIC1L5Dj0oEBx,From Michigan With Love,album,12,2019-02-15,day,6,178133,False,USSM11809011,candidate,Quinn XCII
+3KE6KppohrzZMbo2ao7CZ2,Too Late (with AJR),3ApUX1o6oSz321MMECyIYd|6s22t5Y3prQHyaHWUN1R1C,Quinn XCII|AJR,1FguQss7XFrc5w7KWL2sc9,The People's Champ,album,12,2023-01-27,day,7,175760,False,USUG12208992,candidate,Quinn XCII
+51LIqkda3pTeECZUhMnool,Straightjacket,3ApUX1o6oSz321MMECyIYd,Quinn XCII,7j7cqgeWmYH9PbKe3S5oJj,The Story of Us,album,11,2017-09-15,day,2,206533,False,USSM11608964,candidate,Quinn XCII
+5Ev3sAE6AN0baPJKe3vcy1,Kings of Summer,4BzCdhJTyTS3gumq9xmymb|3ApUX1o6oSz321MMECyIYd,ayokay|Quinn XCII,3CXeWGh1nVLjPpLx0dLIAr,Kings of Summer (feat. Quinn XCII),single,2,2016-07-20,day,2,222644,False,USSM11605999,candidate,Quinn XCII
+3nAz0OCzeiGbUudc8kXKar,Bartender,3ApUX1o6oSz321MMECyIYd,Quinn XCII,1FguQss7XFrc5w7KWL2sc9,The People's Champ,album,12,2023-01-27,day,1,176813,True,USUG12208980,candidate,Quinn XCII
+2Tqvu6la5srS2Fz3pID1EB,Let Me Down (with Chelsea Cutler),3ApUX1o6oSz321MMECyIYd|5JMLG56F1X5mFmWNmS0iAp,Quinn XCII|Chelsea Cutler,1FguQss7XFrc5w7KWL2sc9,The People's Champ,album,12,2023-01-27,day,5,149733,True,USUG12208988,candidate,Quinn XCII
+6MYXloeVAIxavZGATPu7Tb,FFYL,3ApUX1o6oSz321MMECyIYd,Quinn XCII,0f0urvIhwe83ExM04JyRVI,Change of Scenery,single,5,2015-04-28,day,3,226500,False,USHM21578600,candidate,Quinn XCII
+29tKLZTDyHSxGV3vBjVugz,smoke,6jxGLrn1I14RIeRYodOpLN|3ApUX1o6oSz321MMECyIYd,Łaszewo|Quinn XCII,6DibCYwPItPfq53VY7SYmb,smoke,single,1,2025-11-07,day,1,165957,False,QM24S2506534,candidate,Quinn XCII
+52681Ivj8kgCi90Lu8B9fl,Little Things (with Quinn XCII & Chelsea Cutler),7wg1qvie3KqDNQbAkTdbX0|3ApUX1o6oSz321MMECyIYd|5JMLG56F1X5mFmWNmS0iAp,Louis The Child|Quinn XCII|Chelsea Cutler,4aBLjtEUUg1424XB5WQgKP,Here For Now,album,14,2020-06-26,day,4,197453,True,USUM72006496,candidate,Quinn XCII
+4CxmynXhw78QefruycvxG8,Coffee (feat. Marc E. Bassy),3ApUX1o6oSz321MMECyIYd|3tQx1LPXbsYjE9VwN1Peaa,Quinn XCII|Marc E. Bassy,1dVw3jSdgZp7PfGhCEo32t,A Letter To My Younger Self,album,12,2020-07-10,day,5,180053,False,USSM12002051,candidate,Quinn XCII
+7cWyFwAaxdK2HSRuiRkMjy,Always Been You,3ApUX1o6oSz321MMECyIYd,Quinn XCII,7j7cqgeWmYH9PbKe3S5oJj,The Story of Us,album,11,2017-09-15,day,11,235720,False,USSM11705904,candidate,Quinn XCII
+5DeYzhFraf23cUaakwghkP,Way It Was,44Ewva5aHOX00EwaX2D2mh|3ApUX1o6oSz321MMECyIYd,Two Friends|Quinn XCII,1XtPqp4pKKRTOi5hc5oWIW,Way It Was,single,1,2025-08-15,day,1,199124,False,CBEFB2501159,candidate,Quinn XCII
+6cTadRpi52dp3D9FRhUw4I,HOOPLA,3ApUX1o6oSz321MMECyIYd,Quinn XCII,0Cruvuwhku3EwTd1V7b84E,HOOPLA,single,1,2026-05-08,day,1,134400,False,QM6P42639553,candidate,Quinn XCII
+4Tid4MwqgR1CfKCun3tFon,Kings of Summer - Single Version,4BzCdhJTyTS3gumq9xmymb|3ApUX1o6oSz321MMECyIYd,ayokay|Quinn XCII,3CXeWGh1nVLjPpLx0dLIAr,Kings of Summer (feat. Quinn XCII),single,2,2016-07-20,day,1,207880,False,USSM11606000,candidate,Quinn XCII
+2GCYlHf2CHjqgi8ikhUT8Y,Full Circle,3ApUX1o6oSz321MMECyIYd,Quinn XCII,4irczqMHultKKEHOLVNLPO,Full Circle,single,1,2015-08-06,day,1,219459,False,USHM81503552,candidate,Quinn XCII
+5yU3w1RzMZpSWytWAU9iyN,Autopilot,3ApUX1o6oSz321MMECyIYd,Quinn XCII,7zGPSFi3LOIC1L5Dj0oEBx,From Michigan With Love,album,12,2019-02-15,day,2,181520,False,USSM11900399,candidate,Quinn XCII
+5s2coZZQHU7IN6ErpXFula,Right Where You Should Be (feat. Ashe & Louis Futon),3ApUX1o6oSz321MMECyIYd|6P5NO5hzJbuOqSdyPB7SJM|79ffq2PHS5TDmgnHhAyudW,Quinn XCII|Ashe|Louis Futon,7zGPSFi3LOIC1L5Dj0oEBx,From Michigan With Love,album,12,2019-02-15,day,12,205280,False,USSM11900405,candidate,Quinn XCII
+2UdbN109XCUQO83jLIHUPr,The Lows,3ApUX1o6oSz321MMECyIYd,Quinn XCII,1FguQss7XFrc5w7KWL2sc9,The People's Champ,album,12,2023-01-27,day,8,170160,True,USUG12208994,candidate,Quinn XCII
+1piIGIhnGRiXQ360hhh8Mr,Less I Know,5jAMCwdNHWr7JThxtMuEyy|3ApUX1o6oSz321MMECyIYd,NOTD|Quinn XCII,6AMjHESQyOiW52JfQC8PEm,NOTED...EP,single,6,2022-09-09,day,1,166893,False,SEUM72201070,candidate,Quinn XCII
+1PewwBauzqbg7VGp2JHyKZ,Old Recliners,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,5gZFprukMkMJiEKEgf3q1f,Kansas Anymore (The Longest Goodbye),album,17,2025-02-14,day,14,221103,False,USUM72500277,candidate,ROLE MODEL
+6Op1AAvS0Jb3Gbom92zadJ,Look At That Woman,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,4OZ6nCbn8w0cHr1m0qiD2s,Kansas Anymore,album,13,2024-07-19,day,2,163458,False,USUM72404559,candidate,ROLE MODEL
+2J051fjLklkoPbzOoTAACZ,"Sally, When The Wine Runs Out",1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,5gZFprukMkMJiEKEgf3q1f,Kansas Anymore (The Longest Goodbye),album,17,2025-02-14,day,15,218660,True,USUM72500706,candidate,ROLE MODEL
+4mDTqEqt0QHQFPNkz8eHjr,Writing's On The Wall,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,4OZ6nCbn8w0cHr1m0qiD2s,Kansas Anymore,album,13,2024-07-19,day,1,169974,False,USUM72404558,candidate,ROLE MODEL
+6bQnZnQTJWJbxcL6FsQ2Au,High Hopes 3000,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,7fZFja60WuvgF48NW1au0R,Chuck Timely & The Hourglass,album,12,2026-08-07,day,2,245755,False,USUM72604226,candidate,ROLE MODEL
+2kbTNUg1DDA5JuLk2h9PP9,Slipfast,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,4OZ6nCbn8w0cHr1m0qiD2s,Kansas Anymore,album,13,2024-07-19,day,11,192287,False,USUM72404553,candidate,ROLE MODEL
+5UhZyWfrSEhGYfIIFNYscF,a little more time,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,7GRsfBAEdhJTdcwoqTXedi,a little more time,single,1,2023-02-17,day,1,210202,False,USUM72301653,candidate,ROLE MODEL
+5va7AdTu5BWzZcziPkdxSP,Love I You,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,7fZFja60WuvgF48NW1au0R,Chuck Timely & The Hourglass,album,12,2026-08-07,day,4,262057,False,USUM72604231,candidate,ROLE MODEL
+2jAQzmhwPPcc6jBx4w664w,Deeply Still In Love,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,4OZ6nCbn8w0cHr1m0qiD2s,Kansas Anymore,album,13,2024-07-19,day,8,242544,True,USUM72404554,candidate,ROLE MODEL
+6fjl6Ekn2hE7U9TLJ8teY0,Some Protector,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,5gZFprukMkMJiEKEgf3q1f,Kansas Anymore (The Longest Goodbye),album,17,2025-02-14,day,16,217263,False,USUM72500707,candidate,ROLE MODEL
+57a0usyQgVXthMoFZotx85,Harmony,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,7fZFja60WuvgF48NW1au0R,Chuck Timely & The Hourglass,album,12,2026-08-07,day,12,261427,True,USUM72604244,candidate,ROLE MODEL
+1dKUibfoGwiApjEYJhB9R2,High Hopes 3000,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,1wNw84HV2GGAhuf6ROgRgu,High Hopes 3000,single,1,2026-06-03,day,1,245755,False,USUM72604226,candidate,ROLE MODEL
+3LCFq7wySSi3ePmHV49bvp,Stain,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,7fZFja60WuvgF48NW1au0R,Chuck Timely & The Hourglass,album,12,2026-08-07,day,10,196803,False,USUM72604246,candidate,ROLE MODEL
+4ROx8ILeFj6GPxbZZueZ7D,Chasing Midnight,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,7fZFja60WuvgF48NW1au0R,Chuck Timely & The Hourglass,album,12,2026-08-07,day,5,275110,True,USUM72604227,candidate,ROLE MODEL
+4Iei8c0ljwTIkMvIQNLZTm,Joy,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,7fZFja60WuvgF48NW1au0R,Chuck Timely & The Hourglass,album,12,2026-08-07,day,7,214534,True,USUM72604230,candidate,ROLE MODEL
+0NuWgxEp51CutD2pJoF4OM,blind,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,6RIPoDTAV7hnyBAM5xrKVV,our little angel - EP,single,6,2020-10-21,day,3,153293,False,USUM72010617,candidate,ROLE MODEL
+6gKCztJf6T1hpXdWcFk8KB,"Oh, Gemini",1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,4OZ6nCbn8w0cHr1m0qiD2s,Kansas Anymore,album,13,2024-07-19,day,4,164970,False,USUM72402769,candidate,ROLE MODEL
+5gMZytf2L5iBLiyBEaSAhh,Somebody Else - Spotify Singles,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,2x1pqv8DQ5JaR5bbZFiwYq,Somebody Else - Spotify Singles,single,1,2024-09-18,day,1,300341,True,USUM72410584,candidate,ROLE MODEL
+43C2N2FgjrKfORvmhs9vJ8,Superglue,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,4OZ6nCbn8w0cHr1m0qiD2s,Kansas Anymore,album,13,2024-07-19,day,6,200503,True,USUM72404556,candidate,ROLE MODEL
+6oRLjuxL1nuSnm3FtPlRHc,The Wedding,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,7fZFja60WuvgF48NW1au0R,Chuck Timely & The Hourglass,album,12,2026-08-07,day,11,276345,False,USUM72604247,candidate,ROLE MODEL
+16ZFHH1D14LVOwXnjdNK06,Service Receipt,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,7fZFja60WuvgF48NW1au0R,Chuck Timely & The Hourglass,album,12,2026-08-07,day,8,272355,True,USUM72604245,candidate,ROLE MODEL
+6qrWIui36OnNSy4WSYeeME,Good Thing,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,7fZFja60WuvgF48NW1au0R,Chuck Timely & The Hourglass,album,12,2026-08-07,day,6,260614,False,USUM72604228,candidate,ROLE MODEL
+12zYE8lqduNUUrxe641vp4,Writing's On The Wall,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,5gZFprukMkMJiEKEgf3q1f,Kansas Anymore (The Longest Goodbye),album,17,2025-02-14,day,1,169974,False,USUM72404558,candidate,ROLE MODEL
+6A521u0gY1goZmyLRFS0yK,"Something, Somehow, Someday",1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,4OZ6nCbn8w0cHr1m0qiD2s,Kansas Anymore,album,13,2024-07-19,day,13,215978,False,USUM72404557,candidate,ROLE MODEL
+2N0y2WeVGfhIutZ8n3GiPm,Song Is All You Get,1dy5WNgIKQU6ezkpZs4y8z,ROLE MODEL,7fZFja60WuvgF48NW1au0R,Chuck Timely & The Hourglass,album,12,2026-08-07,day,3,248831,True,USUM72604232,candidate,ROLE MODEL
+37zuIvk4KBkAxxLJsxJaHq,Would That I,2FXC3k01G6Gw61bmprjgqS,Hozier,2c7gFThUYyo2t6ogAgIYNw,"Wasteland, Baby!",album,14,2019-03-01,day,12,268293,False,USSM11809035,candidate,Hozier
+5Apvsk0suoivI1H8CmBglv,Almost (Sweet Music),2FXC3k01G6Gw61bmprjgqS,Hozier,2c7gFThUYyo2t6ogAgIYNw,"Wasteland, Baby!",album,14,2019-03-01,day,2,217480,False,USSM11806793,candidate,Hozier
+57V4uc2b2diZ4RPHXWecb9,Like Real People Do,2FXC3k01G6Gw61bmprjgqS,Hozier,4Pv7m8D82A1Xun7xNCKZjJ,Hozier (Expanded Edition),album,15,2014-09-19,day,10,198029,False,USSM11307292,candidate,Hozier
+5TgEJ62DOzBpGxZ7WRsrqb,Work Song,2FXC3k01G6Gw61bmprjgqS,Hozier,4Pv7m8D82A1Xun7xNCKZjJ,Hozier (Expanded Edition),album,15,2014-09-19,day,9,229715,False,USSM11401475,candidate,Hozier
+2DNXgvkyv35vTWvdgjs7qn,Someone New,2FXC3k01G6Gw61bmprjgqS,Hozier,4Pv7m8D82A1Xun7xNCKZjJ,Hozier (Expanded Edition),album,15,2014-09-19,day,4,222813,False,USSM11405188,candidate,Hozier
+5aRZk9oWIYUB5alrTs8TTV,From Eden,2FXC3k01G6Gw61bmprjgqS,Hozier,4Pv7m8D82A1Xun7xNCKZjJ,Hozier (Expanded Edition),album,15,2014-09-19,day,6,283466,False,USSM11405190,candidate,Hozier
+32btQnrL0HR6M1KKAPf3D3,Do I Wanna Know? - BBC Live Lounge,2FXC3k01G6Gw61bmprjgqS,Hozier,5PaHwpTefKhQa6Yqsj9WRH,Hozier (Special Edition),album,26,2014-09-19,day,12,257893,False,GBCAD1500308,candidate,Hozier
+4oEf84vBYVftf6KmZexhVo,Northern Attitude (with Hozier),2RQXRUsr4IW1f3mKyKsy4B|2FXC3k01G6Gw61bmprjgqS,Noah Kahan|Hozier,5yWshZTxFD4N2clZjUBGOH,Northern Attitude (with Hozier),single,1,2023-11-10,day,1,267256,True,USUM72315552,candidate,Hozier
+4JpazKcfOhbwqZrsYhzHee,Jackie and Wilson,2FXC3k01G6Gw61bmprjgqS,Hozier,4Pv7m8D82A1Xun7xNCKZjJ,Hozier (Expanded Edition),album,15,2014-09-19,day,3,223120,False,USSM11405187,candidate,Hozier
+76JKIsdKrAfWUMjaA0u7v5,Too Sweet,2FXC3k01G6Gw61bmprjgqS,Hozier,0OWvUsVTHFXXnGiGht96K4,Unreal Unearth: Unaired,album,23,2024-08-19,day,1,251424,False,USSM12401865,candidate,Hozier
+1ptwL6lZNLc654XAaHqcHb,Unknown / Nth,2FXC3k01G6Gw61bmprjgqS,Hozier,3gF9KIynrJaC80HbVayPMx,Unreal Unearth,album,16,2023-08-18,day,15,280106,False,USSM12302744,candidate,Hozier
+1CS7Sd1u5tWkstBhpssyjP,Take Me to Church,2FXC3k01G6Gw61bmprjgqS,Hozier,4Pv7m8D82A1Xun7xNCKZjJ,Hozier (Expanded Edition),album,15,2014-09-19,day,1,241688,False,USSM11307291,candidate,Hozier
+4IadxL6BUymXlh8RCJJu7T,Too Sweet,2FXC3k01G6Gw61bmprjgqS,Hozier,1KZC0cX0qq6hodR9YVgh9F,Unheard,single,4,2024-03-22,day,1,251424,False,USSM12401865,candidate,Hozier
+1C042FLYy7rP3MfnkOcnha,Cherry Wine - Live,2FXC3k01G6Gw61bmprjgqS,Hozier,4Pv7m8D82A1Xun7xNCKZjJ,Hozier (Expanded Edition),album,15,2014-09-19,day,13,240147,False,USSM11307294,candidate,Hozier
+1djzKW3eYLyzjjHXazEWWh,Movement,2FXC3k01G6Gw61bmprjgqS,Hozier,2c7gFThUYyo2t6ogAgIYNw,"Wasteland, Baby!",album,14,2019-03-01,day,3,237800,False,USSM11806792,candidate,Hozier
+083PU4XnYAOMAGVruma3vb,Shrike,2FXC3k01G6Gw61bmprjgqS,Hozier,2c7gFThUYyo2t6ogAgIYNw,"Wasteland, Baby!",album,14,2019-03-01,day,8,298880,False,USSM11806791,candidate,Hozier
+6QnfsyzifAJJrNHYTO6j9J,Francesca,2FXC3k01G6Gw61bmprjgqS,Hozier,3gF9KIynrJaC80HbVayPMx,Unreal Unearth,album,16,2023-08-18,day,4,270066,False,USSM12302652,candidate,Hozier
+2SXx7Ofa79CeJfio98aJcG,Eat Your Young,2FXC3k01G6Gw61bmprjgqS,Hozier,3gF9KIynrJaC80HbVayPMx,Unreal Unearth,album,16,2023-08-18,day,6,242293,False,USSM12300491,candidate,Hozier
+6JmSfynzr6E0QllQZNEXEb,Angel of Small Death and the Codeine Scene,2FXC3k01G6Gw61bmprjgqS,Hozier,4Pv7m8D82A1Xun7xNCKZjJ,Hozier (Expanded Edition),album,15,2014-09-19,day,2,219214,False,USSM11307293,candidate,Hozier
+6pBeLF2GZS3NNwV4DBvtg5,Northern Attitude (with Hozier),2RQXRUsr4IW1f3mKyKsy4B|2FXC3k01G6Gw61bmprjgqS,Noah Kahan|Hozier,3qBWNcWifNhUKJAWzswdJY,Stick Season (Forever),album,30,2024-02-09,day,26,267256,True,USUM72315552,candidate,Hozier
+3SRtygyWBQnoxuOPtdBPm2,De Selby (Part 2),2FXC3k01G6Gw61bmprjgqS,Hozier,3gF9KIynrJaC80HbVayPMx,Unreal Unearth,album,16,2023-08-18,day,2,227826,False,USSM12302734,candidate,Hozier
+6ctlpLPyLH3R1V16fxoOWE,Talk,2FXC3k01G6Gw61bmprjgqS,Hozier,2c7gFThUYyo2t6ogAgIYNw,"Wasteland, Baby!",album,14,2019-03-01,day,9,206546,False,USSM11809032,candidate,Hozier
+1HYnjKqSSHh1tdl2Hi57zH,"Wasteland, Baby!",2FXC3k01G6Gw61bmprjgqS,Hozier,2c7gFThUYyo2t6ogAgIYNw,"Wasteland, Baby!",album,14,2019-03-01,day,14,266466,False,USSM11809037,candidate,Hozier
+1EgeiGYBJouzsieXUiX2wF,Rubber Band Man (with Hozier),3gd8FJtBJtkRxdfbTu19U2|2FXC3k01G6Gw61bmprjgqS,Mumford & Sons|Hozier,4jnBkfheZqprSwXV7qyrc0,Prizefighter,album,14,2026-02-20,day,2,218400,False,GBUM72505897,candidate,Hozier
+1yTTMcUhL7rtz08Dsgb7Qb,The Bones - with Hozier,6WY7D3jk8zTrHtmkqqo5GI|2FXC3k01G6Gw61bmprjgqS,Maren Morris|Hozier,6HzebUNgGlzC1AMBwHGIkH,The Bones (with Hozier),single,1,2019-10-04,day,1,197298,False,USG4X1900026,candidate,Hozier
+1TnUURhehaoMWKAqQtirm6,Colors,26VFTg2z8YR0cCuwLzESi2,Halsey,5U5rt98q8Jqx4lP3RdqYfO,BADLANDS,album,11,2015-08-28,day,6,249499,False,USUM71507629,candidate,Halsey
+3OzCF9i6Ey7EkkAYJztmKp,Bad At Love,26VFTg2z8YR0cCuwLzESi2,Halsey,5ZvnIKEq0HAwDHNR8f2yIx,hopeless fountain kingdom (Deluxe Plus),album,17,2017-06-02,day,11,181279,False,USUM71702220,candidate,Halsey
+6FZDfxM3a3UCqtzo5pxSLZ,Without Me,26VFTg2z8YR0cCuwLzESi2,Halsey,68enXe5XcJdciSDAZr0Alr,Manic,album,16,2020-01-17,day,9,201660,True,USUM71813499,candidate,Halsey
+126oeltvIg79HHP4yAi4rq,Now Or Never,26VFTg2z8YR0cCuwLzESi2,Halsey,5ZvnIKEq0HAwDHNR8f2yIx,hopeless fountain kingdom (Deluxe Plus),album,17,2017-06-02,day,6,214801,False,USUM71701077,candidate,Halsey
+7FGq80cy8juXBCD2nrqdWU,Eastside (with Halsey & Khalid),5CiGnKThu5ctn9pBxv7DGa|26VFTg2z8YR0cCuwLzESi2|6LuN9FCkKOj5PcnpouEgny,benny blanco|Halsey|Khalid,7dQ734EW0iLvQfF6vBFNiZ,FRIENDS KEEP SECRETS,album,7,2018-12-07,day,1,170769,False,USUM71809132,candidate,Halsey
+0d2iYfpKoM0QCKvcLCkBao,Eastside (with Halsey & Khalid),5CiGnKThu5ctn9pBxv7DGa|26VFTg2z8YR0cCuwLzESi2|6LuN9FCkKOj5PcnpouEgny,benny blanco|Halsey|Khalid,7pkLXlFdpQDfmHujT2AbBK,Eastside (with Halsey & Khalid),single,1,2018-07-12,day,1,173799,False,USUM71809132,candidate,Halsey
+2IO7yf562c1zLzpanal1DT,Gasoline,26VFTg2z8YR0cCuwLzESi2,Halsey,5OZJflQcQCdZLQjtUudCin,BADLANDS (Deluxe),album,16,2015-08-28,day,13,199593,True,USUM71507634,candidate,Halsey
+1VSuFS7PahCN3SWbOcQ98m,forget me too (feat. Halsey),6TIYQ3jFPwQSRmorSezPxX|26VFTg2z8YR0cCuwLzESi2,mgk|Halsey,57lgFncHBYu5E3igZnuCJK,Tickets To My Downfall,album,15,2020-09-25,day,5,171620,True,USUM72014954,candidate,Halsey
+7lidXGPXPYLNThITAOTlkK,You should be sad,26VFTg2z8YR0cCuwLzESi2,Halsey,68enXe5XcJdciSDAZr0Alr,Manic,album,16,2020-01-17,day,4,205473,True,USUM71918343,candidate,Halsey
+7BKLCZ1jbUBVqRi2FVlTVw,Closer,69GGBxA162lTqCwzJG5jLp|26VFTg2z8YR0cCuwLzESi2,The Chainsmokers|Halsey,0rSLgV8p5FzfnqlEk4GzxE,Closer,single,1,2016-07-29,day,1,244960,False,USQX91601347,candidate,Halsey
+37wMw58jtlDmjKQ20bhsVf,Be Kind,64KEffDW9EtZ1y2vBYgq8T|26VFTg2z8YR0cCuwLzESi2,Marshmello|Halsey,4aGnM41GDqf5doDnYO4g5L,Be Kind,single,1,2020-05-01,day,1,172761,False,USUG12001567,candidate,Halsey
+2ufmtcIFdFpuUYBPXK5f67,Graveyard,26VFTg2z8YR0cCuwLzESi2,Halsey,68enXe5XcJdciSDAZr0Alr,Manic,album,16,2020-01-17,day,3,181805,False,USUM71917563,candidate,Halsey
+12ZCF1YHZTtygHyl1h0wEe,Nightmare,26VFTg2z8YR0cCuwLzESi2,Halsey,0yMLTRxwcDN5XHjP5w8jAH,"If I Can’t Have Love, I Want Power (Extended)",album,16,2021-08-27,day,14,231998,True,USUM71907487,candidate,Halsey
+5k38wzpLb15YgncyWdTZE4,Him & I (with Halsey),02kJSzxNuaWGqwubyUba0Z|26VFTg2z8YR0cCuwLzESi2,G-Eazy|Halsey,1VAc77UvK5wj8ZSWCo3V2b,The Beautiful & Damned,album,20,2017-12-15,day,3,268866,True,USRC11701867,candidate,Halsey
+4mGdjNMo0RonTlOEb7cYg4,11 Minutes (with Halsey feat. Travis Barker),6Ad91Jof8Niiw0lGLLi3NW|26VFTg2z8YR0cCuwLzESi2|4exLIFE8sISLr28sqG1qNX,YUNGBLUD|Halsey|Travis Barker,7jY0r3cjoRY6M3IqRb1m7H,11 Minutes (with Halsey feat. Travis Barker),single,1,2019-02-14,day,1,239507,True,USUG11800795,candidate,Halsey
+6kxaaIeowajN7w21PfMLbu,So Good,26VFTg2z8YR0cCuwLzESi2,Halsey,2GCDQipR2hfrNzLC9FCwaf,So Good,single,1,2022-06-09,day,1,176058,False,USUM72208998,candidate,Halsey
+16w8ZGVSjI4TlTLV8VimBY,Castle,26VFTg2z8YR0cCuwLzESi2,Halsey,5OZJflQcQCdZLQjtUudCin,BADLANDS (Deluxe),album,16,2015-08-28,day,1,277623,False,USUM71507625,candidate,Halsey
+7MhNCT34oaLIxwAsZlZd67,Without Me,26VFTg2z8YR0cCuwLzESi2|4MCBfE4596Uoi2O4DtmEMz,Halsey|Juice WRLD,1hlapolkCnQLMgKcKNVCuc,Manic,album,27,2020-01-17,day,4,228951,True,USUM71900157,candidate,Halsey
+3SKzTIl9mW0DadTys9SFo3,Control,26VFTg2z8YR0cCuwLzESi2,Halsey,5OZJflQcQCdZLQjtUudCin,BADLANDS (Deluxe),album,16,2015-08-28,day,14,214761,False,USUM71507636,candidate,Halsey
+16nCYYc1lCxCyvaR1lgo0i,Could Have Been Me,26VFTg2z8YR0cCuwLzESi2,Halsey,3WCLzYOlSmLD2cy1RXdwUd,Sing 2 (Original Motion Picture Soundtrack),compilation,17,2021-12-17,day,12,148732,False,USQ4E2101105,candidate,Halsey
+6SL8U8TtdwOtGhbmGzsMfX,I'm Not Mad,26VFTg2z8YR0cCuwLzESi2,Halsey,1hlapolkCnQLMgKcKNVCuc,Manic,album,27,2020-01-17,day,2,173467,False,USUM71923948,candidate,Halsey
+6Xs7OKt6i0Ddq8B4M5Dgvr,New Americana,26VFTg2z8YR0cCuwLzESi2,Halsey,5U5rt98q8Jqx4lP3RdqYfO,BADLANDS,album,11,2015-08-28,day,3,183808,False,USUM71507637,candidate,Halsey
+3IgUCMkHS4RgHdngIlporF,Sorry,26VFTg2z8YR0cCuwLzESi2,Halsey,5ZvnIKEq0HAwDHNR8f2yIx,hopeless fountain kingdom (Deluxe Plus),album,17,2017-06-02,day,7,220540,False,USUM71702216,candidate,Halsey
+1Ao5nOuAUm42ob1UVvOkgW,Walls Could Talk,26VFTg2z8YR0cCuwLzESi2,Halsey,5ZvnIKEq0HAwDHNR8f2yIx,hopeless fountain kingdom (Deluxe Plus),album,17,2017-06-02,day,10,101789,True,USUM71702219,candidate,Halsey
+2C6WXnmZ66tHhHlnvwePiK,Die For Me (feat. Future & Halsey),246dkjvS1zLTtiykXe5h60|26VFTg2z8YR0cCuwLzESi2|1RyvyyTE3xzB2ZywiAwp0i,Post Malone|Halsey|Future,4g1ZRSobMefqF6nelkgibi,Hollywood's Bleeding,album,17,2019-09-06,day,7,245266,True,USUM71918728,candidate,Halsey
+63y6xWR4gXz7bnUGOk8iI6,Into You,66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,3pdKKSqqLVIKmRTGw0x2N7,Dangerous Woman,album,11,2016-05-20,day,4,244453,False,USUM71601827,candidate,Ariana Grande
+20jbSiX29FDX4oQxBXyUEi,hate that i made you love me,66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,1x159B5VzbDWAGBik5cr1z,hate that i made you love me,single,1,2026-05-29,day,1,197949,False,USUM72601821,candidate,Ariana Grande
+5J4ZkQpzMUFojo1CtAZYpn,Love Me Harder,66CXWjxzNUsdJxJ2JdwvnR|1Xyo4u8uXC1ZmMpatF05PJ,Ariana Grande|The Weeknd,6EVYTRG1drKdO8OnIQBeEj,My Everything (Deluxe),album,15,2014-08-22,day,9,236133,False,USUM71409728,candidate,Ariana Grande
+3iy2QuCtCzpWnR6tia39AB,hate that i made you love me,66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,2k4FmEtXR0WiDW0Ac2QArT,petal,album,12,2026-07-31,day,2,197949,False,USUM72601821,candidate,Ariana Grande
+51ZQ1vr10ffzbwIjDCwqm4,we can't be friends (wait for your love),66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,5EYKrEDnKhhcNxGedaRQeK,eternal sunshine,album,13,2024-03-08,day,10,228639,False,USUM72317276,candidate,Ariana Grande
+70pVCVMGjmIWPbWXDwf11e,petal,66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,2k4FmEtXR0WiDW0Ac2QArT,petal,album,12,2026-07-31,day,3,184248,True,USUM72601822,candidate,Ariana Grande
+12KUFSHFgT0XCoiSlvdQi4,Break Free,66CXWjxzNUsdJxJ2JdwvnR|2qxJFvFYMEDqd7ui6kSAcq,Ariana Grande|Zedd,6EVYTRG1drKdO8OnIQBeEj,My Everything (Deluxe),album,15,2014-08-22,day,5,214840,False,USUM71409719,candidate,Ariana Grande
+7xoUc6faLbCqZO6fQEYprd,One Last Time,66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,6EVYTRG1drKdO8OnIQBeEj,My Everything (Deluxe),album,15,2014-08-22,day,3,197266,False,USUM71409723,candidate,Ariana Grande
+0lok0VDJn0zRvHLBCITSSw,kiss me,66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,2k4FmEtXR0WiDW0Ac2QArT,petal,album,12,2026-07-31,day,1,219584,False,USUM72601820,candidate,Ariana Grande
+3d1oTMjtfVySbAYQp3v4MU,like i do,66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,2k4FmEtXR0WiDW0Ac2QArT,petal,album,12,2026-07-31,day,9,167333,True,USUM72601827,candidate,Ariana Grande
+5JbnupagBhD0AanbkCELdH,"nowhere, nobody",66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,2k4FmEtXR0WiDW0Ac2QArT,petal,album,12,2026-07-31,day,12,172001,False,USUM72601830,candidate,Ariana Grande
+06EL94D0TA27Ik0Ke5usbj,The Way,66CXWjxzNUsdJxJ2JdwvnR|4LLpKhyESsyAXpc4laK94U,Ariana Grande|Mac Miller,5xSvNPstcxHtR4ap2vvN8A,Yours Truly,album,12,2013-01-01,day,8,227026,False,USUM71302939,candidate,Ariana Grande
+0QltPqkR4dnhbINyBOU5SY,stay,66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,2k4FmEtXR0WiDW0Ac2QArT,petal,album,12,2026-07-31,day,4,148420,False,USUM72601823,candidate,Ariana Grande
+55srcWA7TioKV0LZVNXltY,never get over me,66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,2k4FmEtXR0WiDW0Ac2QArT,petal,album,12,2026-07-31,day,10,228857,True,USUM72601828,candidate,Ariana Grande
+5DZOKNtaoVEssXu9ltcMjx,oh well,66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,2k4FmEtXR0WiDW0Ac2QArT,petal,album,12,2026-07-31,day,5,196166,False,USUM72601824,candidate,Ariana Grande
+2qT1uLXPVPzGgFOx4jtEuo,no tears left to cry,66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,3tx8gQqWbGwqIGZHqDNrGe,Sweetener,album,15,2018-08-17,day,10,205920,False,USUM71805289,candidate,Ariana Grande
+6ocbgoVGwYJhOv1GgI9NsF,7 rings,66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,2fYhqwDWXjbpjaIJPEfKFw,"thank u, next",album,12,2019-02-08,day,10,178626,True,USUM71900110,candidate,Ariana Grande
+4zmXWmILSBkn7gTvIyCiNi,bad thing (bunny hop),66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,2k4FmEtXR0WiDW0Ac2QArT,petal,album,12,2026-07-31,day,11,208024,True,USUM72601829,candidate,Ariana Grande
+6RUhbFEhrvGISaQ8u2j2JN,Dangerous Woman,66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,3pdKKSqqLVIKmRTGw0x2N7,Dangerous Woman,album,11,2016-05-20,day,2,235946,False,USUM71601826,candidate,Ariana Grande
+1oFAF1hdPOickyHgbuRjyX,Save Your Tears (Remix) (with Ariana Grande) - Bonus Track,1Xyo4u8uXC1ZmMpatF05PJ|66CXWjxzNUsdJxJ2JdwvnR,The Weeknd|Ariana Grande,4ZyeHIgdujClXSjC2cSqSb,After Hours (Deluxe),album,18,2020-03-20,day,18,191013,False,USUG12101839,candidate,Ariana Grande
+0lizgQ7Qw35od7CYaoMBZb,Santa Tell Me,66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,27MNgBEnLCKoafz1g2Zu97,Santa Tell Me,single,1,2014-11-24,day,1,204093,False,USUM71417401,candidate,Ariana Grande
+3e9HZxeyfWwjeyPAMmWSSQ,"thank u, next",66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,2fYhqwDWXjbpjaIJPEfKFw,"thank u, next",album,12,2019-02-08,day,11,207320,True,USUM71819361,candidate,Ariana Grande
+7vS3Y0IKjde7Xg85LWIEdP,Problem,66CXWjxzNUsdJxJ2JdwvnR|5yG7ZAZafVaAlMTeBybKAL,Ariana Grande|Iggy Azalea,6EVYTRG1drKdO8OnIQBeEj,My Everything (Deluxe),album,15,2014-08-22,day,2,193920,False,USUM71405403,candidate,Ariana Grande
+6MFSqc8pzXlwfzXqWZEKd4,big feelings,66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,2k4FmEtXR0WiDW0Ac2QArT,petal,album,12,2026-07-31,day,6,173622,True,USUM72601825,candidate,Ariana Grande
+1TEL6MlSSVLSdhOSddidlJ,needy,66CXWjxzNUsdJxJ2JdwvnR,Ariana Grande,2fYhqwDWXjbpjaIJPEfKFw,"thank u, next",album,12,2019-02-08,day,2,171573,True,USUM71900396,candidate,Ariana Grande
