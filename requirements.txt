@@ -1,4 +1,2 @@
 spotipy
 pandas
-scikit-learn
-matplotlib
