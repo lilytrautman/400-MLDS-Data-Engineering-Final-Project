@@ -1,7 +1,6 @@
-"""Pull hourly PJM demand + fuel mix (EIA) and weather (Open-Meteo) into data/raw/*.csv. All times UTC."""
+"""Pull all hourly PJM data (EIA) and weather (Open-Meteo) into data/raw/*.csv, uncleaned. Times are UTC."""
 
 import os
-import time
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -11,84 +10,52 @@ import requests
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw"
 
-# Load .env if present; real environment variables win.
-env_file = ROOT / ".env"
-if env_file.exists():
-    for line in env_file.read_text().splitlines():
-        if "=" in line and not line.lstrip().startswith("#"):
-            key, value = line.split("=", 1)
-            os.environ.setdefault(key.strip(), value.strip().strip("\"'"))
+# Load EIA_API_KEY from .env if present.
+if (ROOT / ".env").exists():
+    for line in (ROOT / ".env").read_text().splitlines():
+        if "=" in line:
+            k, v = line.split("=", 1)
+            os.environ.setdefault(k.strip(), v.strip())
 
-EIA_KEY = os.environ.get("EIA_API_KEY", "DEMO_KEY")  # DEMO_KEY is heavily rate limited
-REGION = "PJM"
+EIA_KEY = os.environ.get("EIA_API_KEY", "DEMO_KEY")
 START = "2019-01-01"
-END = (date.today() - timedelta(days=6)).isoformat()  # Open-Meteo archive lags ~5 days
+END = str(date.today() - timedelta(days=6))  # Open-Meteo archive lags ~5 days
 
-# PJM is big; average a few load centers' weather. (name, lat, lon)
-CITIES = [
-    ("chicago", 41.88, -87.63),
-    ("philadelphia", 39.95, -75.17),
-    ("washington_dc", 38.91, -77.04),
-]
-WEATHER_VARS = ["temperature_2m", "relative_humidity_2m", "dew_point_2m",
-                "wind_speed_10m", "cloud_cover", "precipitation"]
+# PJM load centers (name, lat, lon)
+CITIES = [("chicago", 41.88, -87.63), ("philadelphia", 39.95, -75.17), ("washington_dc", 38.91, -77.04)]
+WEATHER_VARS = ("temperature_2m,relative_humidity_2m,dew_point_2m,apparent_temperature,"
+                "precipitation,snowfall,cloud_cover,wind_speed_10m,shortwave_radiation")
 
 
-def eia(route, facets, start=START, end=END):
-    """Page through an EIA v2 hourly route (5000 rows per request)."""
-    url = f"https://api.eia.gov/v2/electricity/rto/{route}/data/"
-    params = {
-        "api_key": EIA_KEY,
-        "frequency": "hourly",
-        "data[0]": "value",
-        "start": f"{start}T00",
-        "end": f"{end}T23",
-        "sort[0][column]": "period",
-        "sort[0][direction]": "asc",
-        "length": 5000,
-        **{f"facets[{k}][]": v for k, v in facets.items()},
-    }
-    rows, offset = [], 0
+def eia(route):
+    """Every hourly PJM row from an EIA v2 route, 5000 per page."""
+    rows = []
     while True:
-        r = requests.get(url, params={**params, "offset": offset}, timeout=60)
+        r = requests.get(f"https://api.eia.gov/v2/electricity/rto/{route}/data/", params={
+            "api_key": EIA_KEY, "frequency": "hourly", "data[0]": "value",
+            "facets[respondent][]": "PJM", "start": f"{START}T00", "end": f"{END}T23",
+            "sort[0][column]": "period", "sort[0][direction]": "asc",
+            "offset": len(rows), "length": 5000,
+        }, timeout=60)
         r.raise_for_status()
-        resp = r.json()["response"]
-        rows += resp["data"]
-        offset += len(resp["data"])
-        print(f"  {route}: {offset}/{resp['total']}")
-        if not resp["data"] or offset >= int(resp["total"]):
-            break
-        time.sleep(0.5)
-    df = pd.DataFrame(rows)
-    df["period"] = pd.to_datetime(df["period"], format="%Y-%m-%dT%H", utc=True)
-    df["value"] = pd.to_numeric(df["value"])
-    return df
+        page = r.json()["response"]["data"]
+        rows += page
+        if len(page) < 5000:
+            return pd.DataFrame(rows)
 
 
-def weather(name, lat, lon, start=START, end=END):
-    """Hourly historical weather for one point from the Open-Meteo archive (no key)."""
+def weather(city, lat, lon):
+    """Hourly weather for one city from the Open-Meteo archive (no key needed)."""
     r = requests.get("https://archive-api.open-meteo.com/v1/archive", params={
-        "latitude": lat, "longitude": lon,
-        "start_date": start, "end_date": end,
-        "hourly": ",".join(WEATHER_VARS),
-        "timezone": "GMT",
-        "temperature_unit": "fahrenheit",
+        "latitude": lat, "longitude": lon, "start_date": START, "end_date": END,
+        "hourly": WEATHER_VARS, "temperature_unit": "fahrenheit", "timezone": "GMT",
     }, timeout=120)
     r.raise_for_status()
-    df = pd.DataFrame(r.json()["hourly"])
-    df["time"] = pd.to_datetime(df["time"], utc=True)
-    df["city"] = name
-    return df
+    return pd.DataFrame(r.json()["hourly"]).assign(city=city)
 
 
 if __name__ == "__main__":
     RAW.mkdir(parents=True, exist_ok=True)
-    # type: D = demand, DF = EIA day-ahead forecast, NG = net generation, TI = net interchange
-    outputs = {
-        "eia_demand": eia("region-data", {"respondent": REGION, "type": ["D", "DF", "NG", "TI"]}),
-        "eia_fuel_mix": eia("fuel-type-data", {"respondent": REGION}),
-        "weather": pd.concat(weather(*c) for c in CITIES),
-    }
-    for name, df in outputs.items():
-        df.to_csv(RAW / f"{name}.csv", index=False)
-        print(f"{name}: {len(df)} rows -> data/raw/{name}.csv")
+    eia("region-data").to_csv(RAW / "eia_demand.csv", index=False)  # D, DF, NG, TI
+    eia("fuel-type-data").to_csv(RAW / "eia_fuel_mix.csv", index=False)
+    pd.concat(weather(*c) for c in CITIES).to_csv(RAW / "weather.csv", index=False)
