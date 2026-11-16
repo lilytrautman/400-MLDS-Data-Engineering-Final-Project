@@ -1,86 +1,96 @@
-# This script pulls hourly PJM power data from the EIA API and hourly weather from the Open-Meteo API.
-# It saves everything to data/raw as is, and the cleaning happens in clean_data.py.
+# This script pulls my Spotify data from the Spotify API and saves it to data/raw as is.
+# The cleaning happens in clean_data.py.
 # Run it from the project folder with python src/read_api.py
+# The first time it opens a Spotify login page in the browser to give the app access.
 
 import os
-from datetime import date, timedelta
 
 import pandas as pd
-import requests
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
 
-# This reads the EIA api key from the .env file. The line in .env should look like EIA_API_KEY=yourkey
+# This reads the Spotify app keys from the .env file. The lines in .env should look like
+# SPOTIFY_CLIENT_ID=yourid and SPOTIFY_CLIENT_SECRET=yoursecret
 for line in open(".env"):
-    if line.startswith("EIA_API_KEY="):
-        os.environ["EIA_API_KEY"] = line.split("=", 1)[1].strip()
-api_key = os.environ["EIA_API_KEY"]
+    if line.startswith("SPOTIFY_"):
+        key, value = line.strip().split("=", 1)
+        os.environ[key] = value
 
-# This is the date range we pull. The weather archive is about 5 days behind, so we stop 6 days ago.
-start = "2019-01-01"
-end = str(date.today() - timedelta(days=6))
-
-# These are the cities we get weather for. PJM covers a lot of states, so I picked three big cities in it.
-cities = [("chicago", 41.88, -87.63), ("philadelphia", 39.95, -75.17), ("washington_dc", 38.91, -77.04)]
-weather_vars = ("temperature_2m,relative_humidity_2m,dew_point_2m,apparent_temperature,"
-                "precipitation,snowfall,cloud_cover,wind_speed_10m,shortwave_radiation")
-
-
-# This gets all the hourly PJM data from one EIA endpoint. EIA only gives 5000 rows at a time,
-# so it keeps asking for the next 5000 until it gets a page that isn't full.
-def get_eia(endpoint):
-    rows = []
-    while True:
-        url = "https://api.eia.gov/v2/electricity/rto/" + endpoint + "/data/"
-        params = {
-            "api_key": api_key,
-            "frequency": "hourly",
-            "data[0]": "value",
-            "facets[respondent][]": "PJM",
-            "start": start + "T00",
-            "end": end + "T23",
-            "sort[0][column]": "period",
-            "sort[0][direction]": "asc",
-            "offset": len(rows),
-            "length": 5000,
-        }
-        response = requests.get(url, params=params, timeout=60)
-        response.raise_for_status()
-        page = response.json()["response"]["data"]
-        rows = rows + page
-        if len(page) < 5000:
-            return pd.DataFrame(rows)
+# This logs in to Spotify. The redirect uri has to match the one in the Spotify developer dashboard.
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
+    client_id=os.environ["SPOTIFY_CLIENT_ID"],
+    client_secret=os.environ["SPOTIFY_CLIENT_SECRET"],
+    redirect_uri="http://127.0.0.1:8888/callback",
+    scope="user-top-read user-read-recently-played user-library-read",
+    cache_path=".cache",
+))
 
 
-# This gets the hourly weather for one city. Open-Meteo doesn't need an api key.
-def get_weather(city, lat, lon):
-    params = {
-        "latitude": lat,
-        "longitude": lon,
-        "start_date": start,
-        "end_date": end,
-        "hourly": weather_vars,
-        "temperature_unit": "fahrenheit",
-        "timezone": "GMT",
+# This turns one track from the API into a row for the csv. Songs can have more than one
+# artist, so the artists get joined together with a | like "Drake|Rihanna".
+def track_row(track, source):
+    return {
+        "track_id": track["id"],
+        "name": track["name"],
+        "artist_ids": "|".join(artist["id"] for artist in track["artists"]),
+        "artist_names": "|".join(artist["name"] for artist in track["artists"]),
+        "album": track["album"]["name"],
+        "release_date": track["album"]["release_date"],
+        "duration_ms": track["duration_ms"],
+        "explicit": track["explicit"],
+        "source": source,
     }
-    response = requests.get("https://archive-api.open-meteo.com/v1/archive", params=params, timeout=120)
-    response.raise_for_status()
-    weather = pd.DataFrame(response.json()["hourly"])
-    weather["city"] = city
-    return weather
 
 
 os.makedirs("data/raw", exist_ok=True)
 
-# This is the demand data. It has actual demand, EIA's day-ahead forecast, net generation and interchange.
-demand = get_eia("region-data")
-demand.to_csv("data/raw/eia_demand.csv", index=False)
-print("demand:", len(demand), "rows")
+# This is my listening data. It has my top tracks for the last month, 6 months and all time,
+# every song I've saved, and the last 50 songs I played.
+user_tracks = []
+for time_range in ["short_term", "medium_term", "long_term"]:
+    top = sp.current_user_top_tracks(limit=50, time_range=time_range)
+    for rank, track in enumerate(top["items"]):
+        row = track_row(track, "top_" + time_range)
+        row["rank"] = rank
+        user_tracks.append(row)
 
-# This is the fuel mix data. It has how much power came from each fuel every hour.
-fuel = get_eia("fuel-type-data")
-fuel.to_csv("data/raw/eia_fuel_mix.csv", index=False)
-print("fuel mix:", len(fuel), "rows")
+# Saved tracks come 50 at a time, so this keeps going to the next page until there isn't one
+page = sp.current_user_saved_tracks(limit=50)
+while page:
+    for item in page["items"]:
+        row = track_row(item["track"], "saved")
+        row["added_at"] = item["added_at"]
+        user_tracks.append(row)
+    page = sp.next(page)
 
-# This is the weather data for all three cities stacked together.
-weather = pd.concat([get_weather(city, lat, lon) for city, lat, lon in cities])
-weather.to_csv("data/raw/weather.csv", index=False)
-print("weather:", len(weather), "rows")
+recent = sp.current_user_recently_played(limit=50)
+for item in recent["items"]:
+    row = track_row(item["track"], "recent")
+    row["played_at"] = item["played_at"]
+    user_tracks.append(row)
+
+pd.DataFrame(user_tracks).to_csv("data/raw/user_tracks.csv", index=False)
+print("user tracks:", len(user_tracks), "rows")
+
+# This is my top 20 artists from the last 6 months
+top_artists = []
+artists = sp.current_user_top_artists(limit=20, time_range="medium_term")
+for rank, artist in enumerate(artists["items"]):
+    top_artists.append({"artist_id": artist["id"], "name": artist["name"], "rank": rank})
+
+pd.DataFrame(top_artists).to_csv("data/raw/top_artists.csv", index=False)
+print("top artists:", len(top_artists), "rows")
+
+# These are songs by my top artists that we could recommend. Spotify only lets new apps get
+# 10 search results at a time, so this asks 5 times to get 50 songs per artist.
+candidates = []
+for artist in top_artists:
+    for offset in range(0, 50, 10):
+        results = sp.search(q='artist:"' + artist["name"] + '"', type="track", limit=10, offset=offset)
+        for track in results["tracks"]["items"]:
+            row = track_row(track, "candidate")
+            row["seed_artist"] = artist["name"]
+            candidates.append(row)
+
+pd.DataFrame(candidates).to_csv("data/raw/candidate_tracks.csv", index=False)
+print("candidate tracks:", len(candidates), "rows")

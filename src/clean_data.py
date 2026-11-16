@@ -1,64 +1,47 @@
-# This script cleans the EIA and weather data and puts it all into one table with a row for every hour.
+# This script cleans the Spotify data in data/raw and saves it to data/processed.
 # Run it from the project folder with python src/clean_data.py
 
 import os
 
 import pandas as pd
 
-# This is every hour from the start of 2019 to the last day we pulled, in UTC time
-all_hours = pd.date_range("2019-01-01", "2026-11-09 23:00", freq="h", tz="UTC")
+user_tracks = pd.read_csv("data/raw/user_tracks.csv")
+candidates = pd.read_csv("data/raw/candidate_tracks.csv")
+top_artists = pd.read_csv("data/raw/top_artists.csv")
 
-# This is the demand data. It has actual demand, EIA's day-ahead forecast, net generation and interchange.
-# I pivot it so each one gets its own column, then reindex so any hour EIA skipped shows up as an empty row.
-demand = pd.read_csv("data/raw/eia_demand.csv")
-demand["period"] = pd.to_datetime(demand["period"], format="%Y-%m-%dT%H", utc=True)
-demand = demand.pivot(index="period", columns="type", values="value")
-demand = demand.rename(columns={"D": "demand", "DF": "forecast", "NG": "net_generation", "TI": "interchange"})
-demand = demand.reindex(all_hours)
+# This checks for null values in each table
+print("null values in user tracks:")
+print(user_tracks.isna().sum())
+print("null values in candidate tracks:")
+print(candidates.isna().sum())
 
-# This is the fuel mix data. It has how much power came from each fuel (coal, gas, nuclear, etc) every hour.
-fuel = pd.read_csv("data/raw/eia_fuel_mix.csv")
-fuel["period"] = pd.to_datetime(fuel["period"], format="%Y-%m-%dT%H", utc=True)
-fuel = fuel.pivot(index="period", columns="fueltype", values="value")
-fuel = fuel.rename(columns={"COL": "coal", "NG": "gas", "NUC": "nuclear", "OIL": "oil",
-                            "OTH": "other", "SUN": "solar", "WAT": "hydro", "WND": "wind"})
-fuel = fuel.reindex(all_hours)
+# Local files and songs that got taken off Spotify don't have a track id, so we can't use them
+user_tracks = user_tracks.dropna(subset=["track_id"])
+candidates = candidates.dropna(subset=["track_id"])
 
-# This is the weather data for Chicago, Philadelphia and DC. It has temperature, humidity, wind, etc.
-# I give each city its own columns so the names look like temperature_2m_chicago.
-weather = pd.read_csv("data/raw/weather.csv")
-weather["time"] = pd.to_datetime(weather["time"], utc=True)
-weather = weather.pivot(index="time", columns="city")
-weather.columns = [var + "_" + city for var, city in weather.columns]
+# The same song can show up in my top tracks more than once (like top this month and top all time),
+# so this only removes rows that are exact copies. Searching the same artist 5 times can also
+# give the same song twice, so candidates only keep one row per song.
+user_tracks = user_tracks.drop_duplicates()
+candidates = candidates.drop_duplicates(subset=["track_id"])
 
-print("missing before:")
-print(demand.isna().sum())
+# Release dates come in different formats (some are just "2019", some are "2019-05-01"),
+# so the first 4 characters give the year for all of them. This also turns length into minutes.
+for df in [user_tracks, candidates]:
+    df["release_year"] = df["release_date"].astype(str).str[:4].astype(int)
+    df["duration_min"] = df["duration_ms"] / 60000
 
-# This removes the bad demand readings. EIA puts 2147480000 when something breaks, and there are also
-# some spikes that are way off from the rest of the day. Real peaks are never more than about 33% off
-# from the day's median, so anything more than 40% off gets removed.
-for col in ["demand", "net_generation"]:
-    demand.loc[demand[col] > 1000000, col] = None
-    daily_median = demand[col].rolling(25, center=True, min_periods=5).median()
-    spike = (demand[col] / daily_median - 1).abs() > 0.4
-    demand.loc[spike, col] = None
+user_tracks["added_at"] = pd.to_datetime(user_tracks["added_at"])
+user_tracks["played_at"] = pd.to_datetime(user_tracks["played_at"], format="ISO8601")
 
-# This fills in gaps that are 3 hours or less using the hours on either side.
-# I leave the forecast alone since it's what we compare our model against.
-for col in ["demand", "net_generation", "interchange"]:
-    demand[col] = demand[col].interpolate(limit=3, limit_area="inside")
-fuel = fuel.interpolate(limit=3, limit_area="inside")
-
-print("missing after:")
-print(demand.isna().sum())
-
-# This joins everything together into one table and saves it
-hourly = demand.join(fuel).join(weather)
-hourly.index.name = "time"
-
-assert len(hourly) == len(all_hours)
-assert hourly["demand"].max() < 170000
+# This marks which candidate songs I already like (saved or in my top tracks). That's what
+# the model will try to predict.
+liked = user_tracks[user_tracks["source"] != "recent"]["track_id"]
+candidates["liked"] = candidates["track_id"].isin(liked)
+print("candidates I already like:", candidates["liked"].sum(), "out of", len(candidates))
 
 os.makedirs("data/processed", exist_ok=True)
-hourly.to_csv("data/processed/pjm_hourly.csv")
-print("saved", hourly.shape, "to data/processed/pjm_hourly.csv")
+user_tracks.to_csv("data/processed/user_tracks.csv", index=False)
+candidates.to_csv("data/processed/candidate_tracks.csv", index=False)
+top_artists.to_csv("data/processed/top_artists.csv", index=False)
+print("saved", len(user_tracks), "user tracks and", len(candidates), "candidates to data/processed")
