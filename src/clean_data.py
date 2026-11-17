@@ -1,13 +1,13 @@
-# This script cleans the Spotify data in data/raw and saves it to data/processed.
-# Run it from the project folder with python src/clean_data.py
+# This script cleans the Spotify data in the SQLite database and saves the cleaned tables back into it.
+# Run read_api.py and store_data.py first, then run this from the project folder with python src/clean_data.py
 
-import os
+import sqlite3
 
 import pandas as pd
 
-user_tracks = pd.read_csv("data/raw/user_tracks.csv")
-candidates = pd.read_csv("data/raw/candidate_tracks.csv")
-top_artists = pd.read_csv("data/raw/top_artists.csv")
+conn = sqlite3.connect("data/spotify.db")
+user_tracks = pd.read_sql("SELECT * FROM user_tracks", conn)
+candidates = pd.read_sql("SELECT * FROM candidate_tracks", conn)
 
 # This checks for null values in each table
 print("null values in user tracks:")
@@ -40,8 +40,10 @@ liked = user_tracks[user_tracks["source"] != "recent"]["track_id"]
 candidates["liked"] = candidates["track_id"].isin(liked)
 print("candidates I already like:", candidates["liked"].sum(), "out of", len(candidates))
 
-os.makedirs("data/processed", exist_ok=True)
-user_tracks.to_csv("data/processed/user_tracks.csv", index=False)
-candidates.to_csv("data/processed/candidate_tracks.csv", index=False)
-top_artists.to_csv("data/processed/top_artists.csv", index=False)
-print("saved", len(user_tracks), "user tracks and", len(candidates), "candidates to data/processed")
+# This saves the cleaned data as new tables in the database. The raw tables stay
+# there too, so we can always go back to what came from the API.
+user_tracks.to_sql("clean_user_tracks", conn, if_exists="replace", index=False)
+candidates.to_sql("clean_candidate_tracks", conn, if_exists="replace", index=False)
+print("saved", len(user_tracks), "user tracks and", len(candidates), "candidates to the database")
+
+conn.close()
