@@ -8,8 +8,9 @@ A data pipeline that pulls listening data from the Spotify API, adds audio featu
 ## Status
 
 - Done: Project setup (Docker, pinned packages)
-- Working: Ingestion and cleaning
-- Todo: Scheduling, analysis and dashboard
+- Done: Ingestion, cleaning and data quality checks
+- Todo: Analysis and dashboard
+- Maybe later: Scheduling and ML
 
 ## Data sources
 
@@ -25,7 +26,7 @@ A data pipeline that pulls listening data from the Spotify API, adds audio featu
 3. Log in once (opens a browser):
    ```bash
    pip install -r requirements.txt
-   python src/ingest.py
+   python src/01_ingest.py
    ```
 4. Run the pipeline:
    ```bash
