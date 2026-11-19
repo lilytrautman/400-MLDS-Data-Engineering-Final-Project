@@ -5,7 +5,7 @@ endpoint. Later steps read these files, so they can be rerun without calling the
 APIs again, and the files are a record of exactly what each API returned.
 
 Usage (from the repo root):
-    python src/ingest.py
+    python src/01_ingest.py
 """
 
 import json
