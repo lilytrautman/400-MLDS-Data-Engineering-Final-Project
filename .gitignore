@@ -1,6 +1,6 @@
 .env
 .venv/
-.cache
+.cache*
 __pycache__/
 data/
 .DS_Store
