@@ -112,6 +112,77 @@ def pull_spotify(sp, run_dir):
     save(run_dir, "saved_tracks", get_all(sp, sp.current_user_saved_tracks(limit=50)))
 
 
+def unique_tracks(run_dir):
+    """Return each distinct track found in this run's Spotify files.
+
+    Plays and liked songs wrap the track in a "track" key; top tracks are track
+    objects themselves. Local files have no Spotify id and are left out.
+    """
+    tracks = {}
+    for item in load(run_dir, "recently_played") + load(run_dir, "saved_tracks"):
+        tracks[item["track"]["id"]] = item["track"]
+    for time_range in TIME_RANGES:
+        for track in load(run_dir, f"top_tracks_{time_range}"):
+            tracks[track["id"]] = track
+    tracks.pop(None, None)
+    return list(tracks.values())
+
+
+def stored_track_ids(table):
+    """Return the track ids already stored in a final table (empty before the first load)."""
+    if not DB_PATH.exists():
+        return set()
+    conn = sqlite3.connect(DB_PATH)
+    try:
+        return {row[0] for row in conn.execute(f"SELECT track_id FROM {table}")}
+    except sqlite3.OperationalError:  # the table doesn't exist yet
+        return set()
+    finally:
+        conn.close()
+
+
+def pull_reccobeats(track_ids):
+    """Fetch audio features for the given Spotify track ids, in batches.
+
+    Returns one entry per request: the ids asked for and the raw response (None if
+    the request failed). Tracks ReccoBeats doesn't know are simply absent from the
+    response, so misses can be counted later.
+    """
+    responses = []
+    for start in range(0, len(track_ids), RECCOBEATS_BATCH_SIZE):
+        batch = track_ids[start:start + RECCOBEATS_BATCH_SIZE]
+        data = get_json(RECCOBEATS_URL, {"ids": ",".join(batch)})
+        responses.append({"asked": batch, "response": data})
+        time.sleep(PAUSE_SECONDS)
+
+    matched = sum(len(r["response"]["content"]) for r in responses if r["response"])
+    print(f"reccobeats: {matched}/{len(track_ids)} tracks matched")
+    return responses
+
+
+def pull_deezer(tracks):
+    """Look up each track on Deezer by its ISRC and return one entry per track looked up.
+
+    Tracks without an ISRC can't be looked up and are skipped. Each entry keeps the
+    raw response, misses included, so match rates can be measured later.
+    """
+    responses = []
+    skipped = 0
+    for track in tracks:
+        isrc = (track.get("external_ids") or {}).get("isrc")
+        if not isrc:
+            skipped += 1
+            continue
+        data = get_json(DEEZER_URL.format(isrc=isrc))
+        responses.append({"track_id": track["id"], "isrc": isrc, "response": data})
+        time.sleep(PAUSE_SECONDS)
+
+    # Deezer answers "not found" with HTTP 200 and an "error" key, not a failed request
+    matched = sum(1 for r in responses if r["response"] is not None and "error" not in r["response"])
+    print(f"deezer: {matched}/{len(responses)} tracks matched, {skipped} skipped (no ISRC)")
+    return responses
+
+
 def main():
     """Run one ingestion and return the folder the raw files were saved in."""
     run_id = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H%MZ")
@@ -120,6 +191,15 @@ def main():
 
     sp = login()
     pull_spotify(sp, run_dir)
+
+    # Audio features and Deezer data don't change, so only look up tracks not stored yet.
+    # Tracks that got no match are asked again on the next run.
+    tracks = unique_tracks(run_dir)
+    have_features = stored_track_ids("audio_features")
+    have_deezer = stored_track_ids("deezer_tracks")
+    save(run_dir, "audio_features",
+         pull_reccobeats([t["id"] for t in tracks if t["id"] not in have_features]))
+    save(run_dir, "deezer", pull_deezer([t for t in tracks if t["id"] not in have_deezer]))
     return run_dir
 
 
