@@ -48,6 +48,21 @@ The database ends up in `data/spotify.db`. Tokens (`tokens/`), keys and data sta
 To rebuild the database from saved raw files without calling the APIs:
 `python src/pipeline.py data/raw/<run_id>`.
 
+## Dashboard
+
+A Flask app that reads `data/spotify.db` (read-only). It doesn't need API keys or Airflow,
+only a copy of the database in `data/`.
+
+```
+pip install -r requirements.txt
+python dashboard/app.py
+```
+
+Open http://127.0.0.1:5000. The **Individual** tab shows one listener's trends and the
+**Compare** tab compares listeners. Each tab is a Flask Blueprint in `dashboard/views/`
+with its own template; `base.html`, `style.css` and `static/charts.js` hold the shared
+layout, colors and Plotly settings.
+
 ## Team
 
 Alex Miller, Gloria Ye, Lily Trautman, Yash Ahlawat

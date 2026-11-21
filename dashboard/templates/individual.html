@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Individual · Spotify Dashboard{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>Individual listener</h1>
+    <p>One person's listening trends.</p>
+  </div>
+  <form method="get" class="field">
+    <label for="user">Listener</label>
+    <select id="user" name="user" onchange="this.form.submit()">
+      {% for u in users %}
+        <option value="{{ u.user_id }}" {{ 'selected' if u.user_id == user_id }}>{{ u.display_name }}</option>
+      {% endfor %}
+    </select>
+  </form>
+</div>
+
+<div class="card">
+  <p class="empty">Coming soon.</p>
+</div>
+{% endblock %}
