@@ -1,0 +1,25 @@
+# Airflow for the daily pipeline run: one container with the scheduler and the web UI.
+# Start:  docker compose up -d --build     UI: http://localhost:8080
+# Stop:   docker compose down
+services:
+  airflow:
+    build: .
+    command: standalone
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:8080"  # only reachable from this computer
+    env_file: .env  # Spotify app keys
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DEFAULT_TIMEZONE: America/Chicago
+      AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_ALL_ADMINS: "true"  # no login page, local use only
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: sqlite:////opt/airflow/db/airflow.db
+    volumes:
+      - ./DAG:/opt/airflow/dags
+      - ./src:/opt/project/src
+      - ./data:/opt/project/data
+      - ./tokens:/opt/project/tokens
+      - airflow-db:/opt/airflow/db  # Airflow's own run history, kept between restarts
+
+volumes:
+  airflow-db:
