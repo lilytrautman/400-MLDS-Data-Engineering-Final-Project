@@ -9,8 +9,10 @@ A data pipeline that pulls listening data from the Spotify API, adds audio featu
 
 - Done: Project setup (Docker, pinned packages)
 - Done: Ingestion, cleaning and data quality checks
+- Done: Pulls for every team member's account
+- Done: Daily runs with Airflow
 - Todo: Analysis and dashboard
-- Maybe later: Scheduling and ML
+- Maybe later: ML
 
 ## Data sources
 
@@ -21,20 +23,30 @@ A data pipeline that pulls listening data from the Spotify API, adds audio featu
 ## Run it
 
 1. Create an app in the [Spotify developer dashboard](https://developer.spotify.com/dashboard)
-   with the redirect URI `http://127.0.0.1:8888/callback`.
+   with the redirect URI `http://127.0.0.1:8888/callback`. Add every account you want to
+   pull under **User Management** (up to 5).
 2. Copy `.env.example` to `.env` and add your app's client id and secret.
-3. Log in once (opens a browser):
-   ```bash
+3. Install the packages and log each account in once:
+   ```
    pip install -r requirements.txt
-   python src/01_ingest.py
+   python src/login.py <name>             # on this computer (opens a browser)
+   python src/login.py <name> --remote    # prints a link to send to someone else
    ```
-4. Run the pipeline:
-   ```bash
-   docker build -t spotify-pipeline .
-   docker run --rm --env-file .env -v "$PWD/data:/app/data" -v "$PWD/.cache:/app/.cache" spotify-pipeline
+4. Run the pipeline once:
    ```
+   python src/pipeline.py
+   ```
+5. Or run it every day with Airflow:
+   ```
+   docker compose up -d --build
+   ```
+   Open http://localhost:8080, unpause `spotify_daily`, and it runs every day at 9 PM
+   (Chicago time). Stop it with `docker compose down`.
 
-The database ends up in `data/spotify.db`. Your keys and data stay out of git.
+The database ends up in `data/spotify.db`. Tokens (`tokens/`), keys and data stay out of git.
+
+To rebuild the database from saved raw files without calling the APIs:
+`python src/pipeline.py data/raw/<run_id>`.
 
 ## Team
 
