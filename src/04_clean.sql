@@ -81,7 +81,7 @@ WHERE track_id IS NOT NULL AND artist_id IS NOT NULL;
 
 -- plays: append-only history; plays of local files are logged, not loaded
 INSERT OR IGNORE INTO dropped_rows (run_id, source_table, row_key, reason)
-SELECT run_id, 'stg_plays', played_at, 'missing track_id (local file)'
+SELECT run_id, 'stg_plays', user_id || ' ' || played_at, 'missing track_id (local file)'
 FROM stg_plays
 WHERE track_id IS NULL;
 
@@ -92,7 +92,7 @@ WHERE track_id IS NOT NULL;
 
 -- saved_tracks: one row per liked song; liked local files are logged, not loaded
 INSERT OR IGNORE INTO dropped_rows (run_id, source_table, row_key, reason)
-SELECT run_id, 'stg_saved_tracks', added_at, 'missing track_id (local file)'
+SELECT run_id, 'stg_saved_tracks', user_id || ' ' || added_at, 'missing track_id (local file)'
 FROM stg_saved_tracks
 WHERE track_id IS NULL;
 
