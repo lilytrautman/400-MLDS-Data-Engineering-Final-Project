@@ -1,10 +1,13 @@
 """Pull raw data from the Spotify, ReccoBeats and Deezer APIs.
 
-Every API response is saved untouched as JSON in data/raw/<run_id>/, one file per
-endpoint. Later steps read these files, so they can be rerun without calling the
-APIs again, and the files are a record of exactly what each API returned.
+Every account that has logged in (one token file in tokens/) is pulled into its
+own folder, data/raw/<run_id>/<name>/, one JSON file per endpoint. Audio features
+and Deezer data are looked up once for the tracks of all accounts together and saved
+next to those folders. Later steps read these files, so they can be rerun without
+calling the APIs again, and the files are a record of exactly what each API returned.
 
 Usage (from the repo root):
+    python src/login.py <name>     once per account
     python src/01_ingest.py
 """
 
@@ -18,10 +21,13 @@ from pathlib import Path
 import requests
 import spotipy
 from dotenv import load_dotenv
+from spotipy.cache_handler import CacheFileHandler
 from spotipy.oauth2 import SpotifyOAuth
 
-RAW_DIR = Path("data/raw")
-DB_PATH = Path("data/spotify.db")  # read to skip tracks that are already enriched
+ROOT = Path(__file__).resolve().parent.parent  # the repo root, wherever this runs from
+RAW_DIR = ROOT / "data" / "raw"
+DB_PATH = ROOT / "data" / "spotify.db"  # read to skip tracks that are already enriched
+TOKENS_DIR = ROOT / "tokens"  # one Spotify login per account, never committed
 
 # Spotify: read-only access to the profile, listening history, top items and liked songs
 SCOPES = "user-read-private user-top-read user-read-recently-played user-library-read"
@@ -40,20 +46,38 @@ def now_utc():
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def login():
-    """Return an authenticated Spotify client.
+def auth_manager(name, open_browser=True):
+    """Return the Spotify login for one account, stored in tokens/<name>.json.
 
-    The app keys come from .env. The first login opens a browser; after that the
-    token is cached in .cache and refreshed automatically.
+    The app keys come from .env. show_dialog makes Spotify ask which account to use,
+    so a browser already logged in as someone else doesn't log in the wrong person.
     """
-    load_dotenv()
-    return spotipy.Spotify(auth_manager=SpotifyOAuth(
+    load_dotenv(ROOT / ".env")
+    return SpotifyOAuth(
         client_id=os.environ["SPOTIFY_CLIENT_ID"],
         client_secret=os.environ["SPOTIFY_CLIENT_SECRET"],
         redirect_uri=REDIRECT_URI,
         scope=SCOPES,
-        cache_path=".cache",
-    ))
+        cache_handler=CacheFileHandler(cache_path=str(TOKENS_DIR / f"{name}.json")),
+        open_browser=open_browser,
+        show_dialog=True,
+    )
+
+
+def accounts():
+    """Return the name of every account that has logged in, from its token file."""
+    return sorted(path.stem for path in TOKENS_DIR.glob("*.json"))
+
+
+def account_dirs(run_dir):
+    """Return the folder of every account fully pulled in this run.
+
+    A pull writes into <name>.tmp and is renamed when it finishes, so a failed pull
+    is never picked up.
+    """
+    return sorted(path.parent for path in Path(run_dir).glob("*/me.json")
+                  if path.parent.suffix != ".tmp")
+
 
 
 def save(run_dir, name, items):
@@ -111,19 +135,34 @@ def pull_spotify(sp, run_dir):
     # Liked songs come 50 per page, so follow every page back to the first like
     save(run_dir, "saved_tracks", get_all(sp, sp.current_user_saved_tracks(limit=50)))
 
+def pull_account(name, run_dir):
+    """Pull one account's Spotify data into <run_dir>/<name>/."""
+    login = auth_manager(name, open_browser=False)
+    # Refresh the saved token without ever asking for a login, so a scheduled run
+    # fails with a clear message instead of waiting for someone to log in
+    if not login.validate_token(login.cache_handler.get_cached_token()):
+        raise RuntimeError(f"token expired or revoked, run: python src/login.py {name}")
+
+    # Write into <name>.tmp and rename when done, so staging never reads a half pull
+    tmp_dir = Path(run_dir) / f"{name}.tmp"
+    tmp_dir.mkdir(parents=True, exist_ok=True)
+    pull_spotify(spotipy.Spotify(auth_manager=login), tmp_dir)
+    tmp_dir.rename(Path(run_dir) / name)
+
 
 def unique_tracks(run_dir):
-    """Return each distinct track found in this run's Spotify files.
+    """Return each distinct track found across accounts in this run's Spotify files.
 
     Plays and liked songs wrap the track in a "track" key; top tracks are track
     objects themselves. Local files have no Spotify id and are left out.
     """
     tracks = {}
-    for item in load(run_dir, "recently_played") + load(run_dir, "saved_tracks"):
-        tracks[item["track"]["id"]] = item["track"]
-    for time_range in TIME_RANGES:
-        for track in load(run_dir, f"top_tracks_{time_range}"):
-            tracks[track["id"]] = track
+    for account_dir in account_dirs(run_dir):
+        for item in load(account_dir, "recently_played") + load(account_dir, "saved_tracks"):
+            tracks[item["track"]["id"]] = item["track"]
+        for time_range in TIME_RANGES:
+            for track in load(account_dir, f"top_tracks_{time_range}"):
+                tracks[track["id"]] = track
     tracks.pop(None, None)
     return list(tracks.values())
 
@@ -182,24 +221,43 @@ def pull_deezer(tracks):
     print(f"deezer: {matched}/{len(responses)} tracks matched, {skipped} skipped (no ISRC)")
     return responses
 
+def enrich(run_dir):
+    """Look up audio features and Deezer data for this run's tracks not stored yet.
 
-def main():
-    """Run one ingestion and return the folder the raw files were saved in."""
-    run_id = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H%MZ")
-    run_dir = RAW_DIR / run_id
-    run_dir.mkdir(parents=True, exist_ok=True)
-
-    sp = login()
-    pull_spotify(sp, run_dir)
-
-    # Audio features and Deezer data don't change, so only look up tracks not stored yet.
-    # Tracks that got no match are asked again on the next run.
+    Audio features and Deezer data don't change, so only tracks not stored yet are
+    looked up. Tracks that got no match are asked again on the next run.
+    """
     tracks = unique_tracks(run_dir)
     have_features = stored_track_ids("audio_features")
     have_deezer = stored_track_ids("deezer_tracks")
     save(run_dir, "audio_features",
          pull_reccobeats([t["id"] for t in tracks if t["id"] not in have_features]))
     save(run_dir, "deezer", pull_deezer([t for t in tracks if t["id"] not in have_deezer]))
+
+
+def new_run_dir():
+    """Create and return the folder for a new run, named by the UTC time it started."""
+    run_dir = RAW_DIR / datetime.now(timezone.utc).strftime("%Y-%m-%dT%H%MZ")
+    run_dir.mkdir(parents=True, exist_ok=True)
+    return run_dir
+
+
+def main():
+    """Run one ingestion and return the folder the raw files were saved in."""
+    names = accounts()
+    if not names:
+        raise SystemExit("No accounts logged in yet. Run: python src/login.py <name>")
+
+    run_dir = new_run_dir()
+    for name in names:
+        print(f"--- {name}")
+        # One account failing shouldn't stop the others from loading
+        try:
+            pull_account(name, run_dir)
+        except Exception as error:
+            print(f"{name}: pull failed, skipped ({error})")
+
+    enrich(run_dir)
     return run_dir
 
 
