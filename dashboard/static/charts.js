@@ -43,10 +43,11 @@ const Charts = (() => {
       margin: { l: 48, r: 16, t: 8, b: 40 },
       showlegend: false,
       legend: { orientation: "h", x: 0, y: 1.12, font: { color: color("text-2") } },
+      // Hover tooltips: white box with black text
       hoverlabel: {
-        bgcolor: color("surface"),
+        bgcolor: "#ffffff",
         bordercolor: color("axis"),
-        font: { color: color("text"), size: 13 },
+        font: { color: "#0b0b0b", size: 13 },
       },
       bargap: 0.25,
       barcornerradius: 4,
@@ -58,17 +59,67 @@ const Charts = (() => {
 
   const config = { displayModeBar: false, responsive: true };
 
-  function draw(id) {
-    const { data, layout: lay } = registry.get(id)();
-    Plotly.react(id, data, layout(lay));
+  // ---- Rounded HTML tooltips ----
+  // Plotly draws its own tooltips as square SVG boxes. A chart that passes a
+  // `tip` function gets this HTML tooltip instead (rounded, styled in style.css).
+  // tip(points) returns the tooltip's HTML; escape any names you put in it.
+  let tipEl = null;
+  function tipBox() {
+    if (!tipEl) {
+      tipEl = document.createElement("div");
+      tipEl.setAttribute("role", "tooltip");
+      document.body.appendChild(tipEl);
+    }
+    return tipEl;
+  }
+  function hideTip() {
+    if (tipEl) tipEl.style.display = "none";
+  }
+  // theme: "light" (white box) or "dark" (black box)
+  function tooltip(el, tip, theme = "light") {
+    el.on("plotly_hover", (ev) => {
+      const html = tip(ev.points);
+      if (!html || !ev.event) return hideTip();
+      const t = tipBox();
+      t.className = `chart-tip ${theme}`;
+      t.innerHTML = html;
+      t.style.display = "block";
+      // Next to the mouse, flipped to the other side near the window's edge
+      const { clientX: x, clientY: y } = ev.event;
+      const r = t.getBoundingClientRect();
+      const left = x + 16 + r.width > window.innerWidth - 8 ? x - r.width - 16 : x + 16;
+      const top = y + 16 + r.height > window.innerHeight - 8 ? y - r.height - 16 : y + 16;
+      t.style.left = `${Math.max(8, left)}px`;
+      t.style.top = `${Math.max(8, top)}px`;
+    });
+    el.on("plotly_unhover", hideTip);
+  }
+  // Turn off Plotly's own tooltip on every hoverable trace (hover events still fire)
+  function withoutPlotlyTips(data) {
+    return data.map((tr) => {
+      if (tr.hoverinfo === "skip") return tr;
+      const { hovertemplate, ...rest } = tr;
+      return { ...rest, hoverinfo: "none" };
+    });
   }
 
-  function plot(id, builder) {
+  const tips = new Map();  // chart id -> tip function
+
+  function draw(id) {
+    const { data, layout: lay } = registry.get(id)();
+    Plotly.react(id, tips.has(id) ? withoutPlotlyTips(data) : data, layout(lay));
+  }
+
+  // options.tip: optional function(points) -> HTML for a rounded tooltip
+  function plot(id, builder, options = {}) {
     registry.set(id, builder);
     const el = document.getElementById(id);
     if (!el) return;
     const { data, layout: lay } = builder();
-    Plotly.newPlot(el, data, layout(lay), config);
+    if (options.tip) tips.set(id, options.tip);
+    Plotly.newPlot(el, options.tip ? withoutPlotlyTips(data) : data, layout(lay), config).then(() => {
+      if (options.tip) tooltip(el, options.tip);
+    });
   }
 
   // Redraw every chart with the current colors (after a light/dark switch)
@@ -91,5 +142,5 @@ const Charts = (() => {
       <div class="scroll"><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div></details>`;
   }
 
-  return { plot, redrawAll, color, series, dataTable, config };
+  return { plot, redrawAll, tooltip, withoutPlotlyTips, color, series, dataTable, config };
 })();
