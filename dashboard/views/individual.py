@@ -54,7 +54,8 @@ def mood_over_time(user_id):
         d = to_local(r["added_at"])
         g = groups[(d.year, (d.month - 1) // 3 + 1)]
         g["liked"] += 1
-        if r["valence"] is not None:
+        # Count a song only if it has both scores, so the two averages use the same songs
+        if r["valence"] is not None and r["energy"] is not None:
             g["valence"].append(r["valence"])
             g["energy"].append(r["energy"])
 
@@ -109,91 +110,90 @@ def listening_hours(user_id):
     return {"days": days, "hours": [{"hour": h, "plays": hours.get(h, 0)} for h in range(24)]}
 
 
-def _latest_two_snapshots(table, user_id, time_range):
-    dates = query(
-        f"SELECT DISTINCT snapshot_date FROM {table} "
-        "WHERE user_id = ? AND time_range = ? ORDER BY snapshot_date DESC LIMIT 2",
-        (user_id, time_range),
-    )
-    dates = [d["snapshot_date"] for d in dates]
-    return (dates[0] if dates else None), (dates[1] if len(dates) > 1 else None)
+# The id column and the "names" query for each top list. Each query returns the
+# list's rows for one snapshot, with the item's id as item_id.
+TOP_LISTS = {
+    "top_tracks": (
+        "track_id",
+        """
+        SELECT tt.rank, tt.track_id AS item_id,
+               COALESCE(t.name, '(removed from Spotify)') AS track,
+               COALESCE(ar.name, '') AS artist,
+               s.track_id IS NOT NULL AS liked
+        FROM top_tracks tt
+        JOIN tracks t ON t.track_id = tt.track_id
+        LEFT JOIN track_artists ta ON ta.track_id = tt.track_id AND ta.artist_order = 0
+        LEFT JOIN artists ar ON ar.artist_id = ta.artist_id
+        LEFT JOIN saved_tracks s ON s.user_id = tt.user_id AND s.track_id = tt.track_id
+        WHERE tt.user_id = :user AND tt.time_range = :range
+          AND tt.snapshot_date = :date AND tt.rank <= :limit
+        ORDER BY tt.rank
+        """,
+    ),
+    "top_artists": (
+        "artist_id",
+        """
+        SELECT ta.rank, ta.artist_id AS item_id, a.name AS artist
+        FROM top_artists ta
+        JOIN artists a ON a.artist_id = ta.artist_id
+        WHERE ta.user_id = :user AND ta.time_range = :range
+          AND ta.snapshot_date = :date AND ta.rank <= :limit
+        ORDER BY ta.rank
+        """,
+    ),
+}
 
 
-def _rank_change(prev_ranks, key, rank, has_prev):
-    """Places moved since the previous daily snapshot: +3 is up three, None is new."""
-    if not has_prev:
-        return {"kind": "none"}
-    if key not in prev_ranks:
-        return {"kind": "new"}
-    return {"kind": "move", "by": prev_ranks[key] - rank}
+def _top_list(table, user_id, time_range, limit):
+    """One ranked list from the latest daily snapshot, with each item's move since
+    the snapshot before it: {"kind": "move", "by": 3} is up three places."""
+    id_col, list_sql = TOP_LISTS[table]
+    dates = [
+        r["snapshot_date"]
+        for r in query(
+            f"SELECT DISTINCT snapshot_date FROM {table} "
+            "WHERE user_id = ? AND time_range = ? ORDER BY snapshot_date DESC LIMIT 2",
+            (user_id, time_range),
+        )
+    ]
+    if not dates:
+        return []
+
+    # Yesterday's ranks by item, or None when there's only one snapshot so far
+    prev = None
+    if len(dates) == 2:
+        prev = {
+            r["id"]: r["rank"]
+            for r in query(
+                f"SELECT {id_col} AS id, rank FROM {table} "
+                "WHERE user_id = ? AND time_range = ? AND snapshot_date = ?",
+                (user_id, time_range, dates[1]),
+            )
+        }
+
+    rows = query(list_sql, {"user": user_id, "range": time_range, "date": dates[0], "limit": limit})
+    for r in rows:
+        item = r.pop("item_id")
+        if prev is None:
+            r["change"] = {"kind": "none"}
+        elif item not in prev:
+            r["change"] = {"kind": "new"}
+        else:
+            r["change"] = {"kind": "move", "by": prev[item] - r["rank"]}
+        if "liked" in r:
+            r["liked"] = bool(r["liked"])
+    return rows
 
 
 def top_lists(user_id, limit=10):
-    """Top tracks and artists for each time range, from the latest daily snapshot."""
-    out = {}
-    for tr in TIME_RANGES:
-        latest, previous = _latest_two_snapshots("top_tracks", user_id, tr)
-        tracks = []
-        if latest:
-            prev = {
-                r["track_id"]: r["rank"]
-                for r in query(
-                    "SELECT track_id, rank FROM top_tracks "
-                    "WHERE user_id = ? AND time_range = ? AND snapshot_date = ?",
-                    (user_id, tr, previous),
-                )
-            } if previous else {}
-            for r in query(
-                """
-                SELECT tt.rank, tt.track_id, t.name AS track, ar.name AS artist,
-                       s.track_id IS NOT NULL AS liked
-                FROM top_tracks tt
-                JOIN tracks t ON t.track_id = tt.track_id
-                LEFT JOIN track_artists ta ON ta.track_id = tt.track_id AND ta.artist_order = 0
-                LEFT JOIN artists ar ON ar.artist_id = ta.artist_id
-                LEFT JOIN saved_tracks s ON s.user_id = tt.user_id AND s.track_id = tt.track_id
-                WHERE tt.user_id = ? AND tt.time_range = ? AND tt.snapshot_date = ? AND tt.rank <= ?
-                ORDER BY tt.rank
-                """,
-                (user_id, tr, latest, limit),
-            ):
-                tracks.append({
-                    "rank": r["rank"],
-                    "track": r["track"] or "(removed from Spotify)",
-                    "artist": r["artist"] or "",
-                    "liked": bool(r["liked"]),
-                    "change": _rank_change(prev, r["track_id"], r["rank"], bool(previous)),
-                })
-
-        latest_a, previous_a = _latest_two_snapshots("top_artists", user_id, tr)
-        artists = []
-        if latest_a:
-            prev = {
-                r["artist_id"]: r["rank"]
-                for r in query(
-                    "SELECT artist_id, rank FROM top_artists "
-                    "WHERE user_id = ? AND time_range = ? AND snapshot_date = ?",
-                    (user_id, tr, previous_a),
-                )
-            } if previous_a else {}
-            for r in query(
-                """
-                SELECT ta.rank, ta.artist_id, a.name AS artist
-                FROM top_artists ta
-                JOIN artists a ON a.artist_id = ta.artist_id
-                WHERE ta.user_id = ? AND ta.time_range = ? AND ta.snapshot_date = ? AND ta.rank <= ?
-                ORDER BY ta.rank
-                """,
-                (user_id, tr, latest_a, limit),
-            ):
-                artists.append({
-                    "rank": r["rank"],
-                    "artist": r["artist"],
-                    "change": _rank_change(prev, r["artist_id"], r["rank"], bool(previous_a)),
-                })
-
-        out[tr] = {"tracks": tracks, "artists": artists, "snapshot": latest or latest_a}
-    return out
+    """Top tracks and artists for each time range (4 weeks, 6 months, 1 year)."""
+    return {
+        tr: {
+            "tracks": _top_list("top_tracks", user_id, tr, limit),
+            "artists": _top_list("top_artists", user_id, tr, limit),
+        }
+        for tr in TIME_RANGES
+    }
 
 
 def liked_vs_played(user_id):
