@@ -5,7 +5,7 @@
 <div class="page-header">
   <div>
     <h1>Individual listener</h1>
-    <p>One person's listening trends.</p>
+    <p>One person's liked songs, listening habits and favorites.</p>
   </div>
   <form method="get" class="field">
     <label for="user">Listener</label>
@@ -17,7 +17,264 @@
   </form>
 </div>
 
-<div class="card">
-  <p class="empty">Coming soon.</p>
+{% if not data %}
+<div class="card"><p class="empty">No listeners in the database yet.</p></div>
+{% else %}
+{% set s = data.summary %}
+{% set lvp = data.liked_vs_played %}
+{% set top4w = data.top.short_term %}
+
+<div class="grid">
+  <!-- Headline numbers -->
+  <div class="card stat span-3">
+    <div class="label">Liked songs</div>
+    <div class="value">{{ "{:,}".format(s.liked) }}</div>
+  </div>
+  <div class="card stat span-3">
+    <div class="label">Plays recorded</div>
+    <div class="value">{{ "{:,}".format(s.plays) }}</div>
+    <div class="note">{{ "since " ~ s.plays_since if s.plays_since else "None yet" }}</div>
+  </div>
+  <div class="card stat span-3">
+    <div class="label">Top artist, last 4 weeks</div>
+    <div class="value small">{{ top4w.artists[0].artist if top4w.artists else "—" }}</div>
+  </div>
+  <div class="card stat span-3">
+    <div class="label">Top track, last 4 weeks</div>
+    <div class="value small">{{ top4w.tracks[0].track if top4w.tracks else "—" }}</div>
+    {% if top4w.tracks %}<div class="note">{{ top4w.tracks[0].artist }}</div>{% endif %}
+  </div>
+
+  <!-- Mood over time -->
+  <section class="card span-12">
+    <h2>Mood and energy of liked songs over time</h2>
+    <p class="sub">Average of the songs liked each quarter. Valence runs from 0 (sad) to 1 (happy).
+      <span id="mood-coverage"></span></p>
+    <div id="mood-chart" class="chart"></div>
+    <div id="mood-table"></div>
+  </section>
+
+  <!-- Release years & hour of day -->
+  <section class="card span-6">
+    <h2>Liked songs by release year</h2>
+    <p class="sub">Year each liked song's album came out.</p>
+    <div id="years-chart" class="chart"></div>
+    <div id="years-table"></div>
+  </section>
+  <section class="card span-6">
+    <h2>Listening by time of day</h2>
+    <p class="sub">Chicago time. {{ s.plays }} plays over {{ data.hours.days }} day{{ "" if data.hours.days == 1 else "s" }}; grows every night.</p>
+    <div id="hours-chart" class="chart"></div>
+    <div id="hours-table"></div>
+  </section>
+
+  <!-- Top tracks & artists, one time-range control for both -->
+  <div class="span-12 section-head">
+    <div>
+      <h2>Top tracks and artists</h2>
+      <p class="sub">From Spotify's latest daily snapshot. Arrows show the change since the day before.</p>
+    </div>
+    <div class="segmented" role="group" aria-label="Time range">
+      <button type="button" data-range="short_term" aria-pressed="true">4 weeks</button>
+      <button type="button" data-range="medium_term" aria-pressed="false">6 months</button>
+      <button type="button" data-range="long_term" aria-pressed="false">1 year</button>
+    </div>
+  </div>
+  <section class="card span-6">
+    <h2>Top tracks</h2>
+    <div id="top-tracks"></div>
+  </section>
+  <section class="card span-6">
+    <h2>Top artists</h2>
+    <div id="top-artists"></div>
+  </section>
+
+  <!-- Liked vs. actually played -->
+  <section class="card span-12">
+    <h2>Liked songs vs. what actually gets played</h2>
+    <p class="sub">Do they listen to their library, or to things they never saved?</p>
+    <div class="grid">
+      <div class="stat span-4">
+        <div class="label">Plays that were liked songs</div>
+        <div class="value">{{ ((100 * lvp.liked_plays / lvp.plays) | round | int) ~ "%" if lvp.plays else "—" }}</div>
+        <div class="note">{{ lvp.liked_plays }} of {{ lvp.plays }} recorded plays</div>
+      </div>
+      <div class="stat span-4">
+        <div class="label">Top tracks (4 weeks) that are liked</div>
+        <div class="value">{{ lvp.top_short_liked ~ " of " ~ lvp.top_short if lvp.top_short else "—" }}</div>
+        <div class="note">Spotify's top 50 for the last 4 weeks</div>
+      </div>
+      <div class="span-4">
+        <div class="label secondary">Replayed but not liked</div>
+        {% if lvp.replayed_not_liked %}
+        <table>
+          <tbody>
+          {% for t in lvp.replayed_not_liked %}
+            <tr>
+              <td>{{ t.track or "(removed from Spotify)" }}<div class="secondary">{{ t.artist or "" }}</div></td>
+              <td class="num">{{ t.plays }} plays</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <p class="secondary">Nothing played twice without being liked.</p>
+        {% endif %}
+      </div>
+    </div>
+  </section>
 </div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% if data %}
+<script>
+const DATA = {{ data | tojson }};
+
+// ---------- Mood & energy over time ----------
+(() => {
+  const rows = DATA.mood;
+  const plotted = rows.filter((r) => r.valence !== null);
+  const withFeatures = rows.reduce((a, r) => a + r.with_features, 0);
+  const liked = rows.reduce((a, r) => a + r.liked, 0);
+  document.getElementById("mood-coverage").textContent =
+    `Based on the ${withFeatures.toLocaleString()} of ${liked.toLocaleString()} liked songs that have audio features.`;
+
+  if (!plotted.length) {
+    document.getElementById("mood-chart").innerHTML = '<p class="empty">Not enough liked songs with audio features yet.</p>';
+    return;
+  }
+  const series = [
+    { key: "valence", name: "Valence (happiness)", slot: 0 },
+    { key: "energy", name: "Energy", slot: 1 },
+  ];
+  // When the two end values are close, nudge their labels apart so they don't overlap
+  const last = plotted[plotted.length - 1];
+  const close = Math.abs(last.valence - last.energy) < 0.08;
+  const nudge = (key) => !close ? 0 : (last[key] >= last[key === "valence" ? "energy" : "valence"] ? 8 : -8);
+  Charts.plot("mood-chart", () => {
+    return {
+      data: series.map((s) => ({
+        type: "scatter",
+        mode: "lines+markers",
+        name: s.name,
+        x: rows.map((r) => r.quarter),
+        y: rows.map((r) => r[s.key]),
+        customdata: rows.map((r) => r.with_features),
+        line: { color: Charts.series(s.slot), width: 2 },
+        marker: { color: Charts.series(s.slot), size: 8, line: { color: Charts.color("surface"), width: 2 } },
+        connectgaps: false,
+        hovertemplate: s.slot === 0
+          ? `${s.name}: %{y:.2f}  (%{customdata} songs)<extra></extra>`
+          : `${s.name}: %{y:.2f}<extra></extra>`,
+      })),
+      layout: {
+        showlegend: true,
+        hovermode: "x unified",
+        margin: { l: 48, r: 72, t: 32, b: 40 },
+        xaxis: {
+          type: "category",
+          tickvals: rows.filter((r) => r.quarter.endsWith("Q1")).map((r) => r.quarter),
+          ticktext: rows.filter((r) => r.quarter.endsWith("Q1")).map((r) => r.quarter.slice(0, 4)),
+          showspikes: true, spikemode: "across", spikethickness: 1, spikecolor: Charts.color("axis"), spikedash: "solid",
+        },
+        yaxis: { range: [0, 1], dtick: 0.25, title: { text: "Average score" } },
+        annotations: series.map((s) => ({
+          x: last.quarter, y: last[s.key], xanchor: "left", yanchor: "middle", xshift: 10, yshift: nudge(s.key),
+          text: s.name.split(" ")[0], showarrow: false, font: { color: Charts.color("text-2"), size: 12 },
+        })),
+      },
+    };
+  });
+  Charts.dataTable("mood-table",
+    [{ key: "quarter", label: "Quarter" }, { key: "liked", label: "Songs liked", num: true },
+     { key: "with_features", label: "With features", num: true },
+     { key: "valence", label: "Avg valence", num: true }, { key: "energy", label: "Avg energy", num: true }],
+    rows.map((r) => ({ ...r, valence: r.valence ?? "—", energy: r.energy ?? "—" })));
+})();
+
+// ---------- Liked songs by release year ----------
+(() => {
+  const rows = DATA.years;
+  if (!rows.length) {
+    document.getElementById("years-chart").innerHTML = '<p class="empty">No liked songs yet.</p>';
+    return;
+  }
+  Charts.plot("years-chart", () => ({
+    data: [{
+      type: "bar", x: rows.map((r) => r.year), y: rows.map((r) => r.songs),
+      marker: { color: Charts.series(0) },
+      hovertemplate: "%{x}: %{y} songs<extra></extra>",
+    }],
+    layout: { bargap: 0.15, yaxis: { title: { text: "Liked songs" } } },
+  }));
+  Charts.dataTable("years-table",
+    [{ key: "year", label: "Release year" }, { key: "songs", label: "Liked songs", num: true }],
+    rows.filter((r) => r.songs > 0));
+})();
+
+// ---------- Listening by hour of day ----------
+(() => {
+  const rows = DATA.hours.hours;
+  const label = (h) => `${h % 12 || 12} ${h < 12 ? "AM" : "PM"}`;
+  if (!rows.some((r) => r.plays)) {
+    document.getElementById("hours-chart").innerHTML = '<p class="empty">No plays recorded yet.</p>';
+    return;
+  }
+  Charts.plot("hours-chart", () => ({
+    data: [{
+      type: "bar", x: rows.map((r) => r.hour), y: rows.map((r) => r.plays),
+      customdata: rows.map((r) => label(r.hour)),
+      marker: { color: Charts.series(0) },
+      hovertemplate: "%{customdata}: %{y} plays<extra></extra>",
+    }],
+    layout: {
+      xaxis: { tickvals: [0, 3, 6, 9, 12, 15, 18, 21], ticktext: [0, 3, 6, 9, 12, 15, 18, 21].map(label), range: [-0.6, 23.6] },
+      yaxis: { title: { text: "Plays" }, rangemode: "tozero" },
+    },
+  }));
+  Charts.dataTable("hours-table",
+    [{ key: "label", label: "Hour" }, { key: "plays", label: "Plays", num: true }],
+    rows.map((r) => ({ label: label(r.hour), plays: r.plays })));
+})();
+
+// ---------- Top tracks & artists ----------
+(() => {
+  const esc = (v) => String(v ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const change = (c) => {
+    if (c.kind === "new") return '<span class="change">New</span>';
+    if (c.kind !== "move") return "";
+    if (c.by > 0) return `<span class="change" title="Up ${c.by}">▲ ${c.by}</span>`;
+    if (c.by < 0) return `<span class="change" title="Down ${-c.by}">▼ ${-c.by}</span>`;
+    return '<span class="change" title="No change">–</span>';
+  };
+  const empty = '<p class="empty">No snapshot for this time range yet.</p>';
+
+  function render(range) {
+    const { tracks, artists } = DATA.top[range];
+    document.getElementById("top-tracks").innerHTML = tracks.length ? `<table><tbody>${tracks.map((t) => `
+      <tr>
+        <td class="rank">${t.rank}</td>
+        <td>${esc(t.track)}${t.liked ? ' <span class="liked" title="In liked songs" aria-label="In liked songs">♥</span>' : ""}
+          <div class="secondary">${esc(t.artist)}</div></td>
+        <td class="num">${change(t.change)}</td>
+      </tr>`).join("")}</tbody></table>` : empty;
+    document.getElementById("top-artists").innerHTML = artists.length ? `<table><tbody>${artists.map((a) => `
+      <tr>
+        <td class="rank">${a.rank}</td>
+        <td>${esc(a.artist)}</td>
+        <td class="num">${change(a.change)}</td>
+      </tr>`).join("")}</tbody></table>` : empty;
+  }
+
+  const buttons = document.querySelectorAll(".segmented button");
+  buttons.forEach((b) => b.addEventListener("click", () => {
+    buttons.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    render(b.dataset.range);
+  }));
+  render("short_term");
+})();
+</script>
+{% endif %}
 {% endblock %}
