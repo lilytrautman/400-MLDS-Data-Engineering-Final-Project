@@ -83,31 +83,88 @@ def mood_over_time(user_id):
     return out
 
 
-def release_years(user_id):
-    """Liked songs per album release year, with empty years filled in as 0."""
+def release_years(user_id, top_n=5):
+    """Liked songs per album release year, with empty years filled in as 0.
+
+    Each year also lists its top_n most popular liked songs (by Deezer rank,
+    higher = more mainstream) for the chart's hover tooltip.
+    """
     rows = query(
         """
-        SELECT a.release_year AS year, COUNT(*) AS songs
+        SELECT a.release_year AS year, t.name AS track, ar.name AS artist,
+               d.rank AS popularity
         FROM saved_tracks s
         JOIN tracks t ON t.track_id = s.track_id
         LEFT JOIN albums a ON a.album_id = t.album_id
+        LEFT JOIN track_artists ta ON ta.track_id = t.track_id AND ta.artist_order = 0
+        LEFT JOIN artists ar ON ar.artist_id = ta.artist_id
+        LEFT JOIN deezer_tracks d ON d.track_id = t.track_id
         WHERE s.user_id = ? AND a.release_year IS NOT NULL
-        GROUP BY a.release_year
         """,
         (user_id,),
     )
     if not rows:
         return []
-    counts = {r["year"]: r["songs"] for r in rows}
-    return [{"year": y, "songs": counts.get(y, 0)} for y in range(min(counts), max(counts) + 1)]
+    by_year = defaultdict(list)
+    for r in rows:
+        by_year[r["year"]].append(r)
+
+    out = []
+    for y in range(min(by_year), max(by_year) + 1):
+        songs = by_year.get(y, [])
+        # Most popular first; songs Deezer couldn't match go last
+        songs.sort(key=lambda r: (r["popularity"] is None, -(r["popularity"] or 0), r["track"] or ""))
+        out.append({
+            "year": y,
+            "songs": len(songs),
+            "top": [
+                {"track": r["track"] or "(removed from Spotify)", "artist": r["artist"] or ""}
+                for r in songs[:top_n]
+            ],
+        })
+    return out
 
 
-def listening_hours(user_id):
-    """Plays per hour of the day, in Chicago time."""
-    rows = query("SELECT played_at FROM plays WHERE user_id = ?", (user_id,))
-    hours = Counter(to_local(r["played_at"]).hour for r in rows)
-    days = len({to_local(r["played_at"]).date() for r in rows})
-    return {"days": days, "hours": [{"hour": h, "plays": hours.get(h, 0)} for h in range(24)]}
+def listening_hours(user_id, top_n=5):
+    """Plays per hour of the day, in Chicago time.
+
+    Each hour also lists its top_n most-played songs in that hour, for the
+    chart's hover tooltip.
+    """
+    rows = query(
+        """
+        SELECT p.played_at, p.track_id, t.name AS track, ar.name AS artist
+        FROM plays p
+        JOIN tracks t ON t.track_id = p.track_id
+        LEFT JOIN track_artists ta ON ta.track_id = p.track_id AND ta.artist_order = 0
+        LEFT JOIN artists ar ON ar.artist_id = ta.artist_id
+        WHERE p.user_id = ?
+        """,
+        (user_id,),
+    )
+    hours = Counter()
+    days = set()
+    per_hour = defaultdict(Counter)  # hour -> {track_id: plays in that hour}
+    names = {}
+    for r in rows:
+        local = to_local(r["played_at"])
+        hours[local.hour] += 1
+        days.add(local.date())
+        per_hour[local.hour][r["track_id"]] += 1
+        names[r["track_id"]] = (r["track"] or "(removed from Spotify)", r["artist"] or "")
+
+    def top_songs(hour):
+        # Most plays in this hour first, ties alphabetical
+        ranked = sorted(per_hour[hour].items(), key=lambda kv: (-kv[1], names[kv[0]][0].lower()))
+        return [
+            {"track": names[tid][0], "artist": names[tid][1], "plays": n}
+            for tid, n in ranked[:top_n]
+        ]
+
+    return {
+        "days": len(days),
+        "hours": [{"hour": h, "plays": hours.get(h, 0), "top": top_songs(h)} for h in range(24)],
+    }
 
 
 # The id column and the "names" query for each top list. Each query returns the
@@ -173,7 +230,7 @@ def _top_list(table, user_id, time_range, limit):
 
     rows = query(list_sql, {"user": user_id, "range": time_range, "date": dates[0], "limit": limit})
     for r in rows:
-        item = r.pop("item_id")
+        item = r["item_id"]  # top_lists() uses it, then removes it
         if prev is None:
             r["change"] = {"kind": "none"}
         elif item not in prev:
@@ -185,15 +242,83 @@ def _top_list(table, user_id, time_range, limit):
     return rows
 
 
-def top_lists(user_id, limit=10):
-    """Top tracks and artists for each time range (4 weeks, 6 months, 1 year)."""
-    return {
-        tr: {
-            "tracks": _top_list("top_tracks", user_id, tr, limit),
-            "artists": _top_list("top_artists", user_id, tr, limit),
-        }
-        for tr in TIME_RANGES
+def _tracks_by_artist(user_id, time_range, top_n=5):
+    """For the Top artists hover list: each artist's top_n tracks this user listens to.
+
+    First the artist's songs in the user's Spotify top tracks for this time range
+    (latest snapshot, Spotify's order), then, if fewer than top_n, the artist's
+    most-played recorded songs. A track counts for every artist credited on it.
+    Returns {artist_id: [{"track", "rank", "plays"}, ...]}.
+    """
+    # Recorded plays per track, for the play counts and the fill-up
+    plays = {
+        r["track_id"]: r["plays"]
+        for r in query(
+            "SELECT track_id, COUNT(*) AS plays FROM plays WHERE user_id = ? GROUP BY track_id",
+            (user_id,),
+        )
     }
+    out = defaultdict(list)
+    seen = defaultdict(set)
+
+    def add(artist_id, track_id, name, rank):
+        # Skip repeats by name too: Spotify can have two versions of one song
+        key = (name or track_id).lower()
+        if len(out[artist_id]) < top_n and key not in seen[artist_id]:
+            seen[artist_id].add(key)
+            out[artist_id].append({
+                "track": name or "(removed from Spotify)",
+                "rank": rank,
+                "plays": plays.get(track_id, 0),
+            })
+
+    # 1. Spotify top tracks for this time range
+    for r in query(
+        """
+        SELECT ta.artist_id, tt.track_id, t.name, tt.rank
+        FROM top_tracks tt
+        JOIN tracks t ON t.track_id = tt.track_id
+        JOIN track_artists ta ON ta.track_id = tt.track_id
+        WHERE tt.user_id = :user AND tt.time_range = :range
+          AND tt.snapshot_date = (SELECT MAX(snapshot_date) FROM top_tracks
+                                  WHERE user_id = :user AND time_range = :range)
+        ORDER BY tt.rank
+        """,
+        {"user": user_id, "range": time_range},
+    ):
+        add(r["artist_id"], r["track_id"], r["name"], r["rank"])
+
+    # 2. Fill up with the most-played recorded songs
+    for r in query(
+        """
+        SELECT ta.artist_id, p.track_id, t.name, COUNT(*) AS n
+        FROM plays p
+        JOIN tracks t ON t.track_id = p.track_id
+        JOIN track_artists ta ON ta.track_id = p.track_id
+        WHERE p.user_id = ?
+        GROUP BY ta.artist_id, p.track_id
+        ORDER BY n DESC, t.name
+        """,
+        (user_id,),
+    ):
+        add(r["artist_id"], r["track_id"], r["name"], None)
+    return out
+
+
+def top_lists(user_id, limit=10):
+    """Top tracks and artists for each time range (4 weeks, 6 months, 1 year).
+    Each top artist also carries "tracks": their top 5 tracks for the hover list."""
+    out = {}
+    for tr in TIME_RANGES:
+        tracks = _top_list("top_tracks", user_id, tr, limit)
+        artists = _top_list("top_artists", user_id, tr, limit)
+        by_artist = _tracks_by_artist(user_id, tr) if artists else {}
+        for a in artists:
+            a["tracks"] = by_artist.get(a["item_id"], [])
+        for r in tracks + artists:
+            r.pop("item_id")
+        out[tr] = {"tracks": tracks, "artists": artists}
+    return out
 
 
 def liked_vs_played(user_id):
