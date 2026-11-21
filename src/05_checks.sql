@@ -18,12 +18,19 @@ WHERE track_id NOT IN (SELECT track_id FROM track_artists);
 SELECT (SELECT COUNT(*) FROM plays WHERE played_at > strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
      + (SELECT COUNT(*) FROM saved_tracks WHERE added_at > strftime('%Y-%m-%dT%H:%M:%SZ', 'now'));
 
--- check: this pull overlaps the previous one (no plays lost between runs)
+-- check: every account's pull overlaps its previous one (no plays lost between runs)
 -- Spotify returns the last 50 plays. If all 50 were new and older plays exist, the
--- pulls didn't overlap, and any plays in between were never captured.
-SELECT CASE
-    WHEN (SELECT COUNT(*) FROM stg_plays WHERE track_id IS NOT NULL) = 50
-     AND (SELECT COUNT(*) FROM plays WHERE run_id IN (SELECT run_id FROM stg_plays)) = 50
-     AND EXISTS (SELECT 1 FROM plays WHERE run_id NOT IN (SELECT run_id FROM stg_plays))
-    THEN 1 ELSE 0
-END;
+-- pulls didn't overlap, and any plays in between were never captured. Counts the
+-- accounts where that happened.
+SELECT COUNT(*)
+FROM (
+    SELECT s.user_id, MAX(s.run_id) AS run_id
+    FROM stg_plays AS s
+    WHERE s.track_id IS NOT NULL
+    GROUP BY s.user_id
+    HAVING COUNT(*) = 50
+) AS pulled
+WHERE (SELECT COUNT(*) FROM plays AS p
+       WHERE p.user_id = pulled.user_id AND p.run_id = pulled.run_id) = 50
+  AND EXISTS (SELECT 1 FROM plays AS p
+              WHERE p.user_id = pulled.user_id AND p.run_id <> pulled.run_id);
