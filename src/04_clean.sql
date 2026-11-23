@@ -14,24 +14,26 @@
 -- reads ON as the start of a join. "WHERE true" is used where nothing is filtered.
 
 -- users: profile fields are refreshed on every run
-INSERT INTO users (user_id, display_name, country)
-SELECT user_id, display_name, country
+INSERT INTO users (user_id, display_name, country, image_url)
+SELECT user_id, display_name, country, image_url
 FROM stg_users
 WHERE true
 ON CONFLICT (user_id) DO UPDATE SET
     display_name = excluded.display_name,
-    country      = excluded.country;
+    country      = excluded.country,
+    image_url    = excluded.image_url;
 
 -- albums: songs removed from Spotify come back with an empty album name and
 -- release date '0000', so both become NULL. Local files have no album id.
-INSERT INTO albums (album_id, name, album_type, release_date, release_precision, release_year)
+INSERT INTO albums (album_id, name, album_type, release_date, release_precision, release_year, image_url)
 SELECT album_id,
        NULLIF(TRIM(name), ''),
        album_type,
        NULLIF(release_date, '0000'),
        release_precision,
        CASE WHEN release_date GLOB '[0-9][0-9][0-9][0-9]*' AND release_date <> '0000'
-            THEN CAST(substr(release_date, 1, 4) AS INTEGER) END
+            THEN CAST(substr(release_date, 1, 4) AS INTEGER) END,
+       image_url
 FROM stg_albums
 WHERE album_id IS NOT NULL
 ON CONFLICT (album_id) DO UPDATE SET
@@ -39,16 +41,19 @@ ON CONFLICT (album_id) DO UPDATE SET
     album_type        = excluded.album_type,
     release_date      = excluded.release_date,
     release_precision = excluded.release_precision,
-    release_year      = excluded.release_year;
+    release_year      = excluded.release_year,
+    image_url         = COALESCE(excluded.image_url, albums.image_url);
 
 -- artists: removed songs credit an artist with an empty name, so a known name is
--- never overwritten by a blank one
-INSERT INTO artists (artist_id, name)
-SELECT artist_id, NULLIF(TRIM(name), '')
+-- never overwritten by a blank one. Track credits carry no photo, so a known
+-- image_url is never overwritten by NULL.
+INSERT INTO artists (artist_id, name, image_url)
+SELECT artist_id, NULLIF(TRIM(name), ''), image_url
 FROM stg_artists
 WHERE artist_id IS NOT NULL
 ON CONFLICT (artist_id) DO UPDATE SET
-    name = COALESCE(excluded.name, artists.name);
+    name      = COALESCE(excluded.name, artists.name),
+    image_url = COALESCE(excluded.image_url, artists.image_url);
 
 -- tracks: local files have no Spotify id and can't be loaded, so they're logged.
 -- Removed songs keep their id but have an empty name and a duration of 0.
@@ -156,3 +161,16 @@ ON CONFLICT (track_id) DO UPDATE SET
     deezer_id = excluded.deezer_id,
     rank      = excluded.rank,
     bpm       = excluded.bpm;
+
+-- artists (Deezer fallback): fill missing artist photos for non-top artists from
+-- Deezer's lead-artist image, without overwriting any Spotify photo already stored
+UPDATE artists
+SET image_url = (
+    SELECT d.artist_image_url
+    FROM stg_deezer_tracks AS d
+    JOIN track_artists AS ta ON ta.track_id = d.track_id AND ta.artist_order = 0
+    WHERE ta.artist_id = artists.artist_id
+      AND d.artist_image_url IS NOT NULL
+    LIMIT 1
+)
+WHERE image_url IS NULL;

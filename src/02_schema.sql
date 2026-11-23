@@ -12,7 +12,8 @@
 CREATE TABLE IF NOT EXISTS users (
     user_id      TEXT PRIMARY KEY,
     display_name TEXT,
-    country      TEXT
+    country      TEXT,
+    image_url    TEXT
 ) STRICT;
 
 -- One row per album. release_precision says whether release_date is a year,
@@ -23,13 +24,15 @@ CREATE TABLE IF NOT EXISTS albums (
     album_type        TEXT,
     release_date      TEXT,
     release_precision TEXT CHECK (release_precision IN ('year', 'month', 'day')),
-    release_year      INTEGER
+    release_year      INTEGER,
+    image_url         TEXT
 ) STRICT;
 
 -- One row per artist. Dev Mode no longer returns genres or popularity.
 CREATE TABLE IF NOT EXISTS artists (
     artist_id TEXT PRIMARY KEY,
-    name      TEXT
+    name      TEXT,
+    image_url TEXT
 ) STRICT;
 
 -- One row per track. Release dates live in albums, not here. Songs that were removed
