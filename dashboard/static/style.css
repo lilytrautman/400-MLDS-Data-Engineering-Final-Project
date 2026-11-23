@@ -1,0 +1,306 @@
+/* Shared styling for every dashboard tab.
+   Colors are tokens on :root; charts.js reads the same tokens for Plotly,
+   so charts and page always match, in light and dark mode. */
+
+:root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --border: rgba(11, 11, 11, 0.10);
+  --text: #0b0b0b;
+  --text-2: #52514e;
+  --muted: #898781;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --accent: #1db954;           /* Spotify green, for nav/controls only, never data */
+  --accent-ink: #0b0b0b;
+  --hover: rgba(11, 11, 11, 0.05);
+
+  /* Categorical series colors, used in this order (validated for color blindness) */
+  --series-1: #2a78d6;  /* blue */
+  --series-2: #eb6834;  /* orange */
+  --series-3: #1baf7a;  /* aqua */
+  --series-4: #eda100;  /* yellow */
+  --series-5: #e87ba4;  /* magenta */
+  --series-6: #008300;  /* green */
+  --series-7: #6250d6;  /* violet */
+  --series-8: #e34948;  /* red */
+
+  --radius: 12px;
+  --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --border: rgba(255, 255, 255, 0.10);
+    --text: #f0efec;
+    --text-2: #c3c2b7;
+    --muted: #898781;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --hover: rgba(255, 255, 255, 0.06);
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --series-4: #c98500;
+    --series-5: #d55181;
+    --series-6: #0ca30c;
+    --series-7: #9085e9;
+    --series-8: #e66767;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d;
+  --surface: #1a1a19;
+  --border: rgba(255, 255, 255, 0.10);
+  --text: #f0efec;
+  --text-2: #c3c2b7;
+  --muted: #898781;
+  --grid: #2c2c2a;
+  --axis: #383835;
+  --hover: rgba(255, 255, 255, 0.06);
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #0ca30c;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ---------- Top bar & tabs ---------- */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.topbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  height: 56px;
+}
+.brand { font-weight: 700; }
+.tabs { display: flex; gap: 4px; height: 100%; }
+.tabs a {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  color: var(--text-2);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+.tabs a:hover { color: var(--text); }
+.tabs a.active { color: var(--text); border-bottom-color: var(--accent); font-weight: 600; }
+
+.theme-toggle {
+  margin-left: auto;
+  font: inherit;
+  font-size: 13px;
+  color: var(--text-2);
+  background: transparent;
+  border: 1px solid var(--axis);
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.theme-toggle:hover { background: var(--hover); color: var(--text); }
+.theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---------- Page layout ---------- */
+.page { max-width: 1200px; margin: 0 auto; padding: 24px 16px 64px; }
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.page-header h1 { margin: 0; font-size: 52px; font-weight: 700; line-height: 1.1; }
+.page-header p { margin: 4px 0 0; color: var(--text-2); font-size: 22.5px; }
+
+.grid { display: grid; gap: 16px; grid-template-columns: repeat(12, minmax(0, 1fr)); }
+.span-12 { grid-column: span 12; }
+.span-8 { grid-column: span 8; }
+.span-6 { grid-column: span 6; }
+.span-4 { grid-column: span 4; }
+.span-3 { grid-column: span 3; }
+@media (max-width: 900px) {
+  .span-8, .span-6, .span-4 { grid-column: span 12; }
+  .span-3 { grid-column: span 6; }
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  min-width: 0;
+}
+/* Spotify-green boxes, the same in light and dark mode. Redefining the tokens here
+   makes everything inside a box (text, tables, and the charts, via charts.js)
+   switch to dark ink on green. */
+.card {
+  color-scheme: light;
+  --surface: #1db954;
+  --text: #0b0b0b;
+  --text-2: rgba(11, 11, 11, 0.78);
+  --muted: rgba(11, 11, 11, 0.62);
+  --grid: rgba(11, 11, 11, 0.14);
+  --axis: rgba(11, 11, 11, 0.35);
+  --border: rgba(11, 11, 11, 0.12);
+  --hover: rgba(11, 11, 11, 0.08);
+  --series-1: #0b0b0b;   /* black marks */
+  --series-2: #ffffff;   /* white for a second series */
+  background: var(--surface);
+  color: var(--text);
+}
+.card :focus-visible { outline-color: #0b0b0b; }
+.card h2 { margin: 0; font-size: 32px; font-weight: 700; line-height: 1.2; }
+.card .sub { margin: 4px 0 12px; color: var(--text-2); font-size: 19.5px; line-height: 1.4; }
+.card-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 12px; }
+
+.chart { width: 100%; min-height: 300px; }
+
+.empty { color: var(--muted); padding: 24px 0; text-align: center; }
+
+/* ---------- Stat tiles ---------- */
+.stat .label { color: var(--text-2); font-size: 13px; }
+.stat .label.large { font-size: 26px; font-weight: 700; line-height: 1.2; }
+.stat .value { font-size: 30px; font-weight: 650; line-height: 1.2; margin-top: 4px; }
+.stat .value.small { font-size: 20px; overflow-wrap: anywhere; }
+.stat .note { color: var(--muted); font-size: 12px; margin-top: 4px; }
+/* Notes in the four headline boxes ("since ...", the top track's artist): 1.5x */
+.card.stat .note { font-size: 18px; }
+
+/* Mood & energy: one slider under the chart that scrolls both lines across time */
+.time-scroll { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin: 4px 0 8px; font-size: 16px; color: var(--text-2); }
+.time-scroll input[type="range"] { flex: 1; min-width: 200px; accent-color: #0b0b0b; cursor: pointer; }
+.time-scroll input[type="range"]:disabled { cursor: default; opacity: 0.5; }
+.time-scroll-readout { font-variant-numeric: tabular-nums; color: var(--text); min-width: 11em; }
+
+/* Hover pie charts: the number is the hover target, the pie pops up below it */
+.pie-hover { position: relative; display: inline-block; cursor: pointer; border-radius: 8px; }
+.pie-hover .value { text-decoration: underline dotted rgba(11, 11, 11, 0.45); text-underline-offset: 6px; }
+.pie-pop {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 20;
+  margin-top: 6px;
+  background: var(--surface);
+  border: 1px solid var(--axis);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+.pie-hover:hover .pie-pop,
+.pie-hover:focus .pie-pop { display: block; }
+
+/* Rounded chart tooltips (charts.js replaces Plotly's square ones with these) */
+.chart-tip {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+  max-width: 400px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.45;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+.chart-tip.light { background: #ffffff; color: #0b0b0b; border: 1px solid rgba(11, 11, 11, 0.2); }
+.chart-tip.dark { background: #0b0b0b; color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
+.chart-tip .tip-swatch {
+  display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+  border: 1.5px solid #0b0b0b; margin-right: 6px; vertical-align: -1px;
+}
+
+/* Top artists: hover an artist for their top 5 tracks (reuses the pie popup above) */
+.track-hover .name { text-decoration: underline dotted rgba(11, 11, 11, 0.45); text-underline-offset: 4px; }
+.track-pop { width: 320px; padding: 12px 16px; color: var(--text); font-size: 14px; cursor: default; background: #ffffff; }
+.track-pop-title { display: block; font-weight: 700; margin-bottom: 6px; }
+.track-pop ol { margin: 0; padding-left: 20px; }
+.track-pop li + li { margin-top: 6px; }
+.track-pop .secondary { font-size: 12px; }
+
+.section-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; margin-top: 16px; }
+.section-head h2 { margin: 0; font-size: 36px; font-weight: 700; line-height: 1.2; }
+.section-head .sub { margin: 4px 0 0; color: var(--text-2); font-size: 19.5px; }
+.change { color: var(--text-2); font-size: 12px; white-space: nowrap; }
+.liked { color: var(--muted); font-size: 12px; }
+
+/* ---------- Controls ---------- */
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { color: var(--text-2); font-size: 13px; }
+select {
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--axis);
+  border-radius: 8px;
+  padding: 8px 12px;
+  min-width: 220px;
+}
+select:focus-visible, button:focus-visible, a:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--axis);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.segmented button {
+  font: inherit;
+  font-size: 13px;
+  background: transparent;
+  color: var(--text-2);
+  border: 0;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.segmented button + button { border-left: 1px solid var(--axis); }
+.segmented button:hover { background: var(--hover); }
+.segmented button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+
+/* ---------- Tables & ranked lists ---------- */
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--grid); }
+th { color: var(--text-2); font-weight: 600; font-size: 12px; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.rank { color: var(--muted); width: 2.5em; font-variant-numeric: tabular-nums; }
+.secondary { color: var(--text-2); font-size: 13px; }
+
+/* "Show data" table under each chart */
+details.data-table { margin-top: 8px; font-size: 13px; }
+details.data-table summary { color: var(--text-2); cursor: pointer; }
+details.data-table .scroll { max-height: 260px; overflow: auto; margin-top: 8px; }

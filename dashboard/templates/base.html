@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Spotify Dashboard{% endblock %}</title>
+  <script>
+    // Apply the saved light/dark choice before the page draws, so it doesn't flash
+    try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <!-- The one charting library for every tab -->
+  <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
+  <script src="{{ url_for('static', filename='charts.js') }}"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <span class="brand">Spotify Listening</span>
+      <nav class="tabs">
+        <a href="{{ url_for('individual.index') }}"
+           class="{{ 'active' if request.blueprint == 'individual' }}">Individual</a>
+        <a href="{{ url_for('compare.index') }}"
+           class="{{ 'active' if request.blueprint == 'compare' }}">Compare</a>
+      </nav>
+      <button type="button" id="theme-toggle" class="theme-toggle"></button>
+    </div>
+  </header>
+
+  <main class="page">
+    {% block content %}{% endblock %}
+  </main>
+
+  <script>
+    // Light/dark toggle: overrides the system setting and remembers the choice
+    (() => {
+      const root = document.documentElement;
+      const btn = document.getElementById("theme-toggle");
+      const current = () => root.dataset.theme ||
+        (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      const label = () => {
+        const next = current() === "dark" ? "light" : "dark";
+        btn.textContent = next === "light" ? "☀ Light mode" : "☾ Dark mode";
+        btn.setAttribute("aria-label", `Switch to ${next} mode`);
+      };
+      btn.addEventListener("click", () => {
+        root.dataset.theme = current() === "dark" ? "light" : "dark";
+        try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
+        label();
+        Charts.redrawAll();
+      });
+      label();
+    })();
+  </script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
