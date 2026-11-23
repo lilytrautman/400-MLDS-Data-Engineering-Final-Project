@@ -34,3 +34,13 @@ WHERE (SELECT COUNT(*) FROM plays AS p
        WHERE p.user_id = pulled.user_id AND p.run_id = pulled.run_id) = 50
   AND EXISTS (SELECT 1 FROM plays AS p
               WHERE p.user_id = pulled.user_id AND p.run_id <> pulled.run_id);
+
+-- check: every account already in the database was pulled in this run
+-- 01_ingest.py skips an account whose pull fails (usually an expired login) so the
+-- others still load. Spotify only keeps the last 50 plays, so a skipped account loses
+-- plays every day it goes unnoticed. This makes the run fail instead. The ingest log
+-- names the account; log it back in with python src/login.py <name>.
+-- To drop someone from the project for good, delete their rows from the database too.
+SELECT COUNT(*)
+FROM users
+WHERE user_id NOT IN (SELECT user_id FROM stg_users);
