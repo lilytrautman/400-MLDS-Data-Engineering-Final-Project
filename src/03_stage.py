@@ -52,10 +52,20 @@ def all_tracks(account_dir):
     return tracks
 
 
+def first_image_url(obj):
+    """Return the first image URL from a Spotify object's 'images' list, or None."""
+    images = obj.get("images") or []
+    return images[0].get("url") if images else None
+
+
 def stage_users(account_dir):
     """One row for the account the data was pulled from."""
-    df = pd.json_normalize(load(account_dir, "me"))
-    return df[["id", "display_name", "country"]].rename(columns={"id": "user_id"})
+    rows = [
+        {"user_id": item.get("id"), "display_name": item.get("display_name"),
+         "country": item.get("country"), "image_url": first_image_url(item)}
+        for item in load(account_dir, "me")
+    ]
+    return pd.DataFrame(rows, columns=["user_id", "display_name", "country", "image_url"])
 
 
 def stage_plays(account_dir, user_id):
@@ -89,18 +99,29 @@ def stage_track_artists(account_dir):
 
 def stage_albums(account_dir):
     """One row per album appearance, taken from every track's album."""
-    df = pd.json_normalize([track["album"] for track in all_tracks(account_dir)])
+    albums = [track["album"] for track in all_tracks(account_dir)]
+    df = pd.json_normalize(albums)
     df = df.reindex(columns=["id", "name", "album_type", "release_date", "release_date_precision"])
-    return df.rename(columns={"id": "album_id", "release_date_precision": "release_precision"})
+    df = df.rename(columns={"id": "album_id", "release_date_precision": "release_precision"})
+    df["image_url"] = [first_image_url(album) for album in albums]
+    return df
 
 
 def stage_artists(account_dir):
     """One row per artist appearance, from track credits and the top-artist lists."""
-    credited = stage_track_artists(account_dir)[["artist_id", "artist_name"]]
-    frames = [credited.rename(columns={"artist_name": "name"})]
+    credited = stage_track_artists(account_dir)[["artist_id", "artist_name"]].rename(
+        columns={"artist_name": "name"}
+    )
+    credited["image_url"] = None
+    frames = [credited]
     for time_range in TIME_RANGES:
-        top = pd.json_normalize(load(account_dir, f"top_artists_{time_range}"))
-        frames.append(top.reindex(columns=["id", "name"]).rename(columns={"id": "artist_id"}))
+        items = load(account_dir, f"top_artists_{time_range}")
+        rows = [
+            {"artist_id": item.get("id"), "name": item.get("name"),
+             "image_url": first_image_url(item)}
+            for item in items
+        ]
+        frames.append(pd.DataFrame(rows, columns=["artist_id", "name", "image_url"]))
     return pd.concat(frames, ignore_index=True)
 
 
@@ -155,9 +176,11 @@ def stage_deezer_tracks(run_dir):
         response = entry["response"]
         if response is None or "error" in response:  # failed request or no match
             continue
+        artist_img = (response.get("artist") or {}).get("picture_medium")
         rows.append({"track_id": entry["track_id"], "deezer_id": response["id"],
-                     "rank": response.get("rank"), "bpm": response.get("bpm")})
-    return pd.DataFrame(rows, columns=["track_id", "deezer_id", "rank", "bpm"])
+                     "rank": response.get("rank"), "bpm": response.get("bpm"),
+                     "artist_image_url": artist_img})
+    return pd.DataFrame(rows, columns=["track_id", "deezer_id", "rank", "bpm", "artist_image_url"])
 
 
 def stage_account(account_dir, snapshot_date):

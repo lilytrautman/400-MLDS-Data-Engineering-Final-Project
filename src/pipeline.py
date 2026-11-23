@@ -62,8 +62,15 @@ def run_sql_file(name):
 
 
 def create_tables():
-    """Step 02: create the final tables if they're missing."""
+    """Step 02: create the final tables if they're missing, and add any new columns."""
     run_sql_file("02_schema.sql")
+    # CREATE TABLE IF NOT EXISTS won't add columns to an existing database
+    with closing(connect()) as conn:
+        for table in ("users", "albums", "artists"):
+            cols = {row[1] for row in conn.execute(f"PRAGMA table_info({table})")}
+            if "image_url" not in cols:
+                conn.execute(f"ALTER TABLE {table} ADD COLUMN image_url TEXT")
+        conn.commit()
 
 
 def stage(run_dir):
