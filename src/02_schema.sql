@@ -72,7 +72,8 @@ CREATE TABLE IF NOT EXISTS saved_tracks (
     PRIMARY KEY (user_id, track_id)
 ) STRICT;
 
--- Top 50 tracks per time range, one snapshot per day, so rank changes are kept
+-- Top 50 tracks per time range, one snapshot per day, so rank changes are kept.
+-- snapshot_date is the Chicago date the run started on (not UTC like the timestamps).
 CREATE TABLE IF NOT EXISTS top_tracks (
     user_id       TEXT NOT NULL REFERENCES users (user_id),
     snapshot_date TEXT NOT NULL,

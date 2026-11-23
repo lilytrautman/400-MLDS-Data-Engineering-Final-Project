@@ -9,11 +9,14 @@ the current run.
 
 import json
 from collections import defaultdict
+from datetime import datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import pandas as pd
 
 TIME_RANGES = ["short_term", "medium_term", "long_term"]
+LOCAL_TZ = ZoneInfo("America/Chicago")  # same as the DAG schedule and the dashboard
 
 AUDIO_FEATURES = [
     "acousticness", "danceability", "energy", "instrumentalness", "key", "liveness",
@@ -174,11 +177,21 @@ def stage_account(account_dir, snapshot_date):
     }
 
 
+def snapshot_date_for(run_id):
+    """The Chicago date a run started on, e.g. 2026-11-24T0300Z -> 2026-11-23.
+
+    Run ids are UTC times, and the 9 PM Chicago run is already the next day in UTC,
+    so taking the date straight from the run id would label it a day ahead.
+    """
+    started = datetime.strptime(run_id, "%Y-%m-%dT%H%MZ").replace(tzinfo=timezone.utc)
+    return started.astimezone(LOCAL_TZ).date().isoformat()
+
+
 def main(run_dir, conn):
     """Write every staging table for one run."""
     run_dir = Path(run_dir)
     run_id = run_dir.name
-    snapshot_date = run_id[:10]  # run ids start with the UTC date, e.g. 2026-11-19
+    snapshot_date = snapshot_date_for(run_id)
 
     frames = defaultdict(list)
     # Tracks, albums and artists two people share appear twice here;
