@@ -17,7 +17,7 @@ REPO = "/opt/project"  # where docker-compose.yml mounts the repo
 with DAG(
     dag_id="spotify_daily",
     start_date=datetime(2026, 11, 20),
-    schedule="0 21 * * *",  # every day at 9 PM (Chicago time, set in docker-compose.yml)
+    schedule="0 9,21 * * *",  # twice a day at 9 AM and 9 PM (Chicago time, set in docker-compose.yml)
     catchup=False,  # after the Mac was off, run once, not once per missed day
     max_active_runs=1,  # two runs at once would write to the same database
     default_args={
