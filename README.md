@@ -40,7 +40,7 @@ A data pipeline that pulls listening data from the Spotify API, adds audio featu
    ```
    docker compose up -d --build
    ```
-   Open http://localhost:8080, unpause `spotify_daily`, and it runs every day at 9 PM
+   Open http://localhost:8080, unpause `spotify_daily`, and it runs twice a day at 9 AM and 9 PM
    (Chicago time). Stop it with `docker compose down`.
 
 The database ends up in `data/spotify.db`. Tokens (`tokens/`), keys and data stay out of git.
