@@ -4,78 +4,112 @@
    Sizes are set for a classroom projector: no text smaller than 14px. */
 
 :root {
+  /* Spotify-style theme. Three modes: Auto (follows the computer), Light, Dark.
+     Auto = no data-theme attribute; Light/Dark set data-theme on <html>. */
   color-scheme: light;
-  --page: #f4f4f1;
+  --page: #f6f6f6;
   --surface: #ffffff;
-  --border: rgba(11, 11, 11, 0.12);
-  --text: #0b0b0b;
-  --text-2: #45443f;
-  --muted: #605f59;
-  --grid: #e1e0d9;
-  --axis: #b9b8ad;
-  --accent: #1db954;           /* Spotify green: nav, selected states and the one headline card per page */
-  --accent-ink: #0b0b0b;
-  --accent-soft: rgba(29, 185, 84, 0.16);
-  --hover: rgba(11, 11, 11, 0.05);
+  --surface-2: #f0f0f0;
+  --border: rgba(0, 0, 0, 0.08);
+  --text: #121212;
+  --text-2: #4d4d4d;
+  --muted: #6a6a6a;
+  --grid: #e6e6e6;
+  --axis: #c4c4c4;
+  --accent: #1db954;           /* Spotify green: nav, selected states, the headline card */
+  --accent-ink: #000000;       /* text on a green fill */
+  --accent-text: #117a37;      /* green used as text on the page (darker in light mode for contrast) */
+  --accent-soft: rgba(29, 185, 84, 0.14);
+  --hero: linear-gradient(150deg, #9ff0bb 0%, #d6f7e2 45%, #ffffff 100%);
+  --hover: rgba(0, 0, 0, 0.05);
+  --zebra: rgba(0, 0, 0, 0.035);
+  --row-hover: rgba(0, 0, 0, 0.07);
+  --tip-bg: #ffffff;
+  --tip-text: #121212;
+  --tip-border: rgba(0, 0, 0, 0.12);
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 
-  /* One color per listener (listener 1 = series-1, ...), validated for color blindness */
-  --series-1: #2a78d6;  /* blue */
-  --series-2: #eb6834;  /* orange */
-  --series-3: #1baf7a;  /* aqua */
-  --series-4: #eda100;  /* yellow */
-  --series-5: #e87ba4;  /* magenta */
-  --series-6: #008300;  /* green */
-  --series-7: #6250d6;  /* violet */
-  --series-8: #e34948;  /* red */
+  /* One color per listener (listener 1 = series-1, ...): Wrapped-style violet, amber,
+     pink, sky. Green is left out so it only ever means "selected" / the brand. */
+  --series-1: #7c4ddb;  /* violet */
+  --series-2: #d98a00;  /* amber */
+  --series-3: #d9468a;  /* pink */
+  --series-4: #1f8fd1;  /* sky */
+  --series-5: #e0602e;  /* coral */
+  --series-6: #12a39a;  /* teal */
+  --series-7: #a35cc2;  /* plum */
+  --series-8: #e34948;  /* red (also the liked-song heart) */
 
-  --radius: 12px;
-  --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius: 8px;
+  --font: "Figtree", "Circular", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --page: #0d0d0d;
-    --surface: #1a1a19;
-    --border: rgba(255, 255, 255, 0.12);
-    --text: #f0efec;
-    --text-2: #c9c8be;
-    --muted: #a3a299;
-    --grid: #2c2c2a;
-    --axis: #4a4a46;
-    --accent-soft: rgba(29, 185, 84, 0.22);
-    --hover: rgba(255, 255, 255, 0.06);
-    --series-1: #3987e5;
-    --series-2: #d95926;
-    --series-3: #199e70;
-    --series-4: #c98500;
-    --series-5: #d55181;
-    --series-6: #0ca30c;
-    --series-7: #9085e9;
-    --series-8: #e66767;
+    --page: #121212;
+    --surface: #181818;
+    --surface-2: #242424;
+    --border: rgba(255, 255, 255, 0.08);
+    --text: #ffffff;
+    --text-2: #b3b3b3;
+    --muted: #a7a7a7;
+    --grid: #2a2a2a;
+    --axis: #4d4d4d;
+    --accent: #1ed760;
+    --accent-ink: #000000;
+    --accent-text: #1ed760;
+    --accent-soft: rgba(30, 215, 96, 0.16);
+    --hero: linear-gradient(150deg, #1b7a40 0%, #17472a 50%, #181818 100%);
+    --hover: rgba(255, 255, 255, 0.07);
+    --zebra: rgba(255, 255, 255, 0.045);
+    --row-hover: rgba(255, 255, 255, 0.10);
+    --tip-bg: #282828;
+    --tip-text: #ffffff;
+    --tip-border: rgba(255, 255, 255, 0.12);
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --series-1: #a68bf5;
+    --series-2: #f5b83d;
+    --series-3: #f27bb4;
+    --series-4: #5cb8f0;
+    --series-5: #f5875a;
+    --series-6: #3dc9bf;
+    --series-7: #c98be0;
+    --series-8: #f07a7a;
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --page: #0d0d0d;
-  --surface: #1a1a19;
-  --border: rgba(255, 255, 255, 0.12);
-  --text: #f0efec;
-  --text-2: #c9c8be;
-  --muted: #a3a299;
-  --grid: #2c2c2a;
-  --axis: #4a4a46;
-  --accent-soft: rgba(29, 185, 84, 0.22);
-  --hover: rgba(255, 255, 255, 0.06);
-  --series-1: #3987e5;
-  --series-2: #d95926;
-  --series-3: #199e70;
-  --series-4: #c98500;
-  --series-5: #d55181;
-  --series-6: #0ca30c;
-  --series-7: #9085e9;
-  --series-8: #e66767;
+  --page: #121212;
+  --surface: #181818;
+  --surface-2: #242424;
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #ffffff;
+  --text-2: #b3b3b3;
+  --muted: #a7a7a7;
+  --grid: #2a2a2a;
+  --axis: #4d4d4d;
+  --accent: #1ed760;
+  --accent-ink: #000000;
+  --accent-text: #1ed760;
+  --accent-soft: rgba(30, 215, 96, 0.16);
+  --hero: linear-gradient(150deg, #1b7a40 0%, #17472a 50%, #181818 100%);
+  --hover: rgba(255, 255, 255, 0.07);
+  --zebra: rgba(255, 255, 255, 0.045);
+  --row-hover: rgba(255, 255, 255, 0.10);
+  --tip-bg: #282828;
+  --tip-text: #ffffff;
+  --tip-border: rgba(255, 255, 255, 0.12);
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --series-1: #a68bf5;
+  --series-2: #f5b83d;
+  --series-3: #f27bb4;
+  --series-4: #5cb8f0;
+  --series-5: #f5875a;
+  --series-6: #3dc9bf;
+  --series-7: #c98be0;
+  --series-8: #f07a7a;
 }
 
 * { box-sizing: border-box; }
@@ -92,7 +126,7 @@ body {
 
 /* ---------- Top bar & tabs ---------- */
 .topbar {
-  background: var(--surface);
+  background: var(--page);
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
@@ -104,35 +138,50 @@ body {
   padding: 0 16px;
   display: flex;
   align-items: center;
-  gap: 32px;
-  height: 56px;
+  gap: 24px;
+  height: 64px;
 }
-.brand { font-weight: 700; font-size: 18px; }
-.tabs { display: flex; gap: 4px; height: 100%; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 19px; letter-spacing: -0.01em; }
+.brand-mark { width: 28px; height: 28px; flex: none; color: var(--accent); }
+.tabs { display: flex; gap: 8px; }
 .tabs a {
   display: flex;
   align-items: center;
-  padding: 0 12px;
-  color: var(--text-2);
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--text);
   text-decoration: none;
-  border-bottom: 3px solid transparent;
-}
-.tabs a:hover { color: var(--text); }
-.tabs a.active { color: var(--text); border-bottom-color: var(--accent); font-weight: 600; }
-
-.theme-toggle {
-  margin-left: auto;
-  font: inherit;
+  font-weight: 600;
   font-size: 15px;
+  transition: background-color .15s ease;
+}
+.tabs a:hover { box-shadow: inset 0 0 0 1px var(--text-2); }
+.tabs a.active { background: var(--accent); color: var(--accent-ink); }
+
+/* Theme switch: Auto (follows the computer) / Light / Dark */
+.theme-switch {
+  margin-left: auto;
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border-radius: 999px;
+  background: var(--surface-2);
+}
+.theme-switch button {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
   color: var(--text-2);
   background: transparent;
-  border: 1px solid var(--axis);
-  border-radius: 8px;
-  padding: 6px 12px;
+  border: 0;
+  border-radius: 999px;
+  padding: 6px 14px;
   cursor: pointer;
   white-space: nowrap;
 }
-.theme-toggle:hover { background: var(--hover); color: var(--text); }
+.theme-switch button:hover { color: var(--text); }
+.theme-switch button[aria-pressed="true"] { background: var(--text); color: var(--page); }
 
 /* ---------- Pipeline status strip (under the top bar on every tab) ---------- */
 .status {
@@ -150,6 +199,21 @@ body {
   display: inline-block; width: 9px; height: 9px; border-radius: 50%;
   background: var(--accent); margin-right: 6px; vertical-align: 1px;
 }
+
+/* ---------- Section links under the page title (every tab) ---------- */
+.jump {
+  display: flex; flex-wrap: wrap; gap: 8px; margin: -8px 0 20px;
+  position: sticky; top: 64px; z-index: 5; background: var(--page); padding: 10px 0;
+}
+.jump a {
+  font-size: 15px; font-weight: 600; color: var(--text); text-decoration: none;
+  border-radius: 999px; padding: 6px 14px; background: var(--surface-2);
+}
+.jump a:hover { box-shadow: inset 0 0 0 1px var(--text-2); }
+.jump a.here { background: var(--text); color: var(--page); }
+html { scroll-behavior: smooth; }
+[id] { scroll-margin-top: 130px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 /* ---------- Page layout ---------- */
 .page { max-width: 1280px; margin: 0 auto; padding: 20px 16px 64px; }
@@ -189,18 +253,16 @@ body {
   border-radius: var(--radius);
   padding: 24px;
   min-width: 0;
+  transition: background-color .2s ease;
 }
-/* The one green headline card per page. Dark ink on green in both themes. */
+/* The headline card on each page: a Spotify-style green gradient that fades into
+   the card color. Text keeps the theme's own colors, so it is white on dark and
+   near-black on light. */
 .card.accent {
-  color-scheme: light;
-  --surface: #1db954;
-  --text: #0b0b0b;
-  --text-2: rgba(11, 11, 11, 0.82);
-  --muted: rgba(11, 11, 11, 0.78);
-  --border: rgba(11, 11, 11, 0.12);
-  background: var(--surface);
-  color: var(--text);
+  background: var(--hero);
   border-color: transparent;
+  --text-2: color-mix(in srgb, var(--text) 86%, transparent);
+  --muted: color-mix(in srgb, var(--text) 80%, transparent);
 }
 .card h2 { margin: 0; font-size: 28px; font-weight: 700; line-height: 1.2; text-wrap: balance; }
 .card .sub { margin: 6px 0 16px; color: var(--text-2); font-size: 17px; line-height: 1.45; max-width: 60ch; text-wrap: pretty; }
@@ -231,10 +293,9 @@ body {
   border-radius: 12px;
   font-size: 15px;
   line-height: 1.45;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow);
 }
-.chart-tip.light { background: #ffffff; color: #0b0b0b; border: 1px solid rgba(11, 11, 11, 0.2); }
-.chart-tip.dark { background: #0b0b0b; color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
+.chart-tip { background: var(--tip-bg); color: var(--tip-text); border: 1px solid var(--tip-border); }
 .chart-tip .tip-swatch {
   display: inline-block; width: 10px; height: 10px; border-radius: 50%;
   margin-right: 6px; vertical-align: -1px;
@@ -250,9 +311,9 @@ body {
   z-index: 20;
   margin-top: 6px;
   background: var(--surface);
-  border: 1px solid var(--axis);
+  border: 1px solid var(--tip-border);
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow);
 }
 .pie-hover:hover .pie-pop,
 .pie-hover:focus .pie-pop { display: block; }
@@ -276,45 +337,53 @@ select {
   color: var(--text);
   background: var(--surface);
   border: 1px solid var(--axis);
-  border-radius: 8px;
-  padding: 8px 12px;
+  border-radius: 999px;
+  padding: 8px 16px;
   min-width: 220px;
+  cursor: pointer;
 }
+select:hover { border-color: var(--text-2); }
 select:focus-visible, button:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 2px;
 }
-.card.accent :focus-visible { outline-color: #0b0b0b; }
 
 .segmented {
   display: inline-flex;
   flex-wrap: wrap;
-  border: 1px solid var(--axis);
-  border-radius: 8px;
-  overflow: hidden;
+  gap: 6px;
 }
 .segmented button {
   font: inherit;
   font-size: 15px;
-  background: transparent;
-  color: var(--text-2);
+  font-weight: 600;
+  background: var(--surface-2);
+  color: var(--text);
   border: 0;
-  padding: 7px 14px;
+  border-radius: 999px;
+  padding: 7px 16px;
   cursor: pointer;
 }
-.segmented button + button { border-left: 1px solid var(--axis); }
-.segmented button:hover { background: var(--hover); }
-.segmented button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.segmented button:hover { box-shadow: inset 0 0 0 1px var(--text-2); }
+.segmented button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
 
 /* ---------- Tables & ranked lists ---------- */
-table { width: 100%; border-collapse: collapse; font-size: 16px; }
-th, td { text-align: left; padding: 8px; border-bottom: 1px solid var(--grid); }
-th { color: var(--text-2); font-weight: 600; font-size: 15px; }
-td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
-.rank { color: var(--muted); width: 2.5em; font-variant-numeric: tabular-nums; }
+/* Spotify-style rows: no rules between rows, alternate rows shaded, the row under
+   the mouse highlighted, rounded row ends */
+table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 16px; }
+th, td { text-align: left; padding: 10px 12px; vertical-align: middle; }
+th { color: var(--text-2); font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--grid); }
+tbody tr:nth-child(odd) td { background: var(--zebra); }
+tbody tr:hover td { background: var(--row-hover); }
+tbody td:first-child { border-radius: 6px 0 0 6px; }
+tbody td:last-child { border-radius: 0 6px 6px 0; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rank { color: var(--muted); width: 2.5em; text-align: center; font-size: 17px; font-variant-numeric: tabular-nums; }
+td .secondary { margin-top: 2px; }
 .secondary { color: var(--text-2); font-size: 15px; }
 
 /* "Show data" table under each chart */
 details.data-table { margin-top: 12px; font-size: 15px; }
-details.data-table summary { color: var(--text-2); cursor: pointer; }
+details.data-table summary { color: var(--text-2); cursor: pointer; font-weight: 600; }
+details.data-table summary:hover { color: var(--text); }
 details.data-table .scroll { max-height: 320px; overflow: auto; margin-top: 8px; }

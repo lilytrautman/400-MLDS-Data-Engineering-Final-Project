@@ -42,11 +42,11 @@ const Charts = (() => {
       margin: { l: 56, r: 16, t: 8, b: 48 },
       showlegend: false,
       legend: { orientation: "h", x: 0, y: 1.12, font: { color: color("text-2"), size: 16 } },
-      // Hover tooltips: white box with black text
+      // Hover tooltips follow the theme (white box in light mode, dark grey in dark mode)
       hoverlabel: {
-        bgcolor: "#ffffff",
+        bgcolor: color("tip-bg"),
         bordercolor: color("axis"),
-        font: { color: "#0b0b0b", size: 15 },
+        font: { color: color("tip-text"), size: 15 },
       },
       bargap: 0.25,
       barcornerradius: 4,
@@ -74,13 +74,13 @@ const Charts = (() => {
   function hideTip() {
     if (tipEl) tipEl.style.display = "none";
   }
-  // theme: "light" (white box) or "dark" (black box)
-  function tooltip(el, tip, theme = "light") {
+  // Colors come from the --tip-* tokens, so the box follows light/dark mode
+  function tooltip(el, tip) {
     el.on("plotly_hover", (ev) => {
       const html = tip(ev.points);
       if (!html || !ev.event) return hideTip();
       const t = tipBox();
-      t.className = `chart-tip ${theme}`;
+      t.className = "chart-tip";
       t.innerHTML = html;
       t.style.display = "block";
       // Next to the mouse, flipped to the other side near the window's edge

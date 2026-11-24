@@ -24,6 +24,11 @@
 {% set lvp = data.liked_vs_played %}
 {% set top4w = data.top.short_term %}
 
+<nav class="jump" aria-label="Sections on this page">
+  <a href="#played">Liked vs. played</a><a href="#mood">Mood and energy</a><a href="#years">Release years</a>
+  <a href="#hours">Time of day</a><a href="#top">Top tracks and artists</a>
+</nav>
+
 <div class="grid">
   <!-- Headline numbers: the page's one green card -->
   <section class="card accent span-12" aria-label="Headline numbers">
@@ -49,7 +54,7 @@
   </section>
 
   <!-- Liked vs. actually played -->
-  <section class="card span-12">
+  <section class="card span-12" id="played">
     <h2>Liked songs vs. what actually gets played</h2>
     <p class="sub">Do they listen to their library, or to things they never saved?</p>
     <div class="grid">
@@ -100,7 +105,7 @@
   </section>
 
   <!-- Mood over time -->
-  <section class="card span-12">
+  <section class="card span-12" id="mood">
     <h2>Mood and energy of liked songs over time</h2>
     <p class="sub">Average of the songs liked each quarter, from the first quarter with enough songs.
       Positivity (valence) runs from 0 (sad-sounding) to 1 (happy). Energy runs from 0 (calm) to 1 (intense).
@@ -109,19 +114,19 @@
   </section>
 
   <!-- Release years & hour of day -->
-  <section class="card span-6">
+  <section class="card span-6" id="years">
     <h2>Liked songs by release year</h2>
     <p class="sub">Year each liked song's album came out.</p>
     <div id="years-chart" class="chart"></div>
   </section>
-  <section class="card span-6">
+  <section class="card span-6" id="hours">
     <h2>Listening by time of day</h2>
     <p class="sub">Chicago time. {{ s.plays }} plays over {{ data.hours.days }} day{{ "" if data.hours.days == 1 else "s" }}; grows every night.</p>
     <div id="hours-chart" class="chart"></div>
   </section>
 
   <!-- Top tracks & artists, one time-range control for both -->
-  <div class="span-12 section-head">
+  <div class="span-12 section-head" id="top">
     <div>
       <h2>Top tracks and artists</h2>
       {% set first = data.top.short_term.tracks[0] if data.top.short_term.tracks else none %}
