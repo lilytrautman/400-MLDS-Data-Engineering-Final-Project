@@ -9,11 +9,9 @@
 const Charts = (() => {
   const registry = new Map();
 
-  // Charts sit inside .card boxes, which set their own colors (see style.css),
-  // so read the tokens from a card when the page has one.
+  // Charts sit on the neutral cards, which use the page's own tokens
   function color(name) {
-    const scope = document.querySelector(".card") || document.documentElement;
-    return getComputedStyle(scope).getPropertyValue(`--${name}`).trim();
+    return getComputedStyle(document.documentElement).getPropertyValue(`--${name}`).trim();
   }
 
   function series(i) {
@@ -28,8 +26,9 @@ const Charts = (() => {
       zeroline: false,
       showline: true,
       automargin: true,
-      tickfont: { color: color("muted"), size: 12 },
-      title: { font: { color: color("text-2"), size: 12 } },
+      // 16px so axis labels read on a projector
+      tickfont: { color: color("muted"), size: 16 },
+      title: { font: { color: color("text-2"), size: 16 } },
       ...extra,
     };
   }
@@ -39,15 +38,15 @@ const Charts = (() => {
     return {
       paper_bgcolor: "rgba(0,0,0,0)",
       plot_bgcolor: "rgba(0,0,0,0)",
-      font: { family: getComputedStyle(document.body).fontFamily, color: color("text-2"), size: 12 },
-      margin: { l: 48, r: 16, t: 8, b: 40 },
+      font: { family: getComputedStyle(document.body).fontFamily, color: color("text-2"), size: 16 },
+      margin: { l: 56, r: 16, t: 8, b: 48 },
       showlegend: false,
-      legend: { orientation: "h", x: 0, y: 1.12, font: { color: color("text-2") } },
+      legend: { orientation: "h", x: 0, y: 1.12, font: { color: color("text-2"), size: 16 } },
       // Hover tooltips: white box with black text
       hoverlabel: {
         bgcolor: "#ffffff",
         bordercolor: color("axis"),
-        font: { color: "#0b0b0b", size: 13 },
+        font: { color: "#0b0b0b", size: 15 },
       },
       bargap: 0.25,
       barcornerradius: 4,

@@ -1,7 +1,7 @@
 """Compare tab: tastes and habits across all connected users (Gloria).
 
 Everything the page shows is computed here from data/spotify.db and handed to
-compare.html as one JSON blob; static/compare/compare.js draws it. All the rules
+compare.html as one JSON blob; the script in compare.html draws it. All the rules
 (listener profiles, head-to-head results, similarity scores) live in
 this file so they're deterministic and easy to check.
 
@@ -49,7 +49,7 @@ MIN_DAYS = 3              # ...and the plays must cover at least this many days
 FEATURES = [
     ("danceability", "Danceability", "How suitable a track is for dancing, from rhythm and beat strength."),
     ("energy", "Energy", "How intense and active a track feels: fast, loud and noisy scores high."),
-    ("valence", "Valence", "How positive a track sounds: high is cheerful, low is darker or sadder-sounding."),
+    ("valence", "Positivity", "How positive a track sounds (Spotify calls this valence): high is cheerful, low is darker or sadder-sounding."),
     ("acousticness", "Acousticness", "How likely a track is acoustic rather than electronic."),
     ("speechiness", "Speechiness", "How much of a track is spoken words, like rap verses."),
     ("instrumentalness", "Instrumentalness", "How likely a track has no vocals."),
@@ -90,11 +90,11 @@ TRAITS = [
     ("danceability", -1, "Low danceability", "Liked songs score lower on danceability than the rest of the group's."),
     ("energy", +1, "High energy", "Liked songs score higher on energy than the rest of the group's."),
     ("energy", -1, "Low energy", "Liked songs score lower on energy than the rest of the group's."),
-    ("valence", +1, "High valence", "Liked songs sound more positive (higher valence) than the rest of the group's."),
-    ("valence", -1, "Low valence", "Liked songs sound less positive (lower valence) than the rest of the group's."),
+    ("valence", +1, "Upbeat sound", "Liked songs sound more positive (higher valence) than the rest of the group's."),
+    ("valence", -1, "Darker sound", "Liked songs sound less positive (lower valence) than the rest of the group's."),
     ("acousticness", +1, "High acousticness", "Liked songs are more acoustic than the rest of the group's."),
-    ("speechiness", +1, "High speechiness", "Liked songs contain more spoken words, such as rap, than the rest of the group's."),
-    ("instrumentalness", +1, "High instrumentalness", "Liked songs have fewer vocals than the rest of the group's."),
+    ("speechiness", +1, "Rap and spoken word", "Liked songs contain more spoken words, such as rap, than the rest of the group's."),
+    ("instrumentalness", +1, "Instrumental-leaning", "Liked songs have fewer vocals than the rest of the group's."),
     ("explicit", +1, "High explicit share", "A larger share of liked songs are marked explicit."),
     ("explicit", -1, "Low explicit share", "A smaller share of liked songs are marked explicit."),
     ("diversity", +1, "Broad artist range", "Liked songs are spread across more different artists."),
@@ -109,7 +109,7 @@ BATTLES = [
     ("year", -1, "Which library is older?", "Older releases"),
     ("danceability", +1, "Which library is more danceable?", "More danceable"),
     ("energy", +1, "Which library has higher energy?", "Higher energy"),
-    ("valence", +1, "Which library has higher valence?", "Higher valence"),
+    ("valence", +1, "Which library sounds happier?", "Happier sound"),
     ("explicit", +1, "Which library has more explicit songs?", "More explicit"),
     ("diversity", +1, "Which library has more artist variety?", "More artist variety"),
 ]

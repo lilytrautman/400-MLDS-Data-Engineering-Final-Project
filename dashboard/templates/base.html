@@ -27,6 +27,15 @@
     </div>
   </header>
 
+  {% if status %}
+  <!-- Where the data comes from and how fresh it is -->
+  <div class="status" role="status">
+    <span><span class="dot" aria-hidden="true"></span>Last pipeline run <b>{{ status.last or "not yet" }}</b> · next at <b>{{ status.next }}</b> (runs 9 AM and 9 PM Chicago time)</span>
+    <span><b>{{ status.listeners }}</b> listeners · <b>{{ "{:,}".format(status.plays) }}</b> plays · <b>{{ "{:,}".format(status.tracks) }}</b> tracks</span>
+    <span>Audio features (ReccoBeats) <b>{{ "{:,}".format(status.features) }}</b> of {{ "{:,}".format(status.tracks) }} · Popularity (Deezer) <b>{{ "{:,}".format(status.deezer) }}</b> of {{ "{:,}".format(status.tracks) }}</span>
+  </div>
+  {% endif %}
+
   <main class="page">
     {% block content %}{% endblock %}
   </main>
@@ -40,7 +49,7 @@
         (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       const label = () => {
         const next = current() === "dark" ? "light" : "dark";
-        btn.textContent = next === "light" ? "☀ Light mode" : "☾ Dark mode";
+        btn.textContent = next === "light" ? "Light mode" : "Dark mode";
         btn.setAttribute("aria-label", `Switch to ${next} mode`);
       };
       btn.addEventListener("click", () => {
