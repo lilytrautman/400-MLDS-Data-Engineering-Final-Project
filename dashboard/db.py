@@ -40,9 +40,39 @@ def query(sql, params=()):
     return [dict(row) for row in get_db().execute(sql, params).fetchall()]
 
 
+def _table_columns(table):
+    cache = g.setdefault("_table_columns", {})
+    if table not in cache:
+        cache[table] = {r["name"] for r in query(f"PRAGMA table_info({table})")}
+    return cache[table]
+
+
+def has_image_columns():
+    """Check whether image_url exists on users, albums and artists (keeps old DB snapshots working)."""
+    return {t: "image_url" in _table_columns(t) for t in ("users", "albums", "artists")}
+
+
+def _first_word(name):
+    text = (name or "").strip()
+    return text.split()[0] if text else ""
+
+
 def get_users():
     """Every connected account, for user dropdowns. Never hardcode user ids."""
-    return query(
-        "SELECT user_id, COALESCE(display_name, user_id) AS display_name, country "
-        "FROM users ORDER BY display_name COLLATE NOCASE"
+    cols = _table_columns("users")
+    img_sql = "image_url" if "image_url" in cols else "NULL AS image_url"
+    first_sql = "first_name" if "first_name" in cols else "NULL AS first_name"
+    last_sql = "last_name" if "last_name" in cols else "NULL AS last_name"
+    rows = query(
+        f"SELECT user_id, COALESCE(display_name, user_id) AS display_name, country, "
+        f"{img_sql}, {first_sql}, {last_sql} FROM users"
     )
+    for r in rows:
+        raw_name = r["display_name"]
+        r["display_name"] = (
+            (r["first_name"] or "").strip()
+            or _first_word(raw_name)
+            or r["user_id"]
+        )
+    rows.sort(key=lambda r: r["display_name"].lower())
+    return rows
