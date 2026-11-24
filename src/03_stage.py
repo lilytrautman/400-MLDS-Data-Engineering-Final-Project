@@ -58,14 +58,58 @@ def first_image_url(obj):
     return images[0].get("url") if images else None
 
 
+def load_user_names():
+    """Read optional local data/user_names.json overrides (gitignored), keyed by account name or user_id."""
+    path = Path(__file__).resolve().parent.parent / "data" / "user_names.json"
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text())
+        return data if isinstance(data, dict) else {}
+    except (OSError, ValueError):
+        return {}
+
+
+def parse_user_names(account_name, display_name, user_id, overrides):
+    """Derive (first_name, last_name) from optional local overrides, account folder name, and Spotify display_name."""
+    parts = [p for p in account_name.replace("-", "_").split("_") if p]
+    first = parts[0].capitalize() if parts else None
+    last = " ".join(p.capitalize() for p in parts[1:]) or None
+
+    # Fall back to Spotify's display_name when it includes a last name (e.g. "Yash Ahlawat")
+    if not last and display_name:
+        words = display_name.strip().split()
+        if len(words) >= 2:
+            last = " ".join(words[1:])
+
+    override = overrides.get(account_name.lower()) or overrides.get(user_id)
+    if isinstance(override, dict):
+        first = override.get("first_name") or first
+        last = override.get("last_name") or last
+    return first, last
+
+
 def stage_users(account_dir):
     """One row for the account the data was pulled from."""
-    rows = [
-        {"user_id": item.get("id"), "display_name": item.get("display_name"),
-         "country": item.get("country"), "image_url": first_image_url(item)}
-        for item in load(account_dir, "me")
-    ]
-    return pd.DataFrame(rows, columns=["user_id", "display_name", "country", "image_url"])
+    overrides = load_user_names()
+    account_name = Path(account_dir).name
+    rows = []
+    for item in load(account_dir, "me"):
+        user_id = item.get("id")
+        display_name = item.get("display_name")
+        first_name, last_name = parse_user_names(account_name, display_name, user_id, overrides)
+        rows.append({
+            "user_id": user_id,
+            "display_name": display_name,
+            "first_name": first_name,
+            "last_name": last_name,
+            "country": item.get("country"),
+            "image_url": first_image_url(item),
+        })
+    return pd.DataFrame(
+        rows,
+        columns=["user_id", "display_name", "first_name", "last_name", "country", "image_url"],
+    )
 
 
 def stage_plays(account_dir, user_id):
