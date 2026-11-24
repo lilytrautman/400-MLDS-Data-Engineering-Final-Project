@@ -6,3 +6,5 @@ data/
 __pycache__/
 *.db
 tokens/
+docs/
+.DS_Store
