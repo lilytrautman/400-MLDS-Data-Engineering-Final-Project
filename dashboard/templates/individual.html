@@ -3,9 +3,22 @@
 
 {% block content %}
 <div class="page-header">
-  <div>
-    <h1>Individual listener</h1>
-    <p>One person's liked songs, listening habits and favorites.</p>
+  <div class="header-identity">
+    {% if selected_user %}
+    <span class="thumb thumb-circle thumb-lg thumb-listener thumb-ring" style="--ring: var(--series-{{ user_index % 8 + 1 }})" aria-hidden="true">
+      <span class="thumb-fallback">{{ selected_user.initial }}</span>
+      {% if selected_user.image_url %}<img src="{{ selected_user.image_url }}" alt="" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">{% endif %}
+    </span>
+    <div>
+      <h1>{{ selected_user.display_name }}</h1>
+      <p>Liked songs, listening habits and favorites.</p>
+    </div>
+    {% else %}
+    <div>
+      <h1>Individual listener</h1>
+      <p>One person's liked songs, listening habits and favorites.</p>
+    </div>
+    {% endif %}
   </div>
   <form method="get" class="field">
     <label for="user">Listener</label>
@@ -24,56 +37,85 @@
 {% set lvp = data.liked_vs_played %}
 {% set top4w = data.top.short_term %}
 
+<nav class="jump" aria-label="Sections on this page">
+  <a href="#played">Liked vs. played</a><a href="#mood">Mood and energy</a><a href="#years">Release years</a>
+  <a href="#hours">Time of day</a><a href="#top">Top tracks and artists</a>
+</nav>
+
 <div class="grid">
-  <!-- Headline numbers -->
-  <div class="card stat span-3">
-    <div class="label large">Liked songs</div>
-    <div class="value">{{ "{:,}".format(s.liked) }}</div>
-  </div>
-  <div class="card stat span-3">
-    <div class="label large">Plays recorded in database</div>
-    <div class="value">{{ "{:,}".format(s.plays) }}</div>
-    <div class="note">{{ "since " ~ s.plays_since if s.plays_since else "None yet" }}</div>
-  </div>
-  <div class="card stat span-3">
-    <div class="label large">Top artist, last 4 weeks</div>
-    <div class="value small">{{ top4w.artists[0].artist if top4w.artists else "—" }}</div>
-  </div>
-  <div class="card stat span-3">
-    <div class="label large">Top track, last 4 weeks</div>
-    <div class="value small">{{ top4w.tracks[0].track if top4w.tracks else "—" }}</div>
-    {% if top4w.tracks %}<div class="note">{{ top4w.tracks[0].artist }}</div>{% endif %}
-  </div>
+  <!-- Headline numbers: the page's one green card -->
+  <section class="card accent span-12" aria-label="Headline numbers">
+    <div class="grid">
+      <div class="stat span-3">
+        <div class="value">{{ "{:,}".format(s.liked) }}</div>
+        <div class="label">Liked songs</div>
+      </div>
+      <div class="stat span-3">
+        <div class="value">{{ "{:,}".format(s.plays) }}</div>
+        <div class="label">Plays recorded</div>
+        <div class="note">{{ "since " ~ s.plays_since if s.plays_since else "None yet" }}</div>
+      </div>
+      <div class="stat span-3">
+        <div class="hero-media">
+          {% if top4w.artists %}
+          {% set ta = top4w.artists[0] %}
+          <span class="thumb thumb-circle thumb-lg" aria-hidden="true">
+            <span class="thumb-fallback">{{ (ta.artist[:1] or "?") | upper }}</span>
+            {% if ta.image_url %}<img src="{{ ta.image_url }}" alt="" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">{% endif %}
+          </span>
+          {% endif %}
+          <div class="media-text">
+            <div class="value small">{{ top4w.artists[0].artist if top4w.artists else "—" }}</div>
+            <div class="label">Top artist, last 4 weeks</div>
+          </div>
+        </div>
+      </div>
+      <div class="stat span-3">
+        <div class="hero-media">
+          {% if top4w.tracks %}
+          {% set tt = top4w.tracks[0] %}
+          <span class="thumb thumb-square thumb-lg" aria-hidden="true">
+            <span class="thumb-fallback">&#9834;</span>
+            {% if tt.image_url %}<img src="{{ tt.image_url }}" alt="" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">{% endif %}
+          </span>
+          {% endif %}
+          <div class="media-text">
+            <div class="value small">{{ top4w.tracks[0].track if top4w.tracks else "—" }}</div>
+            <div class="label">Top track, last 4 weeks{% if top4w.tracks %} · {{ top4w.tracks[0].artist }}{% endif %}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Liked vs. actually played -->
-  <section class="card span-12">
+  <section class="card span-12" id="played">
     <h2>Liked songs vs. what actually gets played</h2>
     <p class="sub">Do they listen to their library, or to things they never saved?</p>
     <div class="grid">
       <div class="stat span-4">
-        <div class="label">Plays that were liked songs</div>
         {% if lvp.plays %}
-        <!-- Hover (or tab to) the number to see a pie chart -->
-        <div class="pie-hover" tabindex="0" data-pie="plays" aria-describedby="pie-plays">
-          <div class="value">{{ ((100 * lvp.liked_plays / lvp.plays) | round | int) ~ "%" }}</div>
-          <div class="pie-pop" id="pie-plays" role="tooltip"></div>
-        </div>
+        {% set share = (100 * lvp.liked_plays / lvp.plays) | round | int %}
+        <div class="value">{{ share }}%</div>
+        <div class="label">of plays were liked songs</div>
+        <div class="meter" role="img" aria-label="{{ share }}% of plays were liked songs"><span style="width: {{ share }}%"></span></div>
+        <div class="note">{{ lvp.liked_plays }} of {{ lvp.plays }} recorded plays</div>
         {% else %}
         <div class="value">—</div>
+        <div class="label">No plays recorded yet</div>
         {% endif %}
-        <div class="note">{{ lvp.liked_plays }} of {{ lvp.plays }} recorded plays</div>
       </div>
       <div class="stat span-4">
-        <div class="label">Top tracks (4 weeks) that are liked</div>
         {% if lvp.top_short %}
-        <div class="pie-hover" tabindex="0" data-pie="top" aria-describedby="pie-top">
-          <div class="value">{{ lvp.top_short_liked ~ " of " ~ lvp.top_short }}</div>
-          <div class="pie-pop" id="pie-top" role="tooltip"></div>
-        </div>
+        {% set share = (100 * lvp.top_short_liked / lvp.top_short) | round | int %}
+        <div class="value">{{ lvp.top_short_liked }} of {{ lvp.top_short }}</div>
+        <div class="label">top tracks (last 4 weeks) are liked</div>
+        <div class="meter" role="img" aria-label="{{ share }}% of top tracks are liked"><span style="width: {{ share }}%"></span></div>
+        <div class="note">Spotify's top 50 for the last 4 weeks</div>
         {% else %}
         <div class="value">—</div>
+        <div class="label">No top-tracks snapshot yet</div>
         {% endif %}
-        <div class="note">Spotify's top 50 for the last 4 weeks</div>
       </div>
       <div class="span-4">
         <div class="label secondary">Top 5 replayed but not liked</div>
@@ -83,7 +125,15 @@
           {% for t in lvp.replayed_not_liked %}
             <tr>
               <td class="rank">{{ loop.index }}</td>
-              <td>{{ t.track or "(removed from Spotify)" }}<div class="secondary">{{ t.artist or "" }}</div></td>
+              <td>
+                <div class="media-row compact">
+                  <span class="thumb thumb-square thumb-sm" aria-hidden="true">
+                    <span class="thumb-fallback">&#9834;</span>
+                    {% if t.image_url %}<img src="{{ t.image_url }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">{% endif %}
+                  </span>
+                  <div class="media-text">{{ t.track or "(removed from Spotify)" }}<div class="secondary">{{ t.artist or "" }}</div></div>
+                </div>
+              </td>
               <td class="num">{{ t.plays }} plays</td>
             </tr>
           {% endfor %}
@@ -98,36 +148,32 @@
   </section>
 
   <!-- Mood over time -->
-  <section class="card span-12">
+  <section class="card span-12" id="mood">
     <h2>Mood and energy of liked songs over time</h2>
-    <p class="sub">Average of the songs liked each quarter. Valence runs from 0 (sad) to 1 (happy). Energy runs from 0 (calm) to 1 (intense).
+    <p class="sub">Average of the songs liked each quarter, from the first quarter with enough songs.
+      Positivity (valence) runs from 0 (sad-sounding) to 1 (happy). Energy runs from 0 (calm) to 1 (intense).
       <span id="mood-coverage"></span></p>
     <div id="mood-chart" class="chart"></div>
-    <!-- One slider scrolls both lines across time (x-axis) -->
-    <div class="time-scroll" id="mood-scroll">
-      <label for="mood-scroll-input">Scroll through time</label>
-      <input type="range" id="mood-scroll-input" min="0" max="0" step="1" value="0">
-      <span class="time-scroll-readout" id="mood-scroll-readout"></span>
-    </div>
   </section>
 
   <!-- Release years & hour of day -->
-  <section class="card span-6">
+  <section class="card span-6" id="years">
     <h2>Liked songs by release year</h2>
     <p class="sub">Year each liked song's album came out.</p>
     <div id="years-chart" class="chart"></div>
   </section>
-  <section class="card span-6">
+  <section class="card span-6" id="hours">
     <h2>Listening by time of day</h2>
     <p class="sub">Chicago time. {{ s.plays }} plays over {{ data.hours.days }} day{{ "" if data.hours.days == 1 else "s" }}; grows every night.</p>
     <div id="hours-chart" class="chart"></div>
   </section>
 
   <!-- Top tracks & artists, one time-range control for both -->
-  <div class="span-12 section-head">
+  <div class="span-12 section-head" id="top">
     <div>
       <h2>Top tracks and artists</h2>
-      <p class="sub">From Spotify's latest daily snapshot. Arrows show the change since the day before.</p>
+      {% set first = data.top.short_term.tracks[0] if data.top.short_term.tracks else none %}
+      <p class="sub">From Spotify's latest daily snapshot.{% if first and first.change.kind != "none" %} Arrows show the change since the day before.{% else %} Changes since the day before will show once there are two days of snapshots.{% endif %}</p>
     </div>
     <div class="segmented" role="group" aria-label="Time range">
       <button type="button" data-range="short_term" aria-pressed="true">4 weeks</button>
@@ -151,47 +197,16 @@
 {% if data %}
 <script>
 const DATA = {{ data | tojson }};
-
-// ---------- Hover pie charts in "Liked vs. played" ----------
-(() => {
-  const lvp = DATA.liked_vs_played;
-  const pies = {
-    plays: { liked: lvp.liked_plays, total: lvp.plays, unit: "plays", title: "Recorded plays" },
-    top: { liked: lvp.top_short_liked, total: lvp.top_short, unit: "tracks", title: "Top 50 tracks, last 4 weeks" },
-  };
-  document.querySelectorAll(".pie-hover").forEach((wrap) => {
-    const p = pies[wrap.dataset.pie];
-    const pop = wrap.querySelector(".pie-pop");
-    let drawn = false;
-    const draw = () => {
-      if (drawn) return;  // draw once, the first time it's shown
-      drawn = true;
-      Plotly.newPlot(pop, Charts.withoutPlotlyTips([{
-        type: "pie",
-        labels: ["Liked", "Not liked"],
-        values: [p.liked, p.total - p.liked],
-        marker: { colors: ["#ffffff", "#eb6834"], line: { color: "#0b0b0b", width: 1.5 } },
-        sort: false, direction: "clockwise",
-        // Whole percents, so the pie matches the rounded number above it
-        texttemplate: "%{percent:.0%}", insidetextorientation: "horizontal",
-        insidetextfont: { color: "#0b0b0b", size: 14 },
-      }]), {
-        width: 260, height: 230,
-        margin: { l: 8, r: 8, t: 32, b: 8 },
-        title: { text: p.title, font: { size: 13, color: "#0b0b0b" }, x: 0.5 },
-        showlegend: true,
-        legend: { orientation: "h", x: 0.5, xanchor: "center", y: -0.02, font: { color: "#0b0b0b" } },
-        paper_bgcolor: "rgba(0,0,0,0)",
-      }, { displayModeBar: false }).then(() => {
-        // Rounded black tooltip on each slice, e.g. "Liked: 46 plays (92%)"
-        Charts.tooltip(pop, (pts) =>
-          `${pts[0].label}: ${pts[0].value} ${p.unit} (${Math.round((100 * pts[0].value) / p.total)}%)`, "dark");
-      });
-    };
-    wrap.addEventListener("mouseenter", draw);
-    wrap.addEventListener("focus", draw);
-  });
-})();
+const esc = (v) => String(v ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const thumbHtml = (url, label, { circle = false, size = "sm", eager = false } = {}) => {
+  const shape = circle ? "thumb-circle" : "thumb-square";
+  const fallback = circle ? esc((String(label ?? "").trim().slice(0, 1) || "?").toUpperCase()) : "&#9834;";
+  const loading = eager ? "" : ' loading="lazy"';
+  const img = url
+    ? `<img src="${esc(url)}" alt=""${loading} decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">`
+    : "";
+  return `<span class="thumb ${shape} thumb-${size}" aria-hidden="true"><span class="thumb-fallback">${fallback}</span>${img}</span>`;
+};
 
 // ---------- Mood & energy over time ----------
 (() => {
@@ -204,127 +219,59 @@ const DATA = {{ data | tojson }};
 
   if (!plotted.length) {
     document.getElementById("mood-chart").innerHTML = '<p class="empty">Not enough liked songs with audio features yet.</p>';
-    document.getElementById("mood-scroll").hidden = true;
     return;
   }
-  // Fixed colors for this chart. Both are close in brightness to the green box, so
-  // each line gets a thin black outline (OUTLINE) to stay visible.
   const series = [
-    { key: "valence", name: "Valence (happiness)", color: "#9ec5f4" },  // light blue
-    { key: "energy", name: "Energy", color: "#eb6834" },                // orange
+    { key: "valence", name: "Positivity" },
+    { key: "energy", name: "Energy" },
   ];
-  const OUTLINE = "#0b0b0b";
-  const MOOD_FONT = 18;  // text size for these charts' axes (1.5x the other charts)
-  // Start the charts at the first quarter that has a point, so earlier empty
-  // quarters don't squeeze the trend. (The "Show data" table keeps every quarter.)
+  // Start at the first quarter that has a point, so earlier empty quarters
+  // don't squeeze the trend. (The tooltip still shows song counts.)
   const shown = rows.slice(rows.findIndex((r) => r.valence !== null));
   // Short spans: label every quarter ("2025 Q2"). Long spans: one label per year.
-  const ticks = shown.length <= 12 ? shown : shown.filter((r) => r.quarter.endsWith("Q1"));
-  const tickLabel = (q) => (shown.length <= 12 ? q : q.slice(0, 4));
-
-  // ---- Time window: the chart shows WINDOW quarters; one slider scrolls it ----
-  const WINDOW = 8;                                   // quarters visible at once (2 years)
-  const win = Math.min(WINDOW, shown.length);
-  const maxStart = shown.length - win;                // 0 means everything already fits
-  let start = maxStart;                               // open on the most recent quarters
-
-  // Direct "Valence"/"Energy" labels at the last plotted quarter inside the window
-  const labelsFor = (from) => {
-    const visible = shown.slice(from, from + win).filter((r) => r.valence !== null);
-    if (!visible.length) return [];
-    const end = visible[visible.length - 1];
-    const close = Math.abs(end.valence - end.energy) < 0.08;
-    const nudge = (key) => !close ? 0 : (end[key] >= end[key === "valence" ? "energy" : "valence"] ? 11 : -11);
-    // Placed just outside the plot's right edge (xref "paper", x = 1) at the height of
-    // each line's last visible point, so lines continuing past the window don't cover them
-    return series.map((s) => ({
-      xref: "paper", x: 1, y: end[s.key], xanchor: "left", yanchor: "middle", xshift: 8, yshift: nudge(s.key),
-      text: s.name.split(" ")[0], showarrow: false, font: { color: Charts.color("text-2"), size: MOOD_FONT },
-    }));
-  };
-  // Category axes count quarters 0, 1, 2...; show [from, from + win) with a half-step pad
-  const xRange = (from) => [from - 0.5, from + win - 0.5];
+  const ticks = shown.length <= 8 ? shown : shown.filter((r) => r.quarter.endsWith("Q1"));
+  const tickLabel = (q) => (shown.length <= 8 ? q : q.slice(0, 4));
+  const last = plotted[plotted.length - 1];
 
   Charts.plot("mood-chart", () => ({
-    data: [
-      // Black outlines drawn first, slightly wider, so the colored lines sit on top
-      ...series.map((s) => ({
-        type: "scatter", mode: "lines", showlegend: false, hoverinfo: "skip",
-        x: shown.map((r) => r.quarter), y: shown.map((r) => r[s.key]),
-        line: { color: OUTLINE, width: 4.5 }, connectgaps: false,
-      })),
-      ...series.map((s) => ({
-        type: "scatter",
-        mode: "lines+markers",
-        name: s.name,
-        x: shown.map((r) => r.quarter),
-        y: shown.map((r) => r[s.key]),
-        customdata: shown.map((r) => r.with_features),
-        line: { color: s.color, width: 2.5 },
-        marker: { color: s.color, size: 8, line: { color: OUTLINE, width: 1.5 } },
-        connectgaps: false,
-        hovertemplate: s.key === "valence"
-          ? `${s.name}: %{y:.2f}  (%{customdata} songs)<extra></extra>`
-          : `${s.name}: %{y:.2f}<extra></extra>`,
-      })),
-    ],
+    data: series.map((s, k) => ({
+      type: "scatter",
+      mode: "lines+markers",
+      name: s.name,
+      x: shown.map((r) => r.quarter),
+      y: shown.map((r) => r[s.key]),
+      customdata: shown.map((r) => r.with_features),
+      line: { color: Charts.series(k), width: 3 },
+      marker: { color: Charts.series(k), size: 8 },
+      connectgaps: false,
+    })),
     layout: {
-      // Text on this chart is 1.5x the other charts' (18px instead of 12px)
       height: 400,
-      showlegend: true,
-      legend: { orientation: "h", x: 0, y: 1.14, font: { color: Charts.color("text-2"), size: MOOD_FONT } },
       hovermode: "x unified",
-      margin: { l: 64, r: 100, t: 48, b: 48 },
+      margin: { l: 64, r: 110, t: 16, b: 48 },
       xaxis: {
         type: "category",
-        range: xRange(start),
-        // With a scrolling window every quarter gets a label ("2025 Q2");
-        // only the ones inside the window are drawn.
-        tickvals: (maxStart > 0 ? shown : ticks).map((r) => r.quarter),
-        ticktext: (maxStart > 0 ? shown : ticks).map((r) => (maxStart > 0 ? r.quarter : tickLabel(r.quarter))),
-        tickfont: { color: Charts.color("muted"), size: MOOD_FONT },
+        tickvals: ticks.map((r) => r.quarter),
+        ticktext: ticks.map((r) => tickLabel(r.quarter)),
         showspikes: true, spikemode: "across", spikethickness: 1, spikecolor: Charts.color("axis"), spikedash: "solid",
       },
-      yaxis: {
-        range: [0, 1], dtick: 0.25,
-        tickfont: { color: Charts.color("muted"), size: MOOD_FONT },
-        title: { text: "Average score", font: { color: Charts.color("text-2"), size: MOOD_FONT } },
-      },
-      annotations: labelsFor(start),
+      yaxis: { range: [0, 1], dtick: 0.25, title: { text: "Average score" } },
+      // Name each line at its last point instead of a separate legend
+      annotations: series.map((s, k) => ({
+        xref: "paper", x: 1, y: last[s.key], xanchor: "left", yanchor: "middle", xshift: 8,
+        yshift: Math.abs(last.valence - last.energy) < 0.08 ? (k === 0 ? 11 : -11) * Math.sign(last.valence - last.energy || 1) : 0,
+        text: `<b>${s.name}</b>`, showarrow: false, font: { color: Charts.series(k), size: 16 },
+      })),
     },
   }), {
-    // Rounded tooltip: the quarter, then each line's score with its color
     tip: (pts) => {
       const lines = pts
-        .filter((p) => p.data.name && p.y !== null && p.y !== undefined)
-        .sort((a, b) => a.curveNumber - b.curveNumber)  // same order as the legend
-        .map((p) => {
-          const songs = p.data.name.startsWith("Valence") ? `  (${p.customdata} songs)` : "";
-          return `<span class="tip-swatch" style="background:${p.data.line.color}"></span>${p.data.name}: ${p.y.toFixed(2)}${songs}`;
-        });
-      return lines.length ? `<b>${pts[0].x}</b><br>${lines.join("<br>")}` : "";
+        .filter((p) => p.y !== null && p.y !== undefined)
+        .sort((a, b) => a.curveNumber - b.curveNumber)
+        .map((p) => `<span class="tip-swatch" style="background:${p.data.line.color}"></span>${p.data.name}: ${p.y.toFixed(2)}`);
+      return lines.length ? `<b>${pts[0].x}</b> · ${pts[0].customdata} songs<br>${lines.join("<br>")}` : "";
     },
   });
-
-  // The one slider: moves the window for both lines together
-  const slider = document.getElementById("mood-scroll-input");
-  const readout = document.getElementById("mood-scroll-readout");
-  const showWindow = () => {
-    readout.textContent = `${shown[start].quarter} – ${shown[start + win - 1].quarter}`;
-  };
-  slider.max = maxStart;
-  slider.value = start;
-  if (maxStart === 0) {
-    slider.disabled = true;
-    readout.textContent = "All quarters fit — nothing to scroll";
-  } else {
-    showWindow();
-    slider.addEventListener("input", () => {
-      start = +slider.value;
-      showWindow();
-      Plotly.relayout("mood-chart", { "xaxis.range": xRange(start), annotations: labelsFor(start) });
-    });
-  }
 })();
 
 // ---------- Liked songs by release year ----------
@@ -335,12 +282,16 @@ const DATA = {{ data | tojson }};
     return;
   }
   // Tooltip: the year and song count, then that year's 5 most popular liked songs
-  const esc = (v) => String(v).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
   const hoverText = (r) => {
     const head = `<b>${r.year}</b>: ${r.songs} song${r.songs === 1 ? "" : "s"}`;
     if (!r.top.length) return head;
-    const list = r.top.map((t, i) => `${i + 1}. ${esc(t.track)}${t.artist ? " – " + esc(t.artist) : ""}`);
-    return `${head}<br><br><b>Most popular:</b><br>${list.join("<br>")}`;
+    const list = r.top.map((t, i) => `
+      <div class="tip-song">
+        <span class="tip-song-rank">${i + 1}.</span>
+        ${thumbHtml(t.image_url, t.track, { size: "xs", eager: true })}
+        <span class="tip-song-text">${esc(t.track)}${t.artist ? " – " + esc(t.artist) : ""}</span>
+      </div>`).join("");
+    return `${head}<br><br><b>Most popular:</b><div class="tip-list">${list}</div>`;
   };
   Charts.plot("years-chart", () => ({
     data: [{
@@ -372,13 +323,16 @@ const DATA = {{ data | tojson }};
     return;
   }
   // Tooltip: the hour and play count, then the 5 songs played most in that hour
-  const esc = (v) => String(v).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
   const hoverText = (r) => {
     const head = `<b>${label(r.hour)}</b>: ${r.plays} play${r.plays === 1 ? "" : "s"}`;
     if (!r.top.length) return head;
-    const list = r.top.map((t, i) =>
-      `${i + 1}. ${esc(t.track)}${t.artist ? " – " + esc(t.artist) : ""} (${t.plays})`);
-    return `${head}<br><br><b>Most played this hour:</b><br>${list.join("<br>")}`;
+    const list = r.top.map((t, i) => `
+      <div class="tip-song">
+        <span class="tip-song-rank">${i + 1}.</span>
+        ${thumbHtml(t.image_url, t.track, { size: "xs", eager: true })}
+        <span class="tip-song-text">${esc(t.track)}${t.artist ? " – " + esc(t.artist) : ""} (${t.plays})</span>
+      </div>`).join("");
+    return `${head}<br><br><b>Most played this hour:</b><div class="tip-list">${list}</div>`;
   };
   Charts.plot("hours-chart", () => ({
     data: [{
@@ -406,7 +360,6 @@ const DATA = {{ data | tojson }};
 
 // ---------- Top tracks & artists ----------
 (() => {
-  const esc = (v) => String(v ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   const change = (c) => {
     if (c.kind === "new") return '<span class="change">New</span>';
     if (c.kind !== "move") return "";
@@ -421,14 +374,24 @@ const DATA = {{ data | tojson }};
     document.getElementById("top-tracks").innerHTML = tracks.length ? `<table><tbody>${tracks.map((t) => `
       <tr>
         <td class="rank">${t.rank}</td>
-        <td>${esc(t.track)}${t.liked ? ' <span class="liked" title="In liked songs" aria-label="In liked songs">♥</span>' : ""}
-          <div class="secondary">${esc(t.artist)}</div></td>
+        <td>
+          <div class="media-row">
+            ${thumbHtml(t.image_url, t.track, { size: "md" })}
+            <div class="media-text">${esc(t.track)}${t.liked ? ' <span class="liked" title="In liked songs" aria-label="In liked songs">♥</span>' : ""}
+              <div class="secondary">${esc(t.artist)}</div></div>
+          </div>
+        </td>
         <td class="num">${change(t.change)}</td>
       </tr>`).join("")}</tbody></table>` : empty;
     document.getElementById("top-artists").innerHTML = artists.length ? `<table><tbody>${artists.map((a) => `
       <tr>
         <td class="rank">${a.rank}</td>
-        <td>${artistHover(a, range)}</td>
+        <td>
+          <div class="media-row">
+            ${thumbHtml(a.image_url, a.artist, { circle: true, size: "md" })}
+            <div class="media-text">${artistHover(a, range)}</div>
+          </div>
+        </td>
         <td class="num">${change(a.change)}</td>
       </tr>`).join("")}</tbody></table>` : empty;
   }
@@ -436,12 +399,16 @@ const DATA = {{ data | tojson }};
   // Hover (or tab to) an artist to see their top 5 tracks for this time range
   const RANGE_LABEL = { short_term: "last 4 weeks", medium_term: "last 6 months", long_term: "last year" };
   function artistHover(a, range) {
-    const items = a.tracks.map((t) => {
+    const items = a.tracks.map((t, idx) => {
       const meta = [
         t.rank ? `#${t.rank} in your top tracks` : "",
         t.plays ? `${t.plays} recorded play${t.plays === 1 ? "" : "s"}` : "",
       ].filter(Boolean).join(" · ");
-      return `<li>${esc(t.track)}${meta ? `<div class="secondary">${meta}</div>` : ""}</li>`;
+      return `<li class="track-pop-row">
+        <span class="track-pop-rank">${idx + 1}.</span>
+        ${thumbHtml(t.image_url, t.track, { size: "xs", eager: true })}
+        <div class="media-text">${esc(t.track)}${meta ? `<div class="secondary">${meta}</div>` : ""}</div>
+      </li>`;
     }).join("");
     const body = items
       ? `<ol>${items}</ol>`

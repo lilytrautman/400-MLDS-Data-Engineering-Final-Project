@@ -18,17 +18,20 @@
 <div class="card"><p class="empty">Comparing needs at least two listeners in the database
   ({{ data.listeners | length if data else 0 }} so far).</p></div>
 {% else %}
+{% set n = data.listeners | length %}
+{# One column per listener when they fit in a row: 4 listeners = 4 across #}
+{% set col = 12 // n if n in [2, 3, 4] else 4 %}
 
-<nav class="cmp-jump" aria-label="Sections on this page">
-  <a href="#profiles">Profiles</a><a href="#similarity">Similarity</a><a href="#head-to-head">Head-to-head</a>
-  <a href="#audio">Audio features</a><a href="#artists">Artist overlap</a><a href="#hours">Listening hours</a>
-  <a href="#eras">Release decades</a><a href="#numbers">Data tables</a>
+<nav class="jump" aria-label="Sections on this page">
+  <a href="#profiles">Profiles</a><a href="#similarity">Similarity</a><a href="#audio">Audio features</a>
+  <a href="#hours">Listening hours</a><a href="#eras">Release decades</a><a href="#artists">Artist overlap</a>
+  <a href="#numbers">Data tables</a>
 </nav>
 
 <div class="grid">
-  <!-- ============ What stands out ============ -->
+  <!-- ============ What stands out: the page's one green card ============ -->
   {% if data.insights %}
-  <section class="card span-12">
+  <section class="card accent span-12">
     <h2>Key findings</h2>
     <ul class="cmp-insights">
       {% for s in data.insights %}<li>{{ s }}</li>{% endfor %}
@@ -44,20 +47,31 @@
     </div>
   </div>
   {% for p in data.personalities %}
-  <section class="card span-4 cmp-persona">
+  <section class="card span-{{ col }} cmp-persona">
     <div class="cmp-persona-head">
-      <div class="cmp-persona-initial" aria-hidden="true">{{ p.initial }}</div>
-      <div>
-        <div class="cmp-kicker">{{ p.name }}</div>
-        <h3 class="cmp-persona-title">{{ p.title }}</h3>
-      </div>
+      <span class="thumb thumb-circle thumb-lg thumb-listener thumb-ring" style="--ring: var(--series-{{ p.i % 8 + 1 }})" aria-hidden="true">
+        <span class="thumb-fallback">{{ p.initial }}</span>
+        {% if p.image_url %}<img src="{{ p.image_url }}" alt="" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">{% endif %}
+      </span>
+      <h3 class="cmp-persona-name">{{ p.name }}</h3>
     </div>
+    <p class="cmp-persona-title">{{ p.title }}</p>
     <p class="cmp-persona-blurb">{{ p.blurb }}</p>
     <dl class="cmp-stats">
       {% for s in p.stats %}
       <div>
         <dt>{{ s.label }}</dt>
+        {% if s.is_artist %}
+        <dd class="media-row compact">
+          <span class="thumb thumb-circle thumb-xs" aria-hidden="true">
+            <span class="thumb-fallback">{{ s.initial }}</span>
+            {% if s.image_url %}<img src="{{ s.image_url }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">{% endif %}
+          </span>
+          <span class="media-text">{{ s.value }}{% if s.note %}<span class="secondary"> · {{ s.note }}</span>{% endif %}</span>
+        </dd>
+        {% else %}
         <dd>{{ s.value }}{% if s.note %}<span class="secondary"> · {{ s.note }}</span>{% endif %}</dd>
+        {% endif %}
       </div>
       {% endfor %}
     </dl>
@@ -69,57 +83,37 @@
   </section>
   {% endfor %}
 
-  <!-- ============ Pairwise similarity ============ -->
+  <!-- ============ Pairwise similarity: pick a pair, see everything about it ============ -->
   <div class="span-12 section-head" id="similarity">
     <div>
       <h2>Pairwise similarity</h2>
-      <p class="sub">Similarity score for each pair. Select a pair for details.</p>
+      <p class="sub">Similarity score for each pair, out of 100. Select a pair to see what they share and how they differ.</p>
     </div>
   </div>
-  <div class="span-12 cmp-pairs" id="pair-cards"></div>
+  <div class="span-12 cmp-pairs" id="pair-cards" role="group" aria-label="Pairs"></div>
 
   <section class="card span-12" id="pair-detail" aria-live="polite">
-    <div class="card-head">
-      <div>
-        <h2>Pair details</h2>
-      </div>
-      <div class="cmp-pickers">
-        <label class="field"><span>Listener 1</span><select id="soul-a"></select></label>
-        <label class="field"><span>Listener 2</span><select id="soul-b"></select></label>
-      </div>
-    </div>
     <div id="soul-body"></div>
     <details class="cmp-why">
       <summary>Score method</summary>
       <ul>
-        <li><b>Artists ({{ (data.compat_weights.artists * 100) | int }}%)</b>: shared artists ÷ the smaller artist list.</li>
-        <li><b>Sound, era, popularity ({{ (data.compat_weights.sound * 100) | int }}% each)</b>: 100 × (1 − |Cliff's delta|) on audio features, release year and Deezer popularity.</li>
+        <li><b>Shared artists ({{ (data.compat_weights.artists * 100) | int }}%)</b>: shared artists ÷ the smaller artist list.</li>
+        <li><b>Audio features, release years, popularity ({{ (data.compat_weights.sound * 100) | int }}% each)</b>: 100 × (1 − |Cliff's delta|) on audio features, release year and Deezer popularity.</li>
       </ul>
       <p class="secondary">A descriptive summary, not a validated measure. Genres are not used because Spotify does not return them in Development Mode.</p>
     </details>
-  </section>
 
-  <!-- ============ Head-to-head ============ -->
-  <section class="card span-12" id="head-to-head">
-    <div class="card-head">
-      <div>
-        <h2>Head-to-head comparison</h2>
-        <p class="sub">Select two listeners. Negligible differences are reported as no clear difference.</p>
-      </div>
-      <div class="cmp-pickers">
-        <label class="field"><span>Listener 1</span><select id="battle-a"></select></label>
-        <label class="field"><span>Listener 2</span><select id="battle-b"></select></label>
-      </div>
-    </div>
+    <h3 class="cmp-h3">Head-to-head</h3>
     <div id="battle-score" class="cmp-scoreboard"></div>
     <div id="battle-rows"></div>
-    <p class="secondary">No clear difference = Cliff's delta &lt; {{ data.thresholds.delta }} or Cohen's h &lt; {{ data.thresholds.h }}.</p>
+    <p class="secondary">"No clear difference" means the gap is too small to count as real
+      (Cliff's delta &lt; {{ data.thresholds.delta }} for song-level values, Cohen's h &lt; {{ data.thresholds.h }} for shares).</p>
   </section>
 
   <!-- ============ Audio feature profile ============ -->
   <section class="card span-12" id="audio">
     <h2>Audio feature profile</h2>
-    <p class="sub">Average audio features of liked songs (ReccoBeats). Dashed line = group average.</p>
+    <p class="sub">Average audio features of each listener's liked songs, from ReccoBeats. The dashed outline is the group average.</p>
     {% if data.dna.available %}
     <p class="cmp-callout">{{ data.dna.insight }}</p>
     <div class="grid" id="dna-grid"></div>
@@ -129,12 +123,32 @@
     {% endif %}
   </section>
 
+  <!-- ============ Listening clock ============ -->
+  <section class="card span-12" id="hours">
+    <h2>Listening by hour of day</h2>
+    <p class="sub">Share of recorded plays in each hour, Chicago time, with midnight at the top. Plays cover only a few days so far.</p>
+    <div class="grid" id="clock-grid"></div>
+  </section>
+
+  <!-- ============ Eras & mainstream ============ -->
+  <section class="card span-6" id="eras">
+    <h2>Release decades</h2>
+    <p class="sub">Share of each listener's liked songs by the decade they came out, oldest on the left.</p>
+    <div id="eras-chart" class="chart"></div>
+  </section>
+  <section class="card span-6">
+    <h2>Popularity distribution</h2>
+    <p class="sub">Deezer's popularity score for each liked song: higher means more people stream it on Deezer right now (it is not a play count).
+      Bar = middle half of the songs, dot = median.</p>
+    <div id="pop-chart" class="chart"></div>
+  </section>
+
   <!-- ============ Artist overlap ============ -->
   <section class="card span-12" id="artists">
     <div class="card-head">
       <div>
         <h2>Artist overlap network</h2>
-        <p class="sub">Circle size = liked songs. White = liked by 2+ listeners, black = one listener. Select an artist for details.</p>
+        <p class="sub">Circle size = liked songs. White circles are artists two or more listeners like; colored circles belong to one listener, in their color. Select an artist for details.</p>
       </div>
       <div class="cmp-controls">
         <div class="segmented" role="group" aria-label="Which artists" id="galaxy-filter"></div>
@@ -144,7 +158,7 @@
     <div class="grid">
       <div class="span-8"><div id="galaxy" class="cmp-galaxy"></div></div>
       <aside class="span-4 cmp-panel" id="galaxy-panel" aria-live="polite">
-        <p class="secondary">Select an artist to see details.</p>
+        <p class="secondary">Select an artist to see who likes them and which songs.</p>
       </aside>
     </div>
     <details class="data-table">
@@ -154,7 +168,18 @@
           <thead><tr><th>Artist</th>{% for l in data.listeners %}<th class="num">{{ l.name }}</th>{% endfor %}</tr></thead>
           <tbody>
           {% for a in data.galaxy.table %}
-            <tr><td>{{ a.artist }}</td>{% for n in a.songs %}<td class="num">{{ n if n else "–" }}</td>{% endfor %}</tr>
+            <tr>
+              <td>
+                <div class="media-row compact">
+                  <span class="thumb thumb-circle thumb-xs" aria-hidden="true">
+                    <span class="thumb-fallback">{{ (a.artist[:1] or "?") | upper }}</span>
+                    {% if a.image_url %}<img src="{{ a.image_url }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">{% endif %}
+                  </span>
+                  <span class="media-text">{{ a.artist }}</span>
+                </div>
+              </td>
+              {% for n in a.songs %}<td class="num">{{ n if n else "–" }}</td>{% endfor %}
+            </tr>
           {% endfor %}
           </tbody>
         </table>
@@ -162,31 +187,12 @@
     </details>
   </section>
 
-  <!-- ============ Listening clock ============ -->
-  <section class="card span-12" id="hours">
-    <h2>Listening by hour of day</h2>
-    <p class="sub">Share of recorded plays by hour, Chicago time. Plays cover only a few days so far.</p>
-    <div class="grid" id="clock-grid"></div>
-  </section>
-
-  <!-- ============ Eras & mainstream ============ -->
-  <section class="card span-6" id="eras">
-    <h2>Release decades</h2>
-    <p class="sub">Liked songs by decade. Darker = newer.</p>
-    <div id="eras-chart" class="chart"></div>
-  </section>
-  <section class="card span-6">
-    <h2>Popularity distribution</h2>
-    <p class="sub">Deezer popularity of liked songs. Bar = middle 50%, dot = median.</p>
-    <div id="pop-chart" class="chart"></div>
-  </section>
-
   <!-- ============ The numbers ============ -->
   <section class="card span-12" id="numbers">
     <h2>Data tables</h2>
-    <p class="sub">Per-listener statistics, pair scores and distributions.</p>
+    <p class="sub">Per-listener statistics, pair scores and distributions behind every chart above.</p>
     <details class="data-table" id="numbers-details">
-      <summary>Show</summary>
+      <summary>Show the data tables</summary>
       <div class="scroll">
         <table>
           <thead>
@@ -207,7 +213,7 @@
       <div class="scroll">
         <table>
           <thead><tr><th>Pair</th><th class="num">Score</th><th class="num">Shared artists</th><th class="num">Jaccard</th>
-            <th class="num">Overlap</th><th class="num">Shared songs</th><th class="num">Sound</th><th class="num">Era</th><th class="num">Mainstream</th></tr></thead>
+            <th class="num">Overlap</th><th class="num">Shared songs</th><th class="num">Audio features</th><th class="num">Release years</th><th class="num">Popularity</th></tr></thead>
           <tbody>
           {% for p in data.pairs %}
             <tr><td>{{ data.listeners[p.a].name }} & {{ data.listeners[p.b].name }}</td>
@@ -236,153 +242,172 @@
 {% block scripts %}
 {% if data and data.enough %}
 <style>
-  /* Compare-only pieces, built from the shared tokens in style.css so they match
-     the Individual tab: green boxes, black and white marks. */
-  .cmp-jump { display: flex; flex-wrap: wrap; gap: 6px; margin: -8px 0 20px; }
-  .cmp-jump a {
-    font-size: 14px; color: var(--text-2); text-decoration: none;
-    border: 1px solid var(--axis); border-radius: 999px; padding: 4px 12px;
-  }
-  .cmp-jump a:hover { color: var(--text); background: var(--hover); }
-  html { scroll-behavior: smooth; }
-  [id] { scroll-margin-top: 72px; }
+  /* Compare-only pieces, built from the shared tokens in style.css so they work in
+     both themes. Each listener keeps one color (var(--series-N)) in every chart. */
 
-  .cmp-insights { margin: 12px 0 0; padding-left: 22px; display: grid; gap: 8px; }
-  .cmp-insights li { font-size: 19px; line-height: 1.4; }
+  .cmp-insights { margin: 14px 0 0; padding-left: 24px; display: grid; gap: 10px; max-width: 75ch; }
+  .cmp-insights li { font-size: 20px; line-height: 1.4; }
   .cmp-callout { font-size: 19px; font-weight: 600; margin: 0 0 12px; }
-  .cmp-h3 { font-size: 20px; margin: 16px 0 4px; }
+  .cmp-h3 { font-size: 22px; margin: 28px 0 8px; }
 
-  /* Personality cards */
-  .cmp-persona { display: flex; flex-direction: column; gap: 10px; transition: transform .2s ease, box-shadow .2s ease; }
-  .cmp-persona:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0, 0, 0, .25); }
+  /* Listener profiles */
+  .cmp-persona { display: flex; flex-direction: column; gap: 10px; }
   .cmp-persona-head { display: flex; gap: 14px; align-items: center; }
-  .cmp-persona-initial {
-    font-size: 30px; font-weight: 700; width: 64px; height: 64px; flex: none; display: grid; place-items: center;
-    background: #ffffff; border: 2px solid #0b0b0b; border-radius: 50%;
-  }
-  .cmp-kicker { font-size: 16px; font-weight: 600; color: var(--text-2); }
-  .cmp-persona-title { margin: 0; font-size: 28px; line-height: 1.15; }
-  .cmp-persona-blurb { margin: 0; font-size: 17px; }
+  .cmp-persona-name { margin: 0; font-size: 22px; line-height: 1.2; overflow-wrap: anywhere; }
+  .cmp-persona-title { margin: 4px 0 0; font-size: 24px; font-weight: 700; line-height: 1.15; text-wrap: balance; }
+  .cmp-persona-blurb { margin: 0; font-size: 16px; color: var(--text-2); text-wrap: pretty; }
   .cmp-stats { margin: 0; display: grid; gap: 8px; }
-  .cmp-stats div { border-top: 1px solid var(--grid); padding-top: 6px; }
-  .cmp-stats dt { font-size: 13px; color: var(--text-2); }
-  .cmp-stats dd { margin: 0; font-size: 20px; font-weight: 650; overflow-wrap: anywhere; }
+  .cmp-stats div { border-top: 1px solid var(--grid); padding-top: 8px; }
+  .cmp-stats dt { font-size: 15px; color: var(--text-2); }
+  .cmp-stats dd { margin: 2px 0 0; font-size: 20px; font-weight: 650; overflow-wrap: anywhere; }
   .cmp-stats dd .secondary { font-weight: 400; }
-  .cmp-why { margin-top: auto; font-size: 14px; }
+  .cmp-why { margin-top: auto; font-size: 15px; }
   .cmp-why summary { cursor: pointer; color: var(--text-2); }
   .cmp-why p, .cmp-why ul { margin: 6px 0; }
+  #pair-detail .cmp-why { margin-top: 16px; }
 
   /* Pairwise similarity */
-  .cmp-pairs { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+  .cmp-pairs { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
   .cmp-pair {
-    font: inherit; text-align: left; cursor: pointer; display: flex; gap: 16px; align-items: center;
-    transition: transform .2s ease, box-shadow .2s ease;
+    font: inherit; color: var(--text); text-align: left; cursor: pointer; display: flex; gap: 16px; align-items: center;
+    padding: 16px 20px; transition: background-color .15s ease, border-color .15s ease;
   }
-  .cmp-pair:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0, 0, 0, .25); }
-  .cmp-pair[aria-pressed="true"] { outline: 3px solid #0b0b0b; outline-offset: -3px; }
-  .cmp-pair .names { font-size: 18px; font-weight: 700; }
-  .cmp-pair .tag { font-size: 14px; color: var(--text-2); }
+  .cmp-pair:hover { background: var(--hover); }
+  .cmp-pair[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 2px var(--accent); background: var(--accent-soft); }
+  .cmp-pair-info { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; min-width: 0; }
+  .cmp-pair-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .cmp-pair .names { font-size: 19px; font-weight: 700; }
+  .cmp-pair .tag { font-size: 15px; color: var(--text-2); }
   .cmp-ring { flex: none; }
-  .cmp-ring .track { stroke: rgba(11, 11, 11, .15); }
-  .cmp-ring .arc { stroke: #0b0b0b; transition: stroke-dashoffset 1s cubic-bezier(.2, .8, .2, 1); }
-  .cmp-ring text { fill: #0b0b0b; font-weight: 700; }
-  .cmp-pickers { display: flex; gap: 12px; flex-wrap: wrap; }
-  .cmp-pickers .field span { color: var(--text-2); font-size: 13px; }
-  .cmp-pickers select { min-width: 180px; }
-  .cmp-soul-top { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; margin: 8px 0 16px; }
-  .cmp-soul-desc { font-size: 20px; font-weight: 600; max-width: 640px; margin: 0; }
-  .cmp-parts { display: grid; gap: 8px; margin: 0 0 16px; }
-  .cmp-part { display: grid; grid-template-columns: 150px 1fr 48px; gap: 12px; align-items: center; font-size: 15px; }
-  .cmp-meter { height: 14px; background: rgba(11, 11, 11, .12); border-radius: 999px; overflow: hidden; }
-  .cmp-meter span { display: block; height: 100%; width: 0; background: #0b0b0b; border-radius: 999px; transition: width .8s cubic-bezier(.2, .8, .2, 1); }
-  .cmp-cols { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-  .cmp-cols h3 { font-size: 18px; margin: 0 0 6px; }
-  .cmp-cols ol, .cmp-cols ul { margin: 0; padding-left: 20px; font-size: 15px; }
-  .cmp-cols li + li { margin-top: 4px; }
+  .cmp-ring .track { stroke: var(--grid); }
+  .cmp-ring .arc { stroke: var(--text); transition: stroke-dashoffset 1s cubic-bezier(.2, .8, .2, 1); }
+  .cmp-ring text { fill: var(--text); font-weight: 700; }
   .cmp-chip {
-    display: inline-block; font-size: 13px; padding: 2px 10px; border-radius: 999px;
-    background: #ffffff; border: 1px solid #0b0b0b; margin: 0 4px 4px 0;
+    display: inline-block; font-size: 15px; padding: 2px 10px; border-radius: 999px;
+    border: 1px solid var(--axis); margin: 4px 4px 0 0;
   }
+  .cmp-chip.best { background: var(--accent); color: var(--accent-ink); border-color: transparent; font-weight: 600; }
+  .cmp-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+
+  .cmp-soul-top { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; margin: 0 0 20px; }
+  .cmp-soul-names { margin: 0; font-size: 28px; line-height: 1.2; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .cmp-soul-names .cmp-amp { color: var(--text-2); font-weight: 500; }
+  .cmp-soul-desc { font-size: 20px; font-weight: 600; max-width: 640px; margin: 8px 0 0; color: var(--text-2); }
+  .cmp-parts { display: grid; gap: 10px; margin: 0 0 20px; max-width: 760px; }
+  .cmp-part { display: grid; grid-template-columns: 170px 1fr 48px; gap: 12px; align-items: center; font-size: 16px; }
+  .cmp-part b { font-variant-numeric: tabular-nums; text-align: right; }
+  .cmp-meter { height: 12px; background: var(--grid); border-radius: 999px; overflow: hidden; }
+  .cmp-meter span { display: block; height: 100%; width: 0; background: var(--text); border-radius: 999px; transition: width .8s cubic-bezier(.2, .8, .2, 1); }
+  .cmp-cols { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .cmp-cols h3 { font-size: 18px; margin: 0 0 8px; }
+  .cmp-cols ol, .cmp-cols ul { margin: 0; padding-left: 20px; font-size: 16px; }
+  .cmp-cols li + li { margin-top: 4px; }
+  .cmp-cols .cmp-media-list { list-style: none; padding-left: 0; display: grid; gap: 8px; }
+  .cmp-cols .cmp-media-list li + li { margin-top: 0; }
+  .cmp-dna-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
 
   /* Head-to-head */
-  .cmp-scoreboard { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; font-size: 20px; font-weight: 700; margin: 8px 0 12px; }
+  .cmp-scoreboard { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; font-size: 20px; font-weight: 700; margin: 4px 0 8px; }
   .cmp-scoreboard .vs { color: var(--text-2); font-weight: 400; }
-  .cmp-side { display: inline-flex; align-items: center; gap: 8px; }
-  .cmp-swatch { width: 18px; height: 18px; border-radius: 4px; border: 2px solid #0b0b0b; display: inline-block; }
-  .cmp-swatch.a { background: #0b0b0b; }
-  .cmp-swatch.b { background: #ffffff; }
-  .cmp-battle { border-top: 1px solid var(--grid); padding: 14px 0; display: grid; gap: 8px; grid-template-columns: minmax(220px, 1fr) 2fr; align-items: center; }
-  .cmp-battle h3 { margin: 0; font-size: 19px; }
-  .cmp-battle .poles { font-size: 13px; color: var(--text-2); }
+  .cmp-battle { border-top: 1px solid var(--grid); padding: 14px 0; display: grid; gap: 8px 24px; grid-template-columns: minmax(240px, 1fr) 2fr; align-items: center; }
+  .cmp-battle h4 { margin: 0; font-size: 19px; }
+  .cmp-battle .poles { font-size: 15px; color: var(--text-2); }
   .cmp-bars { display: grid; gap: 6px; }
-  .cmp-bar { display: grid; grid-template-columns: 1fr 90px; gap: 10px; align-items: center; }
-  .cmp-bar .fill-wrap { height: 22px; background: rgba(11, 11, 11, .1); border-radius: 6px; overflow: hidden; }
-  .cmp-bar .fill { height: 100%; width: 0; border-radius: 6px; transition: width .9s cubic-bezier(.2, .8, .2, 1); border: 2px solid #0b0b0b; }
-  .cmp-bar.a .fill { background: #0b0b0b; }
-  .cmp-bar.b .fill { background: #ffffff; }
-  .cmp-bar .val { font-variant-numeric: tabular-nums; font-weight: 650; }
-  .cmp-verdict { grid-column: 2; font-size: 14px; }
-  .cmp-award { display: inline-block; font-weight: 700; background: #ffffff; border: 2px solid #0b0b0b; border-radius: 999px; padding: 2px 12px; margin-right: 8px; animation: cmp-pop .4s ease; }
-  .cmp-tie { display: inline-block; font-weight: 600; border: 1px dashed #0b0b0b; border-radius: 999px; padding: 2px 12px; margin-right: 8px; }
-  @keyframes cmp-pop { from { transform: scale(.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .cmp-bar { display: grid; grid-template-columns: 130px 1fr 96px; gap: 10px; align-items: center; font-size: 15px; }
+  .cmp-bar .who { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-2); }
+  .cmp-bar .fill-wrap { height: 20px; background: var(--grid); border-radius: 6px; overflow: hidden; }
+  .cmp-bar .fill { height: 100%; width: 0; border-radius: 6px; transition: width .9s cubic-bezier(.2, .8, .2, 1); }
+  .cmp-bar .val { font-variant-numeric: tabular-nums; font-weight: 650; text-align: right; font-size: 16px; }
+  /* Release year: two dots on one shared year scale, so the gap isn't exaggerated */
+  .cmp-years { display: grid; grid-template-columns: 48px 1fr 48px; gap: 10px; align-items: center; font-size: 15px; color: var(--text-2); font-variant-numeric: tabular-nums; }
+  .cmp-years .line { position: relative; height: 24px; }
+  .cmp-years .line::before { content: ""; position: absolute; left: 0; right: 0; top: 11px; height: 2px; background: var(--axis); }
+  .cmp-years .line i { position: absolute; top: 4px; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%; border: 2px solid var(--surface); }
+  .cmp-years-vals { font-size: 16px; font-weight: 650; }
+  .cmp-verdict { grid-column: 2; font-size: 15px; }
+  .cmp-award { display: inline-block; font-weight: 700; background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 999px; padding: 2px 12px; margin-right: 8px; }
+  .cmp-tie { display: inline-block; font-weight: 600; border: 1px dashed var(--axis); border-radius: 999px; padding: 2px 12px; margin-right: 8px; color: var(--text-2); }
 
-  /* Galaxy */
+  /* Artist overlap network */
   .cmp-controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
   .cmp-btn {
-    font: inherit; font-size: 14px; color: var(--text); background: transparent; cursor: pointer;
-    border: 1px solid var(--axis); border-radius: 8px; padding: 6px 12px;
+    font: inherit; font-size: 15px; color: var(--text); background: transparent; cursor: pointer;
+    border: 1px solid var(--axis); border-radius: 999px; padding: 7px 16px; font-weight: 600;
   }
   .cmp-btn:hover { background: var(--hover); }
-  .cmp-btn[aria-pressed="true"] { background: #0b0b0b; color: #ffffff; }
+  .cmp-btn[aria-pressed="true"] { background: var(--text); color: var(--surface); }
   .cmp-galaxy svg { width: 100%; height: auto; display: block; }
   .cmp-galaxy .node { cursor: pointer; transition: transform .7s cubic-bezier(.2, .8, .2, 1), opacity .4s; }
-  .cmp-galaxy .node circle { transition: stroke-width .15s; }
-  .cmp-galaxy .node:hover circle, .cmp-galaxy .node:focus circle, .cmp-galaxy .node.sel circle { stroke-width: 4; }
+  .cmp-galaxy .node circle { transition: stroke-width .15s; stroke-width: 1.5; }
+  .cmp-galaxy .node.shared circle { fill: #ffffff; stroke: #0b0b0b; }
+  .cmp-galaxy .node.solo circle { stroke: var(--surface); }
+  .cmp-galaxy .node:hover circle, .cmp-galaxy .node:focus circle, .cmp-galaxy .node.sel circle { stroke-width: 4; stroke: var(--text); }
   .cmp-galaxy .node:focus { outline: none; }
-  .cmp-galaxy .link { stroke: #0b0b0b; stroke-opacity: .22; transition: stroke-opacity .2s; }
-  .cmp-galaxy .link.hi { stroke-opacity: .9; stroke-width: 2; }
-  .cmp-galaxy text { pointer-events: none; font-family: var(--font); }
-  .cmp-galaxy text.halo { paint-order: stroke; stroke: #1db954; stroke-width: 4px; stroke-linejoin: round; }
-  .cmp-galaxy .node circle[fill="#ffffff"] + text.halo { stroke: #ffffff; }
-  .cmp-panel { background: rgba(255, 255, 255, .9); border: 1px solid rgba(11, 11, 11, .2); border-radius: 12px; padding: 16px; align-self: start; font-size: 15px; }
-  .cmp-panel h3 { margin: 0 0 4px; font-size: 22px; }
-  .cmp-panel ul { margin: 4px 0 10px; padding-left: 18px; }
+  .cmp-galaxy .link { stroke: var(--text); stroke-opacity: .18; transition: stroke-opacity .2s; }
+  .cmp-galaxy .link.hi { stroke-opacity: .85; stroke-width: 2; }
+  .cmp-galaxy text { pointer-events: none; font-family: var(--font); font-weight: 700; }
+  /* Solo bubble label ink: white on deeper Light-mode fills, dark on amber & all bright Dark-mode fills */
+  :root {
+    --solo-ink-1: #ffffff; --solo-ink-2: #0b0b0b; --solo-ink-3: #ffffff; --solo-ink-4: #ffffff;
+    --solo-ink-5: #ffffff; --solo-ink-6: #ffffff; --solo-ink-7: #ffffff; --solo-ink-8: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --solo-ink-1: #0b0b0b; --solo-ink-2: #0b0b0b; --solo-ink-3: #0b0b0b; --solo-ink-4: #0b0b0b;
+      --solo-ink-5: #0b0b0b; --solo-ink-6: #0b0b0b; --solo-ink-7: #0b0b0b; --solo-ink-8: #0b0b0b;
+    }
+  }
+  :root[data-theme="dark"] {
+    --solo-ink-1: #0b0b0b; --solo-ink-2: #0b0b0b; --solo-ink-3: #0b0b0b; --solo-ink-4: #0b0b0b;
+    --solo-ink-5: #0b0b0b; --solo-ink-6: #0b0b0b; --solo-ink-7: #0b0b0b; --solo-ink-8: #0b0b0b;
+  }
+  .cmp-galaxy .node.shared text { fill: #0b0b0b; }
+  .cmp-galaxy text.halo { fill: var(--text); paint-order: stroke; stroke: var(--surface); stroke-width: 5px; stroke-linejoin: round; }
+  .cmp-galaxy .hub text.initial { fill: #0b0b0b; }
+  .cmp-galaxy .hub circle.hub-bg { stroke: var(--surface); stroke-width: 3; }
+  .cmp-galaxy .hub circle.hub-ring { fill: none; stroke-width: 4; pointer-events: none; }
+  .cmp-panel { padding: 4px 0 0; align-self: start; font-size: 16px; }
+  .cmp-panel-head { margin-bottom: 14px; }
+  .cmp-panel h3 { margin: 0 0 2px; font-size: 22px; line-height: 1.2; }
+  .cmp-panel-head p { margin: 0; }
+  .cmp-panel ul { margin: 6px 0 12px; padding-left: 18px; }
+  .cmp-panel-fan { margin-top: 10px; }
 
-  /* Clock */
-  .cmp-clock-meta { font-size: 15px; display: grid; gap: 2px; }
+  /* Listening clock */
+  .cmp-clock-meta { font-size: 16px; display: grid; gap: 4px; }
   .cmp-clock-tag { font-weight: 700; font-size: 17px; }
 
   @media (max-width: 900px) {
     .cmp-battle { grid-template-columns: 1fr; }
     .cmp-verdict { grid-column: 1; }
-    .cmp-part { grid-template-columns: 110px 1fr 40px; }
+    .cmp-part { grid-template-columns: 130px 1fr 40px; }
+    .cmp-bar { grid-template-columns: 96px 1fr 80px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    .cmp-compare *, .cmp-persona, .cmp-pair, .cmp-galaxy .node, .cmp-meter span, .cmp-bar .fill,
-    .cmp-ring .arc, .cmp-award, .cmp-option { transition: none !important; animation: none !important; }
+    .cmp-pair, .cmp-galaxy .node, .cmp-meter span, .cmp-bar .fill, .cmp-ring .arc { transition: none !important; }
   }
 </style>
 <script>
 const DATA = {{ data | tojson }};
-const FONT = 18;  // axis text size, same as the Individual tab
-const INK = "#0b0b0b";
-const WHITE = "#ffffff";
-const ORANGE = "#eb6834";
 const esc = (v) => String(v ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-const ticks = () => ({ color: Charts.color("muted"), size: FONT });
-const axisTitle = (text) => ({ text, font: { color: Charts.color("text-2"), size: FONT } });
 const names = DATA.listeners.map((l) => l.name);
+const N = DATA.listeners.length;
+const COL = [2, 3, 4].includes(N) ? 12 / N : 4;  // grid columns per listener, as in the template
 const pct = (x) => `${Math.round(100 * x)}%`;
 const hourLabel = (h) => `${h % 12 || 12} ${h < 12 ? "AM" : "PM"}`;
 const pairKey = (a, b) => `${Math.min(a, b)}-${Math.max(a, b)}`;
 const nextFrame = (fn) => requestAnimationFrame(() => requestAnimationFrame(fn));
 
-// Fill a <select> with every listener
-function fillSelect(sel, value) {
-  sel.innerHTML = DATA.listeners.map((l) => `<option value="${l.i}">${esc(l.name)}</option>`).join("");
-  sel.value = String(value);
-}
+// Each listener's color: a CSS variable for HTML and SVG (follows the theme by itself),
+// and the current hex value for Plotly (charts redraw when the theme changes)
+const cssColor = (i) => `var(--series-${(i % 8) + 1})`;
+const plotColor = (i) => Charts.series(i);
+const rgba = (hex, a) => {
+  const v = parseInt(hex.replace("#", ""), 16);
+  return `rgba(${(v >> 16) & 255}, ${(v >> 8) & 255}, ${v & 255}, ${a})`;
+};
+const ink = () => Charts.color("text");
+const paper = () => Charts.color("surface");
 
 // Circular score indicator (SVG ring); animates from empty when drawn
 function ring(score, size = 96) {
@@ -392,53 +417,121 @@ function ring(score, size = 96) {
     <circle class="track" cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke-width="10"/>
     <circle class="arc" cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke-width="10" stroke-linecap="round"
       stroke-dasharray="${c}" stroke-dashoffset="${c}" data-offset="${c * (1 - v / 100)}" transform="rotate(-90 ${size / 2} ${size / 2})"/>
-    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" font-size="${size / 3.6}">${score ?? "—"}</text>
+    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" font-size="${size / 3.4}">${score ?? "—"}</text>
   </svg>`;
 }
 function animateRings(root) {
   nextFrame(() => root.querySelectorAll(".cmp-ring .arc").forEach((a) => { a.style.strokeDashoffset = a.dataset.offset; }));
 }
+const listenerAvatar = (i, size = "xs") => {
+  const l = DATA.listeners[i];
+  const img = l.image_url
+    ? `<img src="${esc(l.image_url)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">`
+    : "";
+  return `<span class="thumb thumb-circle thumb-${size} thumb-listener thumb-ring" style="--ring:${cssColor(i)}" aria-hidden="true">`
+    + `<span class="thumb-fallback">${esc(l.initial)}</span>${img}</span>`;
+};
+const entityThumb = (url, label, { circle = false, size = "sm", eager = false } = {}) => {
+  const shape = circle ? "thumb-circle" : "thumb-square";
+  const fallback = circle ? esc((String(label ?? "").trim().slice(0, 1) || "?").toUpperCase()) : "&#9834;";
+  const loading = eager ? "" : ' loading="lazy"';
+  const img = url
+    ? `<img src="${esc(url)}" alt=""${loading} decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">`
+    : "";
+  return `<span class="thumb ${shape} thumb-${size}" aria-hidden="true"><span class="thumb-fallback">${fallback}</span>${img}</span>`;
+};
+const who = (i, size = "xs") => `<span class="who-inline">${listenerAvatar(i, size)}<span>${esc(names[i])}</span></span>`;
+const whoDot = (i) => `<span class="cmp-dot" style="background:${cssColor(i)}"></span>${esc(names[i])}`;
 
-// ======================= Pairwise similarity =======================
+// ======================= Head-to-head rows for one pair =======================
+const renderBattle = (() => {
+  const rowsEl = document.getElementById("battle-rows");
+  const scoreEl = document.getElementById("battle-score");
+  const { categories, results } = DATA.battles;
+  const width = (cat, v) => {
+    if (v === null) return 0;
+    const [lo, hi] = cat.scale;
+    return Math.max(2, Math.min(100, (100 * (v - lo)) / (hi - lo)));
+  };
+
+  return (a, b) => {
+    // Results are stored for (lower index, higher index); flip them if needed
+    const flip = a > b;
+    const rows = results[pairKey(a, b)].map((r) => flip
+      ? { ...r, a: r.b, b: r.a, a_text: r.b_text, b_text: r.a_text, winner: r.winner === null ? null : 1 - r.winner }
+      : r);
+    const wins = [0, 0];
+    let ties = 0;
+    rows.forEach((r) => { if (r.winner !== null) wins[r.winner] += 1; else if (r.enough) ties += 1; });
+    scoreEl.innerHTML = `
+      <span>${who(a)} ${wins[0]}</span><span class="vs">vs.</span><span>${wins[1]} ${who(b)}</span>
+      <span class="vs">· ${ties} with no clear difference</span>`;
+
+    const bar = (i, v, text, cat) => `
+      <div class="cmp-bar"><span class="who">${esc(names[i])}</span>
+        <div class="fill-wrap"><div class="fill"${v === null ? " hidden" : ""} style="background:${cssColor(i)}" data-w="${width(cat, v)}"></div></div>
+        <span class="val">${esc(text)}</span></div>`;
+    // Release year has no zero, so bars would exaggerate the gap: show two dots on a year line
+    const years = (r, cat) => `
+      <div class="cmp-years"><span>${Math.round(cat.scale[0])}</span>
+        <div class="line" role="img" aria-label="${esc(names[a])} ${esc(r.a_text)}, ${esc(names[b])} ${esc(r.b_text)}">
+          ${r.a === null ? "" : `<i style="left:${width(cat, r.a)}%;background:${cssColor(a)}"></i>`}
+          ${r.b === null ? "" : `<i style="left:${width(cat, r.b)}%;background:${cssColor(b)}"></i>`}
+        </div><span>${Math.round(cat.scale[1])}</span></div>
+      <div class="cmp-years-vals">${whoDot(a)} ${esc(r.a_text)} · ${whoDot(b)} ${esc(r.b_text)}</div>`;
+
+    rowsEl.innerHTML = categories.map((cat, k) => {
+      const r = rows[k];
+      const verdict = !r.enough ? '<span class="cmp-tie">Not enough data</span>'
+        : r.winner === null ? '<span class="cmp-tie">No clear difference</span>'
+        : `<span class="cmp-award">${esc(cat.award)}: ${esc(names[r.winner === 0 ? a : b])}</span>`;
+      return `
+        <div class="cmp-battle">
+          <div>
+            <h4>${esc(cat.question)}</h4>
+            <div class="poles">${esc(cat.label)}</div>
+          </div>
+          <div class="cmp-bars">${cat.key === "year" ? years(r, cat) : bar(a, r.a, r.a_text, cat) + bar(b, r.b, r.b_text, cat)}</div>
+          <div class="cmp-verdict">${verdict}<span class="secondary">${esc(r.note)}</span></div>
+        </div>`;
+    }).join("");
+    nextFrame(() => rowsEl.querySelectorAll(".fill").forEach((f) => { f.style.width = `${f.dataset.w}%`; }));
+  };
+})();
+
+// ======================= Pairwise similarity: the pair cards pick the pair =======================
 (() => {
   const cards = document.getElementById("pair-cards");
-  const selA = document.getElementById("soul-a");
-  const selB = document.getElementById("soul-b");
   const body = document.getElementById("soul-body");
-  const byKey = Object.fromEntries(DATA.pairs.map((p) => [pairKey(p.a, p.b), p]));
   const best = [...DATA.pairs].sort((x, y) => (y.score ?? -1) - (x.score ?? -1))[0];
 
   cards.innerHTML = DATA.pairs.map((p) => `
     <button type="button" class="card cmp-pair" data-a="${p.a}" data-b="${p.b}" aria-pressed="false"
       aria-label="${esc(names[p.a])} and ${esc(names[p.b])}: score ${p.score ?? "not available"}">
       ${ring(p.score, 84)}
-      <span>
-        <span class="names">${esc(names[p.a])} &amp; ${esc(names[p.b])}</span><br>
+      <span class="cmp-pair-info">
+        <span class="cmp-pair-head">
+          <span class="avatar-pair">${listenerAvatar(p.a, "sm")}${listenerAvatar(p.b, "sm")}</span>
+          <span class="names">${esc(names[p.a])} &amp; ${esc(names[p.b])}</span>
+        </span>
         <span class="tag">${p.shared_count} shared artists · ${p.shared_tracks_count} shared songs</span>
-        ${p === best && DATA.pairs.length > 1 ? '<br><span class="cmp-chip">Highest score</span>' : ""}
+        ${p === best && DATA.pairs.length > 1 ? '<span class="cmp-chip best">Most similar</span>' : ""}
       </span>
     </button>`).join("");
   animateRings(cards);
 
-  const PART_LABEL = { artists: "Shared artists", sound: "Sound", era: "Era", mainstream: "Mainstream" };
+  const PART_LABEL = { artists: "Shared artists", sound: "Audio features", era: "Release years", mainstream: "Popularity" };
 
-  function render() {
-    const a = +selA.value, b = +selB.value;
+  function render(p) {
     cards.querySelectorAll(".cmp-pair").forEach((c) =>
-      c.setAttribute("aria-pressed", String(pairKey(+c.dataset.a, +c.dataset.b) === pairKey(a, b))));
-    if (a === b) {
-      body.innerHTML = '<p class="empty">Pick two different listeners.</p>';
-      return;
-    }
-    const p = byKey[pairKey(a, b)];
-    // Keep the data in the order the pair was stored, but label it by name
+      c.setAttribute("aria-pressed", String(pairKey(+c.dataset.a, +c.dataset.b) === pairKey(p.a, p.b))));
     const [na, nb] = [names[p.a], names[p.b]];
-    const list = (items, empty) => (items.length ? `<ol>${items.join("")}</ol>` : `<p class="secondary">${empty}</p>`);
+    const mediaList = (items, empty) => (items.length ? `<ul class="cmp-media-list">${items.join("")}</ul>` : `<p class="secondary">${empty}</p>`);
     body.innerHTML = `
       <div class="cmp-soul-top">
-        ${ring(p.score, 140)}
+        ${ring(p.score, 132)}
         <div>
-          <div class="cmp-kicker">${esc(na)} &amp; ${esc(nb)}</div>
+          <h2 class="cmp-soul-names">${who(p.a, "md")} <span class="cmp-amp">&amp;</span> ${who(p.b, "md")}</h2>
           <p class="cmp-soul-desc">${esc(p.description)}</p>
         </div>
       </div>
@@ -450,95 +543,35 @@ function animateRings(root) {
       </div>
       <div class="cmp-cols">
         <div><h3>Shared artists</h3>
-          ${list(p.common.slice(0, 5).map((c) => `<li>${esc(c.artist)}</li>`), "None yet.")}</div>
+          ${mediaList(p.common.slice(0, 5).map((c) => `
+            <li class="media-row compact">
+              ${entityThumb(c.image_url, c.artist, { circle: true, size: "sm" })}
+              <span class="media-text">${esc(c.artist)}</span>
+            </li>`), "None yet.")}</div>
         <div><h3>Shared songs</h3>
-          ${list(p.shared_tracks.slice(0, 5).map((t) => `<li>${esc(t)}</li>`), "None yet.")}</div>
+          ${mediaList(p.shared_tracks.slice(0, 5).map((t) => `
+            <li class="media-row compact">
+              ${entityThumb(t.image_url, t.track, { size: "sm" })}
+              <div class="media-text">${esc(t.track)}${t.artist ? `<div class="secondary">${esc(t.artist)}</div>` : ""}</div>
+            </li>`), "None yet.")}</div>
         <div><h3>Biggest differences</h3>
           ${p.differences.length ? `<ul>${p.differences.map((d) => `<li>${esc(d)}</li>`).join("")}</ul>` : '<p class="secondary">None clear.</p>'}</div>
-        <div><h3>Top artists unique to each</h3>
+        <div><h3>Top artists only one of them likes</h3>
           <b>${esc(na)}</b>: ${p.signature_a.map((s) => `<span class="cmp-chip">${esc(s.artist)} · ${s.songs}</span>`).join("") || "—"}<br>
           <b>${esc(nb)}</b>: ${p.signature_b.map((s) => `<span class="cmp-chip">${esc(s.artist)} · ${s.songs}</span>`).join("") || "—"}</div>
       </div>`;
     animateRings(body);
     nextFrame(() => body.querySelectorAll(".cmp-meter span").forEach((s) => { s.style.width = `${s.dataset.w}%`; }));
+    renderBattle(p.a, p.b);
   }
 
-  fillSelect(selA, best.a);
-  fillSelect(selB, best.b);
-  selA.addEventListener("change", render);
-  selB.addEventListener("change", render);
   cards.addEventListener("click", (e) => {
     const c = e.target.closest(".cmp-pair");
     if (!c) return;
-    selA.value = c.dataset.a;
-    selB.value = c.dataset.b;
-    render();
+    render(DATA.pairs.find((p) => p.a === +c.dataset.a && p.b === +c.dataset.b));
     document.getElementById("pair-detail").scrollIntoView({ block: "start" });
   });
-  render();
-})();
-
-// ======================= Music battle =======================
-(() => {
-  const selA = document.getElementById("battle-a");
-  const selB = document.getElementById("battle-b");
-  const rowsEl = document.getElementById("battle-rows");
-  const scoreEl = document.getElementById("battle-score");
-  const { categories, results } = DATA.battles;
-  const width = (cat, v) => {
-    if (v === null) return 0;
-    const [lo, hi] = cat.scale;
-    return Math.max(2, Math.min(100, (100 * (v - lo)) / (hi - lo)));
-  };
-
-  function render() {
-    const a = +selA.value, b = +selB.value;
-    if (a === b) {
-      scoreEl.innerHTML = "";
-      rowsEl.innerHTML = '<p class="empty">Pick two different listeners.</p>';
-      return;
-    }
-    // Results are stored for (lower index, higher index); flip them if needed
-    const flip = a > b;
-    const rows = results[pairKey(a, b)].map((r) => flip
-      ? { ...r, a: r.b, b: r.a, a_text: r.b_text, b_text: r.a_text, winner: r.winner === null ? null : 1 - r.winner }
-      : r);
-    const wins = [0, 0];
-    let ties = 0;
-    rows.forEach((r) => { if (r.winner !== null) wins[r.winner] += 1; else if (r.enough) ties += 1; });
-    scoreEl.innerHTML = `
-      <span class="cmp-side"><span class="cmp-swatch a"></span>${esc(names[a])} ${wins[0]}</span>
-      <span class="vs">vs.</span>
-      <span class="cmp-side">${wins[1]} ${esc(names[b])}<span class="cmp-swatch b"></span></span>
-      <span class="vs">· ${ties} with no clear difference</span>`;
-
-    rowsEl.innerHTML = categories.map((cat, k) => {
-      const r = rows[k];
-      const verdict = !r.enough ? '<span class="cmp-tie">Insufficient data</span>'
-        : r.winner === null ? '<span class="cmp-tie">No clear difference</span>'
-        : `<span class="cmp-award">${esc(cat.award)}: ${esc(names[r.winner === 0 ? a : b])}</span>`;
-      return `
-        <div class="cmp-battle">
-          <div>
-            <h3>${esc(cat.question)}</h3>
-            <div class="poles">${esc(cat.label)}</div>
-          </div>
-          <div class="cmp-bars">
-            <div class="cmp-bar a" title="${esc(names[a])}"><div class="fill-wrap"><div class="fill"${r.a === null ? ' hidden' : ""} data-w="${width(cat, r.a)}"></div></div><span class="val">${esc(r.a_text)}</span></div>
-            <div class="cmp-bar b" title="${esc(names[b])}"><div class="fill-wrap"><div class="fill"${r.b === null ? ' hidden' : ""} data-w="${width(cat, r.b)}"></div></div><span class="val">${esc(r.b_text)}</span></div>
-          </div>
-          <div class="cmp-verdict">${verdict}<span class="secondary">${esc(r.note)}</span></div>
-        </div>`;
-    }).join("");
-    nextFrame(() => rowsEl.querySelectorAll(".fill").forEach((f) => { f.style.width = `${f.dataset.w}%`; }));
-  }
-
-  const first = [...DATA.pairs].sort((x, y) => (x.score ?? 101) - (y.score ?? 101))[0];  // most different pair
-  fillSelect(selA, first.a);
-  fillSelect(selB, first.b);
-  selA.addEventListener("change", render);
-  selB.addEventListener("change", render);
-  render();
+  render(best);
 })();
 
 // ======================= Audio feature profile: one radar per listener =======================
@@ -548,8 +581,8 @@ function animateRings(root) {
   const grid = document.getElementById("dna-grid");
   const feats = dna.features;
   // Short names around the radar (the full name and meaning are in the tooltip)
-  const SHORT = { danceability: "Dance", energy: "Energy", valence: "Valence", acousticness: "Acoustic",
-    speechiness: "Speech", instrumentalness: "Instrumental" };
+  const SHORT = { danceability: "Dance", energy: "Energy", valence: "Positivity", acousticness: "Acoustic",
+    speechiness: "Spoken", instrumentalness: "No vocals" };
   const short = feats.map((f) => SHORT[f.key] || f.label);
   const labels = [...short, short[0]];  // repeat the first to close the shape
   const avg = feats.map((f) => {
@@ -560,8 +593,8 @@ function animateRings(root) {
   const top = Math.min(1, Math.ceil((maxV + 0.05) * 10) / 10);
 
   grid.innerHTML = dna.listeners.map((l) => `
-    <div class="span-4">
-      <div class="label secondary"><b>${esc(names[l.i])}</b> · ${l.songs.toLocaleString()} songs</div>
+    <div class="span-${COL}">
+      <div class="cmp-dna-head"><b>${who(l.i)}</b> <span class="secondary">· ${l.songs.toLocaleString()} songs</span></div>
       <div id="dna-${l.i}" class="chart"></div>
     </div>`).join("");
 
@@ -574,20 +607,20 @@ function animateRings(root) {
     Charts.plot(`dna-${l.i}`, () => ({
       data: [
         { type: "scatterpolar", name: "Group average", r: [...avg, avg[0]], theta: labels, mode: "lines",
-          line: { color: WHITE, width: 2.5, dash: "dash" }, hoverinfo: "skip" },
+          line: { color: Charts.color("muted"), width: 2, dash: "dash" }, hoverinfo: "skip" },
         { type: "scatterpolar", name: names[l.i], r: [...vals, vals[0]], theta: labels, mode: "lines+markers",
-          fill: "toself", fillcolor: "rgba(11, 11, 11, 0.28)",
-          line: { color: INK, width: 2.5 }, marker: { color: INK, size: 8, line: { color: WHITE, width: 1.5 } } },
+          fill: "toself", fillcolor: rgba(plotColor(l.i), 0.25),
+          line: { color: plotColor(l.i), width: 3 }, marker: { color: plotColor(l.i), size: 8 } },
       ],
       layout: {
-        height: 340,
-        margin: { l: 72, r: 72, t: 32, b: 32 },
+        height: 320,
+        margin: { l: 64, r: 64, t: 32, b: 32 },
         polar: {
           bgcolor: "rgba(0,0,0,0)",
           // Rings every 0.2; exact values are in the tooltip and the "Show data" table
           radialaxis: { range: [0, top], dtick: 0.2, showticklabels: false, ticks: "",
             gridcolor: Charts.color("grid"), linecolor: "rgba(0,0,0,0)" },
-          angularaxis: { tickfont: { color: Charts.color("text-2"), size: 13 }, gridcolor: Charts.color("grid"),
+          angularaxis: { tickfont: { color: Charts.color("text-2"), size: 15 }, gridcolor: Charts.color("grid"),
             linecolor: Charts.color("axis"), direction: "clockwise", rotation: 90 },
         },
       },
@@ -607,7 +640,139 @@ function animateRings(root) {
       ...feats.map((f) => [f.key, l.values[f.key] === null ? "—" : l.values[f.key].toFixed(2)])])));
 })();
 
-// ======================= Artist galaxy =======================
+// ======================= Listening clock =======================
+(() => {
+  const grid = document.getElementById("clock-grid");
+  const C = DATA.clock;
+  const shares = C.map((c) => c.hours.map((n) => (c.plays ? n / c.plays : 0)));
+  const top = Math.max(0.05, ...shares.flat());
+
+  grid.innerHTML = C.map((c) => {
+    const peak = c.peak_hours.length ? c.peak_hours.map(hourLabel).join(", ") : "—";
+    // Always a third line, so every clock below starts at the same height
+    const tag = `<span class="cmp-clock-tag">${c.tag
+      ? `Most plays: ${esc(c.tag.label.toLowerCase())} (${pct(c.tag.share)})` : "No single busiest time of day"}</span>`;
+    return `
+      <div class="span-${COL}">
+        <div class="cmp-clock-meta">
+          <b>${who(c.i)}</b>
+          <span class="secondary">${c.plays} plays · ${c.days} day${c.days === 1 ? "" : "s"} · peak ${peak}</span>
+          ${tag}
+        </div>
+        <div id="clock-${c.i}" class="chart"></div>
+      </div>`;
+  }).join("");
+
+  C.forEach((c, k) => {
+    if (!c.plays) {
+      document.getElementById(`clock-${c.i}`).innerHTML = '<p class="empty">No plays recorded yet.</p>';
+      return;
+    }
+    Charts.plot(`clock-${c.i}`, () => ({
+      data: [{
+        type: "barpolar",
+        r: shares[k].map((s) => 100 * s),
+        theta: [...Array(24).keys()].map((h) => h * 15 + 7.5),
+        width: Array(24).fill(14),
+        marker: { color: plotColor(c.i), line: { color: paper(), width: 1 } },
+        name: names[c.i],
+      }],
+      layout: {
+        height: 300,
+        margin: { l: 48, r: 48, t: 28, b: 28 },
+        polar: {
+          bgcolor: "rgba(0,0,0,0)",
+          // No % labels around the ring; the tooltip has each hour's exact share
+          radialaxis: { range: [0, 100 * top * 1.05], showticklabels: false, ticks: "",
+            gridcolor: Charts.color("grid"), linecolor: "rgba(0,0,0,0)" },
+          angularaxis: { direction: "clockwise", rotation: 90, tickvals: [0, 90, 180, 270], ticktext: ["Midnight", "6 AM", "Noon", "6 PM"],
+            tickfont: { color: Charts.color("text-2"), size: 15 }, gridcolor: Charts.color("grid"), linecolor: Charts.color("axis") },
+        },
+      },
+    }), {
+      tip: (pts) => {
+        const h = pts[0].pointNumber;
+        return `<b>${esc(names[c.i])}</b>, ${hourLabel(h)}–${hourLabel((h + 1) % 24)}<br>${c.hours[h]} play${c.hours[h] === 1 ? "" : "s"} (${pct(shares[k][h])})${c.peak_hours.includes(h) ? "<br>Peak hour" : ""}`;
+      },
+    });
+  });
+})();
+
+// ======================= Eras & mainstream =======================
+(() => {
+  const E = DATA.eras;
+  const L = E.listeners.filter((l) => l.total);
+  if (!L.length) {
+    document.getElementById("eras-chart").innerHTML = '<p class="empty">No release years yet.</p>';
+  } else {
+    // One green, light (oldest) to dark (newest), so the stack reads as a timeline;
+    // every segment of 8% or more is labelled with its decade
+    const shade = (k) => {
+      const t = E.decades.length > 1 ? k / (E.decades.length - 1) : 1;
+      const mix = (a, b) => Math.round(a + t * (b - a));
+      return `rgb(${mix(196, 8)}, ${mix(240, 84)}, ${mix(212, 38)})`;
+    };
+    Charts.plot("eras-chart", () => ({
+      data: E.decades.map((d, k) => {
+        const share = L.map((l) => (100 * l.decades[k]) / l.total);
+        return {
+          type: "bar", orientation: "h", name: `${d}s`,
+          y: L.map((l) => names[l.i]), x: share,
+          customdata: L.map((l) => l.decades[k]),
+          text: share.map((s) => (s >= 8 ? `${String(d).slice(2)}s` : "")),
+          textposition: "inside", insidetextanchor: "middle",
+          textfont: { color: k / Math.max(1, E.decades.length - 1) > 0.68 ? "#ffffff" : "#0b0b0b", size: 15 },
+          marker: { color: shade(k), line: { color: paper(), width: 1 } },
+        };
+      }),
+      layout: {
+        barmode: "stack", height: 100 + 64 * L.length,
+        margin: { l: 8, r: 16, t: 8, b: 48 },
+        xaxis: { range: [0, 100], ticksuffix: "%", showgrid: true },
+        yaxis: { autorange: "reversed" },
+      },
+    }), {
+      tip: (pts) => {
+        const pt = pts[0];
+        const l = L[pt.pointNumber];
+        return `<b>${esc(names[l.i])}</b> · ${esc(pt.data.name)}<br>${pt.customdata} liked song${pt.customdata === 1 ? "" : "s"} (${Math.round(pt.x)}%)<br>Median release year: ${l.median_year === null ? "—" : Math.round(l.median_year)}`;
+      },
+    });
+  }
+
+  const P = E.listeners.filter((l) => l.popularity);
+  if (!P.length) {
+    document.getElementById("pop-chart").innerHTML = '<p class="empty">No Deezer matches yet.</p>';
+    return;
+  }
+  const fmt = (v) => Math.round(v).toLocaleString();
+  Charts.plot("pop-chart", () => ({
+    data: [
+      ...P.map((l) => ({
+        type: "scatter", mode: "lines", x: [l.popularity[0], l.popularity[2]], y: [names[l.i], names[l.i]],
+        line: { color: plotColor(l.i), width: 14 }, hoverinfo: "skip", showlegend: false,
+      })),
+      {
+        type: "scatter", mode: "markers", x: P.map((l) => l.popularity[1]), y: P.map((l) => names[l.i]),
+        marker: { color: paper(), size: 18, line: { color: P.map((l) => plotColor(l.i)), width: 4 } }, name: "median",
+      },
+    ],
+    layout: {
+      height: 100 + 64 * P.length,
+      margin: { l: 8, r: 24, t: 16, b: 64 },
+      xaxis: { range: [0, 1000000], tickformat: "~s", showgrid: true, title: { text: "Deezer popularity score" } },
+      yaxis: { autorange: "reversed" },
+    },
+  }), {
+    tip: (pts) => {
+      const l = P[pts[0].pointNumber];
+      if (!l) return "";
+      return `<b>${esc(names[l.i])}</b><br>Median: ${fmt(l.popularity[1])}<br>Middle half: ${fmt(l.popularity[0])} – ${fmt(l.popularity[2])}<br>${l.matched.toLocaleString()} liked songs matched on Deezer`;
+    },
+  });
+})();
+
+// ======================= Artist overlap network =======================
 (() => {
   const G = DATA.galaxy;
   const el = document.getElementById("galaxy");
@@ -615,7 +780,6 @@ function animateRings(root) {
   const filterEl = document.getElementById("galaxy-filter");
   const moreBtn = document.getElementById("galaxy-more");
   const W = 900, H = 700, CX = W / 2, CY = H / 2 + 10;
-  const N = DATA.listeners.length;
   let filter = "all", more = false, selected = null;
 
   // Listener hubs on a circle (left and right when there are two)
@@ -659,7 +823,9 @@ function animateRings(root) {
       }
       return { a, x, y, tx: x, ty: y, r: radius(a.songs) };
     });
-    const fixed = hubs.map((h) => ({ x: h.x, y: h.y, r: 30 }));
+    // Hubs and their name labels (below each hub) are kept clear of bubbles
+    const fixed = hubs.flatMap((h) => [{ x: h.x, y: h.y, r: 30 },
+      { x: h.x - 28, y: h.y + 50, r: 18 }, { x: h.x + 28, y: h.y + 50, r: 18 }]);
     // Push overlapping bubbles apart, keep them near their target and inside the box
     for (let it = 0; it < 220; it++) {
       for (let i = 0; i < nodes.length; i++) {
@@ -689,61 +855,150 @@ function animateRings(root) {
 
   function showPanel(a) {
     if (!a) {
-      panel.innerHTML = '<p class="secondary">Select an artist to see details.</p>';
+      panel.innerHTML = '<p class="secondary">Select an artist to see who likes them and which songs.</p>';
       return;
     }
     panel.innerHTML = `
-      <h3>${esc(a.name)}</h3>
-      <p class="secondary">${a.songs} liked song${a.songs === 1 ? "" : "s"} across ${a.fans.length} listener${a.fans.length === 1 ? "" : "s"}</p>
+      <div class="media-row cmp-panel-head">
+        ${entityThumb(a.image_url, a.name, { circle: true, size: "xl" })}
+        <div class="media-text">
+          <h3>${esc(a.name)}</h3>
+          <p class="secondary">${a.songs} liked song${a.songs === 1 ? "" : "s"} across ${a.fans.length} listener${a.fans.length === 1 ? "" : "s"}</p>
+        </div>
+      </div>
       ${a.fans.map((f) => `
-        <div><b>${esc(names[f.i])}</b> · ${f.songs} liked song${f.songs === 1 ? "" : "s"}
+        <div class="cmp-panel-fan"><b>${who(f.i)}</b> <span class="secondary">· ${f.songs} liked song${f.songs === 1 ? "" : "s"}</span>
           <ul>${f.tracks.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>
           ${f.songs > f.tracks.length ? `<p class="secondary">Showing the ${f.tracks.length} most recently liked.</p>` : ""}</div>`).join("")}`;
   }
 
+  // Instant rounded hover tooltip for artist bubbles (matches Charts.plot tooltips)
+  const tipEl = document.createElement("div");
+  tipEl.className = "chart-tip";
+  tipEl.setAttribute("role", "tooltip");
+  document.body.appendChild(tipEl);
+  const placeTip = (x, y) => {
+    const r = tipEl.getBoundingClientRect();
+    const left = x + 16 + r.width > window.innerWidth - 8 ? x - r.width - 16 : x + 16;
+    const top = y + 16 + r.height > window.innerHeight - 8 ? y - r.height - 16 : y + 16;
+    tipEl.style.left = `${Math.max(8, left)}px`;
+    tipEl.style.top = `${Math.max(8, top)}px`;
+  };
+  const showTip = (a, x, y) => {
+    const counts = a.fans.map((f) => `${esc(names[f.i])} (${f.songs})`).join(" · ");
+    tipEl.innerHTML = `<div class="media-row compact">
+      ${entityThumb(a.image_url, a.name, { circle: true, size: "sm", eager: true })}
+      <div class="media-text"><b>${esc(a.name)}</b><div class="secondary">${counts}</div></div>
+    </div>`;
+    tipEl.style.display = "block";
+    placeTip(x, y);
+  };
+  const hideTip = () => { tipEl.style.display = "none"; };
+
+  // Fit 1-line or balanced 2-line label inside a circle, picking whichever allows larger text
+  function fitBubbleLabel(name, r) {
+    if (r < 14.5) return null;
+    let best = null;
+    for (const fs of [14, 13, 12, 11, 10, 9.5]) {
+      if (name.length * 0.58 * fs <= 2 * r - 6) {
+        best = { lines: [name], fs };
+        break;
+      }
+    }
+    const words = name.trim().split(/\s+/);
+    if (words.length >= 2) {
+      let split = null;
+      for (let i = 1; i < words.length; i++) {
+        const l1 = words.slice(0, i).join(" "), l2 = words.slice(i).join(" ");
+        const maxLen = Math.max(l1.length, l2.length);
+        if (!split || maxLen < split.maxLen) split = { maxLen, lines: [l1, l2] };
+      }
+      for (const fs of [14, 13, 12, 11, 10, 9.5, 9]) {
+        if (best && fs <= best.fs) break;
+        const halfY = 0.9 * fs;
+        if (2.35 * fs > 2 * r - 6 || halfY >= r) continue;
+        const chord = 2 * Math.sqrt(r * r - halfY * halfY) - 6;
+        if (split.maxLen * 0.58 * fs <= chord) {
+          best = { lines: split.lines, fs };
+          break;
+        }
+      }
+    }
+    return best;
+  }
+
+  function renderBubbleLabel(n, shared) {
+    const fit = fitBubbleLabel(n.a.name, n.r);
+    if (!fit) return "";
+    const fillAttr = shared ? "" : ` style="fill:var(--solo-ink-${(n.a.fans[0].i % 8) + 1})"`;
+    if (fit.lines.length === 1) {
+      return `<text text-anchor="middle" dominant-baseline="central" font-size="${fit.fs}"${fillAttr}>${esc(fit.lines[0])}</text>`;
+    }
+    const dy = +(fit.fs * 0.58).toFixed(1);
+    return `<text text-anchor="middle" dominant-baseline="central" font-size="${fit.fs}"${fillAttr}>`
+      + `<tspan x="0" y="${-dy}">${esc(fit.lines[0])}</tspan>`
+      + `<tspan x="0" y="${dy}">${esc(fit.lines[1])}</tspan></text>`;
+  }
+
   function draw() {
+    hideTip();
     const list = visible();
     const nodes = layout(list);
+    // Keep the right panel populated on initial load and after filter changes
+    if (!nodes.some((n) => n.a.id === selected)) {
+      selected = nodes.length ? nodes[0].a.id : null;
+    }
     const links = nodes.flatMap((n, k) => n.a.fans.map((f) =>
       `<line class="link" data-k="${k}" x1="${hubs[f.i].x}" y1="${hubs[f.i].y}" x2="${n.x}" y2="${n.y}"/>`));
-    const short = (s, n) => (s.length > n ? s.slice(0, n - 1) + "…" : s);
-    // Label only the biggest bubbles; the rest show their name on hover or focus
-    const labelled = new Set([...nodes].sort((x, y) => y.a.songs - x.a.songs).slice(0, 14).map((n) => n.a.id));
     el.innerHTML = `
       <svg viewBox="0 0 ${W} ${H}" role="group" aria-label="Artist network: ${list.length} artists">
+        <defs><clipPath id="hub-clip"><circle cx="0" cy="0" r="28"/></clipPath></defs>
         <g>${links.join("")}</g>
         <g>${nodes.map((n, k) => {
           const shared = n.a.fans.length >= 2;
-          const showLabel = labelled.has(n.a.id);
-          return `<g class="node${selected === n.a.id ? " sel" : ""}" data-k="${k}" tabindex="0" role="button"
+          const label = renderBubbleLabel(n, shared);
+          return `<g class="node ${shared ? "shared" : "solo"}${selected === n.a.id ? " sel" : ""}" data-k="${k}" tabindex="0" role="button"
               style="transform: translate(${n.x}px, ${n.y}px)"
               aria-label="${esc(n.a.name)}: ${n.a.songs} liked songs, ${n.a.fans.map((f) => esc(names[f.i])).join(", ")}">
-            <title>${esc(n.a.name)} · ${n.a.fans.map((f) => `${esc(names[f.i])} ${f.songs}`).join(", ")}</title>
-            <circle r="${n.r}" fill="${shared ? WHITE : INK}" stroke="${INK}" stroke-width="1.5"/>
-            ${showLabel ? `<text class="halo" text-anchor="middle" dy="${shared ? 5 : n.r + 14}" font-size="13" font-weight="700" fill="${INK}">${esc(short(n.a.name, shared ? Math.max(4, Math.floor(n.r / 3.6)) : 16))}</text>` : ""}
+            <circle r="${n.r}"${shared ? "" : ` style="fill:${cssColor(n.a.fans[0].i)}"`}/>
+            ${label}
           </g>`;
         }).join("")}</g>
-        <g>${hubs.map((h, i) => `
-          <g transform="translate(${h.x},${h.y})">
-            <circle r="30" fill="${INK}" stroke="${WHITE}" stroke-width="3"/>
-            <text text-anchor="middle" dy="7" font-size="20" font-weight="700" fill="${WHITE}">${esc(DATA.listeners[i].initial)}</text>
-            <text class="halo" text-anchor="middle" dy="52" font-size="17" font-weight="700" fill="${INK}">${esc(names[i])}</text>
-          </g>`).join("")}</g>
+        <g>${hubs.map((h, i) => {
+          const l = DATA.listeners[i];
+          const photo = l.image_url
+            ? `<image href="${esc(l.image_url)}" x="-28" y="-28" width="56" height="56" clip-path="url(#hub-clip)" preserveAspectRatio="xMidYMid slice" referrerpolicy="no-referrer" onerror="this.remove()"/>`
+            : "";
+          return `
+          <g class="hub" transform="translate(${h.x},${h.y})">
+            <circle class="hub-bg" r="30" style="fill:${cssColor(i)}"/>
+            <text class="initial" text-anchor="middle" dy="7" font-size="20">${esc(l.initial)}</text>
+            ${photo}
+            <circle class="hub-ring" r="29" style="stroke:${cssColor(i)}"/>
+            <text class="halo" text-anchor="middle" dy="54" font-size="18">${esc(names[i])}</text>
+          </g>`;
+        }).join("")}</g>
       </svg>`;
 
     const svg = el.querySelector("svg");
     const highlight = (k, on) => svg.querySelectorAll(`.link[data-k="${k}"]`).forEach((l) => l.classList.toggle("hi", on));
     svg.querySelectorAll(".node").forEach((g) => {
       const k = +g.dataset.k;
+      const artist = nodes[k].a;
       const pick = () => {
-        selected = nodes[k].a.id;
+        selected = artist.id;
         svg.querySelectorAll(".node").forEach((x) => x.classList.toggle("sel", x === g));
-        showPanel(nodes[k].a);
+        showPanel(artist);
       };
-      g.addEventListener("mouseenter", () => highlight(k, true));
-      g.addEventListener("mouseleave", () => highlight(k, false));
-      g.addEventListener("focus", () => highlight(k, true));
-      g.addEventListener("blur", () => highlight(k, false));
+      g.addEventListener("mouseenter", (e) => { highlight(k, true); showTip(artist, e.clientX, e.clientY); });
+      g.addEventListener("mousemove", (e) => { if (tipEl.style.display === "block") placeTip(e.clientX, e.clientY); });
+      g.addEventListener("mouseleave", () => { highlight(k, false); hideTip(); });
+      g.addEventListener("focus", () => {
+        highlight(k, true);
+        const rect = g.getBoundingClientRect();
+        showTip(artist, rect.right, rect.top);
+      });
+      g.addEventListener("blur", () => { highlight(k, false); hideTip(); });
       g.addEventListener("click", pick);
       g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
     });
@@ -770,131 +1025,6 @@ function animateRings(root) {
   draw();
 })();
 
-// ======================= Listening clock =======================
-(() => {
-  const grid = document.getElementById("clock-grid");
-  const C = DATA.clock;
-  const shares = C.map((c) => c.hours.map((n) => (c.plays ? n / c.plays : 0)));
-  const top = Math.max(0.05, ...shares.flat());
-
-  grid.innerHTML = C.map((c) => {
-    const peak = c.peak_hours.length ? c.peak_hours.map(hourLabel).join(", ") : "—";
-    const tag = c.tag
-      ? `<span class="cmp-clock-tag">Most plays: ${esc(c.tag.label.toLowerCase())} (${pct(c.tag.share)})</span>`
-      : "";
-    return `
-      <div class="span-4">
-        <div class="cmp-clock-meta">
-          <b>${esc(names[c.i])}</b>
-          <span class="secondary">${c.plays} plays · ${c.days} day${c.days === 1 ? "" : "s"} · peak <b>${peak}</b></span>
-          ${tag}
-        </div>
-        <div id="clock-${c.i}" class="chart"></div>
-      </div>`;
-  }).join("");
-
-  C.forEach((c, k) => {
-    if (!c.plays) {
-      document.getElementById(`clock-${c.i}`).innerHTML = '<p class="empty">No plays recorded yet.</p>';
-      return;
-    }
-    Charts.plot(`clock-${c.i}`, () => ({
-      data: [{
-        type: "barpolar",
-        r: shares[k].map((s) => 100 * s),
-        theta: [...Array(24).keys()].map((h) => h * 15 + 7.5),
-        width: Array(24).fill(14),
-        marker: { color: c.hours.map((_, h) => (c.peak_hours.includes(h) ? WHITE : INK)), line: { color: INK, width: 1.5 } },
-        name: names[c.i],
-      }],
-      layout: {
-        height: 320,
-        margin: { l: 40, r: 40, t: 24, b: 24 },
-        polar: {
-          bgcolor: "rgba(0,0,0,0)",
-          radialaxis: { range: [0, 100 * top * 1.05], ticksuffix: "%", tickfont: { color: Charts.color("muted"), size: 11 },
-            gridcolor: Charts.color("grid"), linecolor: Charts.color("axis"), angle: 90, showticklabels: true },
-          angularaxis: { direction: "clockwise", rotation: 90, tickvals: [0, 90, 180, 270], ticktext: ["12 AM", "6 AM", "12 PM", "6 PM"],
-            tickfont: { color: Charts.color("text-2"), size: 14 }, gridcolor: Charts.color("grid"), linecolor: Charts.color("axis") },
-        },
-      },
-    }), {
-      tip: (pts) => {
-        const h = pts[0].pointNumber;
-        return `<b>${esc(names[c.i])}</b>, ${hourLabel(h)}–${hourLabel((h + 1) % 24)}<br>${c.hours[h]} play${c.hours[h] === 1 ? "" : "s"} (${pct(shares[k][h])})${c.peak_hours.includes(h) ? "<br>Peak hour" : ""}`;
-      },
-    });
-  });
-})();
-
-// ======================= Eras & mainstream =======================
-(() => {
-  const E = DATA.eras;
-  const L = E.listeners.filter((l) => l.total);
-  if (!L.length) {
-    document.getElementById("eras-chart").innerHTML = '<p class="empty">No release years yet.</p>';
-  } else {
-    // White (oldest) to black (newest), so the stack reads as a timeline
-    const shade = (k) => {
-      const t = E.decades.length > 1 ? k / (E.decades.length - 1) : 1;
-      const v = Math.round(255 - t * (255 - 11));
-      return `rgb(${v},${v},${v})`;
-    };
-    Charts.plot("eras-chart", () => ({
-      data: E.decades.map((d, k) => ({
-        type: "bar", orientation: "h", name: `${d}s`,
-        y: L.map((l) => names[l.i]), x: L.map((l) => (100 * l.decades[k]) / l.total),
-        customdata: L.map((l) => l.decades[k]),
-        marker: { color: shade(k), line: { color: INK, width: 1 } },
-      })),
-      layout: {
-        barmode: "stack", height: 120 + 70 * L.length, showlegend: true,
-        legend: { orientation: "h", x: 0, y: 1.2, font: { color: Charts.color("text-2"), size: 14 } },
-        margin: { l: 8, r: 16, t: 40, b: 40 },
-        xaxis: { range: [0, 100], ticksuffix: "%", showgrid: true, tickfont: ticks() },
-        yaxis: { autorange: "reversed", tickfont: ticks() },
-      },
-    }), {
-      tip: (pts) => {
-        const pt = pts[0];
-        const l = L[pt.pointNumber];
-        return `<b>${esc(names[l.i])}</b> · ${esc(pt.data.name)}<br>${pt.customdata} liked song${pt.customdata === 1 ? "" : "s"} (${Math.round(pt.x)}%)<br>Median release year: ${l.median_year === null ? "—" : Math.round(l.median_year)}`;
-      },
-    });
-  }
-
-  const P = E.listeners.filter((l) => l.popularity);
-  if (!P.length) {
-    document.getElementById("pop-chart").innerHTML = '<p class="empty">No Deezer matches yet.</p>';
-    return;
-  }
-  const fmt = (v) => Math.round(v).toLocaleString();
-  Charts.plot("pop-chart", () => ({
-    data: [
-      ...P.map((l) => ({
-        type: "scatter", mode: "lines", x: [l.popularity[0], l.popularity[2]], y: [names[l.i], names[l.i]],
-        line: { color: INK, width: 14 }, hoverinfo: "skip", showlegend: false,
-      })),
-      {
-        type: "scatter", mode: "markers", x: P.map((l) => l.popularity[1]), y: P.map((l) => names[l.i]),
-        marker: { color: WHITE, size: 18, line: { color: INK, width: 3 } }, name: "median",
-      },
-    ],
-    layout: {
-      height: 120 + 70 * P.length,
-      margin: { l: 8, r: 24, t: 16, b: 56 },
-      xaxis: { range: [0, 1000000], tickformat: "~s", showgrid: true, tickfont: ticks(), title: axisTitle("Deezer popularity") },
-      yaxis: { autorange: "reversed", tickfont: ticks() },
-    },
-  }), {
-    tip: (pts) => {
-      const l = P[pts[0].pointNumber];
-      if (!l) return "";
-      return `<b>${esc(names[l.i])}</b><br>Median: ${fmt(l.popularity[1])}<br>Middle half: ${fmt(l.popularity[0])} – ${fmt(l.popularity[2])}<br>${l.matched.toLocaleString()} liked songs matched on Deezer`;
-    },
-  });
-})();
-
 // ======================= The numbers: distributions, drawn when opened =======================
 (() => {
   const det = document.getElementById("numbers-details");
@@ -905,16 +1035,15 @@ function animateRings(root) {
     const box = (id, field, title, fmt) => Charts.plot(id, () => ({
       data: DATA.advanced.songs.map((s, i) => ({
         type: "box", name: names[i], y: s[field], boxpoints: false,
-        fillcolor: "rgba(255, 255, 255, 0.85)", line: { color: INK, width: 2 },
+        fillcolor: rgba(plotColor(i), 0.3), line: { color: plotColor(i), width: 2 },
       })),
       layout: {
         height: 380,
-        xaxis: { tickfont: ticks() },
-        yaxis: { tickfont: ticks(), title: axisTitle(title), tickformat: fmt },
+        yaxis: { title: { text: title }, tickformat: fmt },
       },
     }));
     box("adv-years", "year", "Release year", "d");
-    box("adv-pop", "popularity", "Deezer popularity", "~s");
+    box("adv-pop", "popularity", "Deezer popularity score", "~s");
   });
 })();
 </script>

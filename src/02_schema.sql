@@ -12,6 +12,8 @@
 CREATE TABLE IF NOT EXISTS users (
     user_id      TEXT PRIMARY KEY,
     display_name TEXT,
+    first_name   TEXT,
+    last_name    TEXT,
     country      TEXT,
     image_url    TEXT
 ) STRICT;

@@ -1,7 +1,7 @@
 """Compare tab: tastes and habits across all connected users (Gloria).
 
 Everything the page shows is computed here from data/spotify.db and handed to
-compare.html as one JSON blob; static/compare/compare.js draws it. All the rules
+compare.html as one JSON blob; the script in compare.html draws it. All the rules
 (listener profiles, head-to-head results, similarity scores) live in
 this file so they're deterministic and easy to check.
 
@@ -31,7 +31,7 @@ from statistics import mean, median, quantiles
 
 from flask import Blueprint, render_template
 
-from db import DB_PATH, LOCAL_TZ, get_users, query
+from db import DB_PATH, LOCAL_TZ, get_users, has_image_columns, query
 
 bp = Blueprint("compare", __name__, url_prefix="/compare")
 
@@ -49,7 +49,7 @@ MIN_DAYS = 3              # ...and the plays must cover at least this many days
 FEATURES = [
     ("danceability", "Danceability", "How suitable a track is for dancing, from rhythm and beat strength."),
     ("energy", "Energy", "How intense and active a track feels: fast, loud and noisy scores high."),
-    ("valence", "Valence", "How positive a track sounds: high is cheerful, low is darker or sadder-sounding."),
+    ("valence", "Positivity", "How positive a track sounds (Spotify calls this valence): high is cheerful, low is darker or sadder-sounding."),
     ("acousticness", "Acousticness", "How likely a track is acoustic rather than electronic."),
     ("speechiness", "Speechiness", "How much of a track is spoken words, like rap verses."),
     ("instrumentalness", "Instrumentalness", "How likely a track has no vocals."),
@@ -90,11 +90,11 @@ TRAITS = [
     ("danceability", -1, "Low danceability", "Liked songs score lower on danceability than the rest of the group's."),
     ("energy", +1, "High energy", "Liked songs score higher on energy than the rest of the group's."),
     ("energy", -1, "Low energy", "Liked songs score lower on energy than the rest of the group's."),
-    ("valence", +1, "High valence", "Liked songs sound more positive (higher valence) than the rest of the group's."),
-    ("valence", -1, "Low valence", "Liked songs sound less positive (lower valence) than the rest of the group's."),
+    ("valence", +1, "Upbeat sound", "Liked songs sound more positive (higher valence) than the rest of the group's."),
+    ("valence", -1, "Darker sound", "Liked songs sound less positive (lower valence) than the rest of the group's."),
     ("acousticness", +1, "High acousticness", "Liked songs are more acoustic than the rest of the group's."),
-    ("speechiness", +1, "High speechiness", "Liked songs contain more spoken words, such as rap, than the rest of the group's."),
-    ("instrumentalness", +1, "High instrumentalness", "Liked songs have fewer vocals than the rest of the group's."),
+    ("speechiness", +1, "Rap and spoken word", "Liked songs contain more spoken words, such as rap, than the rest of the group's."),
+    ("instrumentalness", +1, "Instrumental-leaning", "Liked songs have fewer vocals than the rest of the group's."),
     ("explicit", +1, "High explicit share", "A larger share of liked songs are marked explicit."),
     ("explicit", -1, "Low explicit share", "A smaller share of liked songs are marked explicit."),
     ("diversity", +1, "Broad artist range", "Liked songs are spread across more different artists."),
@@ -109,7 +109,7 @@ BATTLES = [
     ("year", -1, "Which library is older?", "Older releases"),
     ("danceability", +1, "Which library is more danceable?", "More danceable"),
     ("energy", +1, "Which library has higher energy?", "Higher energy"),
-    ("valence", +1, "Which library has higher valence?", "Higher valence"),
+    ("valence", +1, "Which library sounds happier?", "Happier sound"),
     ("explicit", +1, "Which library has more explicit songs?", "More explicit"),
     ("diversity", +1, "Which library has more artist variety?", "More artist variety"),
 ]
@@ -182,6 +182,7 @@ def new_listener(i, user):
         "id": user["user_id"],
         "name": user["display_name"],
         "country": user.get("country"),
+        "image_url": user.get("image_url"),
         "tracks": {},                    # liked track_id -> "Track – Artist"
         "dist": defaultdict(list),       # metric -> values, one per liked song
         "explicit": [0, 0],              # [explicit, songs with a known flag]
@@ -203,13 +204,21 @@ def load(users):
     """Read everything the page needs in a handful of queries."""
     people = [new_listener(i, u) for i, u in enumerate(users)]
     by_id = {p["id"]: p for p in people}
-    names = {}  # artist_id -> name
+    names = {}          # artist_id -> name
+    artist_images = {}  # artist_id -> image_url
+    track_images = {}   # track_id -> album image_url
+    track_meta = {}     # track_id -> (track_name, artist_name)
+
+    img_cols = has_image_columns()
+    album_img = "a.image_url" if img_cols["albums"] else "NULL"
+    artist_img = "ar.image_url" if img_cols["artists"] else "NULL"
 
     cols = ", ".join(f"af.{k}" for k in FEATURE_KEYS)
     for r in query(
         f"""
         SELECT s.user_id, s.track_id, COALESCE(t.name, '(removed from Spotify)') AS track,
-               t.explicit, a.release_year AS year, d.rank AS popularity,
+               t.explicit, a.release_year AS year, {album_img} AS album_image,
+               d.rank AS popularity,
                ta.artist_id, COALESCE(ar.name, '') AS artist, {cols}
         FROM saved_tracks s
         JOIN tracks t ON t.track_id = s.track_id
@@ -224,6 +233,9 @@ def load(users):
         if not p:
             continue
         p["tracks"][r["track_id"]] = r["track"] + (f" – {r['artist']}" if r["artist"] else "")
+        track_meta[r["track_id"]] = (r["track"], r["artist"])
+        if r["album_image"] and r["track_id"] not in track_images:
+            track_images[r["track_id"]] = r["album_image"]
         for key in ["year", "popularity", *FEATURE_KEYS]:
             if r[key] is not None:
                 p["dist"][key].append(r[key])
@@ -238,8 +250,8 @@ def load(users):
 
     # Every credited artist, newest likes first so the details panel shows recent ones
     for r in query(
-        """
-        SELECT s.user_id, ta.artist_id, ar.name AS artist,
+        f"""
+        SELECT s.user_id, ta.artist_id, ar.name AS artist, {artist_img} AS artist_image,
                COALESCE(t.name, '(removed from Spotify)') AS track
         FROM saved_tracks s
         JOIN track_artists ta ON ta.track_id = s.track_id
@@ -252,6 +264,8 @@ def load(users):
         if not p:
             continue
         names[r["artist_id"]] = r["artist"] or "(unknown artist)"
+        if r["artist_image"] and r["artist_id"] not in artist_images:
+            artist_images[r["artist_id"]] = r["artist_image"]
         p["artists"][r["artist_id"]] += 1
         if len(p["artist_tracks"][r["artist_id"]]) < TRACKS_PER_FAN:
             p["artist_tracks"][r["artist_id"]].append(r["track"])
@@ -282,7 +296,7 @@ def load(users):
         if p:
             p["top"].setdefault(r["time_range"], []).append(r["name"])
 
-    return people, names
+    return people, names, artist_images, track_images, track_meta
 
 
 # ---------------------------------------------------------------------------
@@ -380,10 +394,10 @@ def top_artist(p, names):
     if not p["artists"]:
         return None
     aid, n = max(p["artists"].items(), key=lambda kv: (kv[1], names[kv[0]]))
-    return {"name": names[aid], "songs": n}
+    return {"id": aid, "name": names[aid], "songs": n}
 
 
-def personalities(people, names):
+def personalities(people, names, artist_images):
     """Give each listener the profile label where they differ most from everyone else."""
     candidates = []
     rest_cache = {}
@@ -410,7 +424,14 @@ def personalities(people, names):
         fav = top_artist(p, names)
         stats = []
         if fav:
-            stats.append({"label": "Most-liked artist", "value": fav["name"], "note": f"{fav['songs']} songs"})
+            stats.append({
+                "label": "Most-liked artist",
+                "value": fav["name"],
+                "note": f"{fav['songs']} songs",
+                "is_artist": True,
+                "image_url": artist_images.get(fav["id"]),
+                "initial": (fav["name"].strip()[:1] or "?").upper(),
+            })
         if p["i"] in chosen:
             strength, key, title, blurb, c = chosen[p["i"]]
             stats.insert(0, {"label": METRICS[key]["label"], "value": c["a_text"],
@@ -429,12 +450,13 @@ def personalities(people, names):
             why = "No metric differs from the rest of the group by more than the negligible threshold."
             rule = "Default label when no metric clearly differs."
         cards.append({"i": p["i"], "name": p["name"], "initial": (p["name"].strip()[:1] or "?").upper(),
+                      "image_url": p["image_url"],
                       "title": title, "blurb": blurb,
                       "metric": key, "stats": stats[:2], "why": why, "rule": rule})
     return cards
 
 
-def pair_report(a, b, names):
+def pair_report(a, b, names, artist_images, track_images, track_meta):
     """Everything the pairwise similarity section shows for one pair."""
     sa, sb = set(a["artists"]), set(b["artists"])
     shared = sa & sb
@@ -459,7 +481,11 @@ def pair_report(a, b, names):
     # Artists both like most: by the smaller of their two song counts
     common = sorted(shared, key=lambda x: (-min(a["artists"][x], b["artists"][x]),
                                            -(a["artists"][x] + b["artists"][x]), names[x].lower()))
-    shared_tracks = sorted(a["tracks"][t] for t in set(a["tracks"]) & set(b["tracks"]))
+    shared_track_ids = sorted(set(a["tracks"]) & set(b["tracks"]), key=lambda tid: a["tracks"][tid].lower())
+    shared_tracks = [
+        {"track": track_meta[tid][0], "artist": track_meta[tid][1], "image_url": track_images.get(tid)}
+        for tid in shared_track_ids[:12]
+    ]
     top_a = {n for r in a["top"].values() for n in r}
     top_b = {n for r in b["top"].values() for n in r}
 
@@ -489,15 +515,16 @@ def pair_report(a, b, names):
         "overlap": round(overlap, 4),
         "shared_count": len(shared),
         "artists_a": len(sa), "artists_b": len(sb),
-        "common": [{"artist": names[x], "a": a["artists"][x], "b": b["artists"][x]} for x in common[:8]],
-        "shared_tracks": shared_tracks[:12],
-        "shared_tracks_count": len(shared_tracks),
+        "common": [{"artist": names[x], "a": a["artists"][x], "b": b["artists"][x],
+                    "image_url": artist_images.get(x)} for x in common[:8]],
+        "shared_tracks": shared_tracks,
+        "shared_tracks_count": len(shared_track_ids),
         "top_overlap": sorted(top_a & top_b)[:8],
         "signature_a": signature(a, b),
         "signature_b": signature(b, a),
         "differences": [diff_line(c) for c in diffs[:2]],
         "similarities": [f"{METRICS[c['key']]['label']}: {c['a_text']} vs. {c['b_text']}" for c in sames[:4]],
-        "description": describe_pair(a, b, score, parts, len(shared), len(shared_tracks)),
+        "description": describe_pair(a, b, score, parts, len(shared), len(shared_track_ids)),
     }
 
 
@@ -591,7 +618,7 @@ def music_dna(people):
             "listeners": rows, "available": available, "insight": insight}
 
 
-def galaxy(people, names):
+def galaxy(people, names, artist_images):
     """Artists for the overlap network: the most shared ones plus each listener's top unshared ones."""
     fans = defaultdict(dict)
     for p in people:
@@ -607,7 +634,8 @@ def galaxy(people, names):
     return {
         "artists": [
             {
-                "id": a, "name": names[a], "songs": sum(fans[a].values()),
+                "id": a, "name": names[a], "image_url": artist_images.get(a),
+                "songs": sum(fans[a].values()),
                 "fans": [{"i": i, "songs": n, "tracks": by_i[i]["artist_tracks"][a]}
                          for i, n in sorted(fans[a].items())],
             }
@@ -615,7 +643,8 @@ def galaxy(people, names):
         ],
         "shared_total": len(shared),
         "table": [
-            {"artist": names[a], "songs": [fans[a].get(p["i"], 0) for p in people]}
+            {"artist": names[a], "image_url": artist_images.get(a),
+             "songs": [fans[a].get(p["i"], 0) for p in people]}
             for a in shared[:30]
         ],
     }
@@ -723,19 +752,20 @@ def build():
     users = get_users()
     if len(users) < 2:
         return {"listeners": [{"i": i, "name": u["display_name"]} for i, u in enumerate(users)], "enough": False}
-    people, names = load(users)
-    pairs = [pair_report(a, b, names) for a, b in combinations(people, 2)]
+    people, names, artist_images, track_images, track_meta = load(users)
+    pairs = [pair_report(a, b, names, artist_images, track_images, track_meta) for a, b in combinations(people, 2)]
     return {
         "enough": True,
         "listeners": [{"i": p["i"], "name": p["name"], "liked": len(p["tracks"]),
+                       "image_url": p["image_url"],
                        "initial": (p["name"].strip()[:1] or "?").upper()} for p in people],
         "insights": insights(people, pairs, names),
-        "personalities": personalities(people, names),
+        "personalities": personalities(people, names, artist_images),
         "pairs": pairs,
         "compat_weights": COMPAT_WEIGHTS,
         "battles": battles(people),
         "dna": music_dna(people),
-        "galaxy": galaxy(people, names),
+        "galaxy": galaxy(people, names, artist_images),
         "clock": listening_clock(people),
         "eras": eras(people),
         "advanced": advanced(people),

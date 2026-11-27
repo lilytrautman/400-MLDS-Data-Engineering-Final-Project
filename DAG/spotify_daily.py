@@ -1,10 +1,10 @@
-"""Daily Spotify pipeline in Airflow, one task per step:
+"""Twice-daily Spotify pipeline in Airflow, one task per step:
 
     ingest -> create_tables -> stage -> clean -> check
 
-Like the Week 7 dbt DAG, each task runs one command, the same one you can run in
-the terminal. Airflow records how long each task took and whether it passed, which
-is how the pipeline is measured from start to finish.
+Each task runs one command, the same one you can run in the terminal. Airflow
+records how long each task took and whether it passed, measuring the pipeline
+from start to finish.
 """
 
 from datetime import datetime, timedelta

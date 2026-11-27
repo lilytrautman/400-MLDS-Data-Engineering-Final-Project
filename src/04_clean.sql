@@ -13,13 +13,20 @@
 -- In INSERT ... SELECT ... ON CONFLICT, the SELECT needs a WHERE clause, or SQLite
 -- reads ON as the start of a join. "WHERE true" is used where nothing is filtered.
 
--- users: profile fields are refreshed on every run
-INSERT INTO users (user_id, display_name, country, image_url)
-SELECT user_id, display_name, country, image_url
+-- users: profile fields are refreshed on every run; known first/last names stay if a later run has NULL
+INSERT INTO users (user_id, display_name, first_name, last_name, country, image_url)
+SELECT user_id,
+       display_name,
+       NULLIF(TRIM(first_name), ''),
+       NULLIF(TRIM(last_name), ''),
+       country,
+       image_url
 FROM stg_users
 WHERE true
 ON CONFLICT (user_id) DO UPDATE SET
     display_name = excluded.display_name,
+    first_name   = COALESCE(excluded.first_name, users.first_name),
+    last_name    = COALESCE(excluded.last_name, users.last_name),
     country      = excluded.country,
     image_url    = excluded.image_url;
 

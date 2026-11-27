@@ -5,9 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Spotify Dashboard{% endblock %}</title>
   <script>
-    // Apply the saved light/dark choice before the page draws, so it doesn't flash
-    try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+    // Apply the saved Light/Dark choice before the page draws, so it doesn't flash.
+    // Nothing saved = Auto, which follows the computer's setting.
+    try { const t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <!-- The one charting library for every tab -->
   <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
@@ -16,40 +20,66 @@
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <span class="brand">Spotify Listening</span>
+      <span class="brand">
+        <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path d="M6.5 9.2c3.8-1.1 8-.8 11.2 1M7 12.3c3.1-.9 6.6-.6 9.3.9M7.6 15.2c2.5-.7 5.2-.5 7.3.7" fill="none" stroke="var(--page)" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Spotify Listening
+      </span>
       <nav class="tabs">
         <a href="{{ url_for('individual.index') }}"
            class="{{ 'active' if request.blueprint == 'individual' }}">Individual</a>
         <a href="{{ url_for('compare.index') }}"
            class="{{ 'active' if request.blueprint == 'compare' }}">Compare</a>
       </nav>
-      <button type="button" id="theme-toggle" class="theme-toggle"></button>
+      <div class="theme-switch" role="group" aria-label="Color theme">
+        <button type="button" data-mode="auto">Auto</button>
+        <button type="button" data-mode="light">Light</button>
+        <button type="button" data-mode="dark">Dark</button>
+      </div>
     </div>
   </header>
+
+  {% if status %}
+  <!-- Where the data comes from and how fresh it is -->
+  <div class="status" role="status">
+    <span><span class="dot" aria-hidden="true"></span>Last pipeline run <b>{{ status.last or "not yet" }}</b> · next at <b>{{ status.next }}</b> (runs 9 AM and 9 PM Chicago time)</span>
+    <span><b>{{ status.listeners }}</b> listeners · <b>{{ "{:,}".format(status.plays) }}</b> plays · <b>{{ "{:,}".format(status.tracks) }}</b> tracks</span>
+    <span>Audio features (ReccoBeats) <b>{{ "{:,}".format(status.features) }}</b> of {{ "{:,}".format(status.tracks) }} · Popularity (Deezer) <b>{{ "{:,}".format(status.deezer) }}</b> of {{ "{:,}".format(status.tracks) }}</span>
+  </div>
+  {% endif %}
 
   <main class="page">
     {% block content %}{% endblock %}
   </main>
 
   <script>
-    // Light/dark toggle: overrides the system setting and remembers the choice
+    // Theme switch: Auto follows the computer, Light/Dark override it and are remembered
     (() => {
       const root = document.documentElement;
-      const btn = document.getElementById("theme-toggle");
-      const current = () => root.dataset.theme ||
-        (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-      const label = () => {
-        const next = current() === "dark" ? "light" : "dark";
-        btn.textContent = next === "light" ? "☀ Light mode" : "☾ Dark mode";
-        btn.setAttribute("aria-label", `Switch to ${next} mode`);
-      };
-      btn.addEventListener("click", () => {
-        root.dataset.theme = current() === "dark" ? "light" : "dark";
-        try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
-        label();
+      const buttons = document.querySelectorAll(".theme-switch button");
+      const mode = () => root.dataset.theme || "auto";
+      const mark = () => buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === mode())));
+      buttons.forEach((b) => b.addEventListener("click", () => {
+        const m = b.dataset.mode;
+        if (m === "auto") delete root.dataset.theme; else root.dataset.theme = m;
+        try { m === "auto" ? localStorage.removeItem("theme") : localStorage.setItem("theme", m); } catch (e) {}
+        mark();
         Charts.redrawAll();
-      });
-      label();
+      }));
+      mark();
+    })();
+
+    // Section links: mark the section currently on screen
+    (() => {
+      const links = [...document.querySelectorAll(".jump a")];
+      const targets = links.map((a) => document.querySelector(a.getAttribute("href"))).filter(Boolean);
+      if (!targets.length) return;
+      const update = () => {
+        let cur = targets[0];
+        for (const t of targets) if (t.getBoundingClientRect().top < 160) cur = t;
+        links.forEach((a) => a.classList.toggle("here", a.getAttribute("href") === `#${cur.id}`));
+      };
+      addEventListener("scroll", update, { passive: true });
+      update();
     })();
   </script>
   {% block scripts %}{% endblock %}
