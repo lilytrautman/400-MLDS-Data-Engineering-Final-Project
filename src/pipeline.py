@@ -61,15 +61,24 @@ def run_sql_file(name):
         conn.commit()
 
 
+MIGRATIONS = [
+    ("users", "first_name", "TEXT"),
+    ("users", "last_name", "TEXT"),
+    ("users", "image_url", "TEXT"),
+    ("albums", "image_url", "TEXT"),
+    ("artists", "image_url", "TEXT"),
+]
+
+
 def create_tables():
     """Step 02: create the final tables if they're missing, and add any new columns."""
     run_sql_file("02_schema.sql")
     # CREATE TABLE IF NOT EXISTS won't add columns to an existing database
     with closing(connect()) as conn:
-        for table in ("users", "albums", "artists"):
+        for table, column, col_type in MIGRATIONS:
             cols = {row[1] for row in conn.execute(f"PRAGMA table_info({table})")}
-            if "image_url" not in cols:
-                conn.execute(f"ALTER TABLE {table} ADD COLUMN image_url TEXT")
+            if column not in cols:
+                conn.execute(f"ALTER TABLE {table} ADD COLUMN {column} {col_type}")
         conn.commit()
 
 

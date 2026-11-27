@@ -3,9 +3,22 @@
 
 {% block content %}
 <div class="page-header">
-  <div>
-    <h1>Individual listener</h1>
-    <p>One person's liked songs, listening habits and favorites.</p>
+  <div class="header-identity">
+    {% if selected_user %}
+    <span class="thumb thumb-circle thumb-lg thumb-listener thumb-ring" style="--ring: var(--series-{{ user_index % 8 + 1 }})" aria-hidden="true">
+      <span class="thumb-fallback">{{ selected_user.initial }}</span>
+      {% if selected_user.image_url %}<img src="{{ selected_user.image_url }}" alt="" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">{% endif %}
+    </span>
+    <div>
+      <h1>{{ selected_user.display_name }}</h1>
+      <p>Liked songs, listening habits and favorites.</p>
+    </div>
+    {% else %}
+    <div>
+      <h1>Individual listener</h1>
+      <p>One person's liked songs, listening habits and favorites.</p>
+    </div>
+    {% endif %}
   </div>
   <form method="get" class="field">
     <label for="user">Listener</label>
@@ -43,12 +56,34 @@
         <div class="note">{{ "since " ~ s.plays_since if s.plays_since else "None yet" }}</div>
       </div>
       <div class="stat span-3">
-        <div class="value small">{{ top4w.artists[0].artist if top4w.artists else "—" }}</div>
-        <div class="label">Top artist, last 4 weeks</div>
+        <div class="hero-media">
+          {% if top4w.artists %}
+          {% set ta = top4w.artists[0] %}
+          <span class="thumb thumb-circle thumb-lg" aria-hidden="true">
+            <span class="thumb-fallback">{{ (ta.artist[:1] or "?") | upper }}</span>
+            {% if ta.image_url %}<img src="{{ ta.image_url }}" alt="" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">{% endif %}
+          </span>
+          {% endif %}
+          <div class="media-text">
+            <div class="value small">{{ top4w.artists[0].artist if top4w.artists else "—" }}</div>
+            <div class="label">Top artist, last 4 weeks</div>
+          </div>
+        </div>
       </div>
       <div class="stat span-3">
-        <div class="value small">{{ top4w.tracks[0].track if top4w.tracks else "—" }}</div>
-        <div class="label">Top track, last 4 weeks{% if top4w.tracks %} · {{ top4w.tracks[0].artist }}{% endif %}</div>
+        <div class="hero-media">
+          {% if top4w.tracks %}
+          {% set tt = top4w.tracks[0] %}
+          <span class="thumb thumb-square thumb-lg" aria-hidden="true">
+            <span class="thumb-fallback">&#9834;</span>
+            {% if tt.image_url %}<img src="{{ tt.image_url }}" alt="" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">{% endif %}
+          </span>
+          {% endif %}
+          <div class="media-text">
+            <div class="value small">{{ top4w.tracks[0].track if top4w.tracks else "—" }}</div>
+            <div class="label">Top track, last 4 weeks{% if top4w.tracks %} · {{ top4w.tracks[0].artist }}{% endif %}</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -90,7 +125,15 @@
           {% for t in lvp.replayed_not_liked %}
             <tr>
               <td class="rank">{{ loop.index }}</td>
-              <td>{{ t.track or "(removed from Spotify)" }}<div class="secondary">{{ t.artist or "" }}</div></td>
+              <td>
+                <div class="media-row compact">
+                  <span class="thumb thumb-square thumb-sm" aria-hidden="true">
+                    <span class="thumb-fallback">&#9834;</span>
+                    {% if t.image_url %}<img src="{{ t.image_url }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">{% endif %}
+                  </span>
+                  <div class="media-text">{{ t.track or "(removed from Spotify)" }}<div class="secondary">{{ t.artist or "" }}</div></div>
+                </div>
+              </td>
               <td class="num">{{ t.plays }} plays</td>
             </tr>
           {% endfor %}
@@ -154,6 +197,16 @@
 {% if data %}
 <script>
 const DATA = {{ data | tojson }};
+const esc = (v) => String(v ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const thumbHtml = (url, label, { circle = false, size = "sm", eager = false } = {}) => {
+  const shape = circle ? "thumb-circle" : "thumb-square";
+  const fallback = circle ? esc((String(label ?? "").trim().slice(0, 1) || "?").toUpperCase()) : "&#9834;";
+  const loading = eager ? "" : ' loading="lazy"';
+  const img = url
+    ? `<img src="${esc(url)}" alt=""${loading} decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">`
+    : "";
+  return `<span class="thumb ${shape} thumb-${size}" aria-hidden="true"><span class="thumb-fallback">${fallback}</span>${img}</span>`;
+};
 
 // ---------- Mood & energy over time ----------
 (() => {
@@ -229,12 +282,16 @@ const DATA = {{ data | tojson }};
     return;
   }
   // Tooltip: the year and song count, then that year's 5 most popular liked songs
-  const esc = (v) => String(v).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
   const hoverText = (r) => {
     const head = `<b>${r.year}</b>: ${r.songs} song${r.songs === 1 ? "" : "s"}`;
     if (!r.top.length) return head;
-    const list = r.top.map((t, i) => `${i + 1}. ${esc(t.track)}${t.artist ? " – " + esc(t.artist) : ""}`);
-    return `${head}<br><br><b>Most popular:</b><br>${list.join("<br>")}`;
+    const list = r.top.map((t, i) => `
+      <div class="tip-song">
+        <span class="tip-song-rank">${i + 1}.</span>
+        ${thumbHtml(t.image_url, t.track, { size: "xs", eager: true })}
+        <span class="tip-song-text">${esc(t.track)}${t.artist ? " – " + esc(t.artist) : ""}</span>
+      </div>`).join("");
+    return `${head}<br><br><b>Most popular:</b><div class="tip-list">${list}</div>`;
   };
   Charts.plot("years-chart", () => ({
     data: [{
@@ -266,13 +323,16 @@ const DATA = {{ data | tojson }};
     return;
   }
   // Tooltip: the hour and play count, then the 5 songs played most in that hour
-  const esc = (v) => String(v).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
   const hoverText = (r) => {
     const head = `<b>${label(r.hour)}</b>: ${r.plays} play${r.plays === 1 ? "" : "s"}`;
     if (!r.top.length) return head;
-    const list = r.top.map((t, i) =>
-      `${i + 1}. ${esc(t.track)}${t.artist ? " – " + esc(t.artist) : ""} (${t.plays})`);
-    return `${head}<br><br><b>Most played this hour:</b><br>${list.join("<br>")}`;
+    const list = r.top.map((t, i) => `
+      <div class="tip-song">
+        <span class="tip-song-rank">${i + 1}.</span>
+        ${thumbHtml(t.image_url, t.track, { size: "xs", eager: true })}
+        <span class="tip-song-text">${esc(t.track)}${t.artist ? " – " + esc(t.artist) : ""} (${t.plays})</span>
+      </div>`).join("");
+    return `${head}<br><br><b>Most played this hour:</b><div class="tip-list">${list}</div>`;
   };
   Charts.plot("hours-chart", () => ({
     data: [{
@@ -300,7 +360,6 @@ const DATA = {{ data | tojson }};
 
 // ---------- Top tracks & artists ----------
 (() => {
-  const esc = (v) => String(v ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   const change = (c) => {
     if (c.kind === "new") return '<span class="change">New</span>';
     if (c.kind !== "move") return "";
@@ -315,14 +374,24 @@ const DATA = {{ data | tojson }};
     document.getElementById("top-tracks").innerHTML = tracks.length ? `<table><tbody>${tracks.map((t) => `
       <tr>
         <td class="rank">${t.rank}</td>
-        <td>${esc(t.track)}${t.liked ? ' <span class="liked" title="In liked songs" aria-label="In liked songs">♥</span>' : ""}
-          <div class="secondary">${esc(t.artist)}</div></td>
+        <td>
+          <div class="media-row">
+            ${thumbHtml(t.image_url, t.track, { size: "md" })}
+            <div class="media-text">${esc(t.track)}${t.liked ? ' <span class="liked" title="In liked songs" aria-label="In liked songs">♥</span>' : ""}
+              <div class="secondary">${esc(t.artist)}</div></div>
+          </div>
+        </td>
         <td class="num">${change(t.change)}</td>
       </tr>`).join("")}</tbody></table>` : empty;
     document.getElementById("top-artists").innerHTML = artists.length ? `<table><tbody>${artists.map((a) => `
       <tr>
         <td class="rank">${a.rank}</td>
-        <td>${artistHover(a, range)}</td>
+        <td>
+          <div class="media-row">
+            ${thumbHtml(a.image_url, a.artist, { circle: true, size: "md" })}
+            <div class="media-text">${artistHover(a, range)}</div>
+          </div>
+        </td>
         <td class="num">${change(a.change)}</td>
       </tr>`).join("")}</tbody></table>` : empty;
   }
@@ -330,12 +399,16 @@ const DATA = {{ data | tojson }};
   // Hover (or tab to) an artist to see their top 5 tracks for this time range
   const RANGE_LABEL = { short_term: "last 4 weeks", medium_term: "last 6 months", long_term: "last year" };
   function artistHover(a, range) {
-    const items = a.tracks.map((t) => {
+    const items = a.tracks.map((t, idx) => {
       const meta = [
         t.rank ? `#${t.rank} in your top tracks` : "",
         t.plays ? `${t.plays} recorded play${t.plays === 1 ? "" : "s"}` : "",
       ].filter(Boolean).join(" · ");
-      return `<li>${esc(t.track)}${meta ? `<div class="secondary">${meta}</div>` : ""}</li>`;
+      return `<li class="track-pop-row">
+        <span class="track-pop-rank">${idx + 1}.</span>
+        ${thumbHtml(t.image_url, t.track, { size: "xs", eager: true })}
+        <div class="media-text">${esc(t.track)}${meta ? `<div class="secondary">${meta}</div>` : ""}</div>
+      </li>`;
     }).join("");
     const body = items
       ? `<ol>${items}</ol>`

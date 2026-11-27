@@ -9,7 +9,7 @@ from datetime import datetime
 
 from flask import Blueprint, render_template, request
 
-from db import LOCAL_TZ, get_users, query
+from db import LOCAL_TZ, get_users, has_image_columns, query
 
 bp = Blueprint("individual", __name__, url_prefix="/individual")
 
@@ -89,10 +89,11 @@ def release_years(user_id, top_n=5):
     Each year also lists its top_n most popular liked songs (by Deezer rank,
     higher = more mainstream) for the chart's hover tooltip.
     """
+    album_img = "a.image_url" if has_image_columns()["albums"] else "NULL"
     rows = query(
-        """
+        f"""
         SELECT a.release_year AS year, t.name AS track, ar.name AS artist,
-               d.rank AS popularity
+               d.rank AS popularity, {album_img} AS image_url
         FROM saved_tracks s
         JOIN tracks t ON t.track_id = s.track_id
         LEFT JOIN albums a ON a.album_id = t.album_id
@@ -118,7 +119,11 @@ def release_years(user_id, top_n=5):
             "year": y,
             "songs": len(songs),
             "top": [
-                {"track": r["track"] or "(removed from Spotify)", "artist": r["artist"] or ""}
+                {
+                    "track": r["track"] or "(removed from Spotify)",
+                    "artist": r["artist"] or "",
+                    "image_url": r["image_url"],
+                }
                 for r in songs[:top_n]
             ],
         })
@@ -131,11 +136,14 @@ def listening_hours(user_id, top_n=5):
     Each hour also lists its top_n most-played songs in that hour, for the
     chart's hover tooltip.
     """
+    album_img = "a.image_url" if has_image_columns()["albums"] else "NULL"
     rows = query(
-        """
-        SELECT p.played_at, p.track_id, t.name AS track, ar.name AS artist
+        f"""
+        SELECT p.played_at, p.track_id, t.name AS track, ar.name AS artist,
+               {album_img} AS image_url
         FROM plays p
         JOIN tracks t ON t.track_id = p.track_id
+        LEFT JOIN albums a ON a.album_id = t.album_id
         LEFT JOIN track_artists ta ON ta.track_id = p.track_id AND ta.artist_order = 0
         LEFT JOIN artists ar ON ar.artist_id = ta.artist_id
         WHERE p.user_id = ?
@@ -151,13 +159,22 @@ def listening_hours(user_id, top_n=5):
         hours[local.hour] += 1
         days.add(local.date())
         per_hour[local.hour][r["track_id"]] += 1
-        names[r["track_id"]] = (r["track"] or "(removed from Spotify)", r["artist"] or "")
+        names[r["track_id"]] = (
+            r["track"] or "(removed from Spotify)",
+            r["artist"] or "",
+            r["image_url"],
+        )
 
     def top_songs(hour):
         # Most plays in this hour first, ties alphabetical
         ranked = sorted(per_hour[hour].items(), key=lambda kv: (-kv[1], names[kv[0]][0].lower()))
         return [
-            {"track": names[tid][0], "artist": names[tid][1], "plays": n}
+            {
+                "track": names[tid][0],
+                "artist": names[tid][1],
+                "plays": n,
+                "image_url": names[tid][2],
+            }
             for tid, n in ranked[:top_n]
         ]
 
@@ -169,42 +186,48 @@ def listening_hours(user_id, top_n=5):
 
 # The id column and the "names" query for each top list. Each query returns the
 # list's rows for one snapshot, with the item's id as item_id.
-TOP_LISTS = {
-    "top_tracks": (
-        "track_id",
-        """
-        SELECT tt.rank, tt.track_id AS item_id,
-               COALESCE(t.name, '(removed from Spotify)') AS track,
-               COALESCE(ar.name, '') AS artist,
-               s.track_id IS NOT NULL AS liked
-        FROM top_tracks tt
-        JOIN tracks t ON t.track_id = tt.track_id
-        LEFT JOIN track_artists ta ON ta.track_id = tt.track_id AND ta.artist_order = 0
-        LEFT JOIN artists ar ON ar.artist_id = ta.artist_id
-        LEFT JOIN saved_tracks s ON s.user_id = tt.user_id AND s.track_id = tt.track_id
-        WHERE tt.user_id = :user AND tt.time_range = :range
-          AND tt.snapshot_date = :date AND tt.rank <= :limit
-        ORDER BY tt.rank
-        """,
-    ),
-    "top_artists": (
+def _top_list_spec(table):
+    img_cols = has_image_columns()
+    if table == "top_tracks":
+        album_img = "a.image_url" if img_cols["albums"] else "NULL"
+        return (
+            "track_id",
+            f"""
+            SELECT tt.rank, tt.track_id AS item_id,
+                   COALESCE(t.name, '(removed from Spotify)') AS track,
+                   COALESCE(ar.name, '') AS artist,
+                   {album_img} AS image_url,
+                   s.track_id IS NOT NULL AS liked
+            FROM top_tracks tt
+            JOIN tracks t ON t.track_id = tt.track_id
+            LEFT JOIN albums a ON a.album_id = t.album_id
+            LEFT JOIN track_artists ta ON ta.track_id = tt.track_id AND ta.artist_order = 0
+            LEFT JOIN artists ar ON ar.artist_id = ta.artist_id
+            LEFT JOIN saved_tracks s ON s.user_id = tt.user_id AND s.track_id = tt.track_id
+            WHERE tt.user_id = :user AND tt.time_range = :range
+              AND tt.snapshot_date = :date AND tt.rank <= :limit
+            ORDER BY tt.rank
+            """,
+        )
+    artist_img = "a.image_url" if img_cols["artists"] else "NULL"
+    return (
         "artist_id",
-        """
-        SELECT ta.rank, ta.artist_id AS item_id, a.name AS artist
+        f"""
+        SELECT ta.rank, ta.artist_id AS item_id, a.name AS artist,
+               {artist_img} AS image_url
         FROM top_artists ta
         JOIN artists a ON a.artist_id = ta.artist_id
         WHERE ta.user_id = :user AND ta.time_range = :range
           AND ta.snapshot_date = :date AND ta.rank <= :limit
         ORDER BY ta.rank
         """,
-    ),
-}
+    )
 
 
 def _top_list(table, user_id, time_range, limit):
     """One ranked list from the latest daily snapshot, with each item's move since
     the snapshot before it: {"kind": "move", "by": 3} is up three places."""
-    id_col, list_sql = TOP_LISTS[table]
+    id_col, list_sql = _top_list_spec(table)
     dates = [
         r["snapshot_date"]
         for r in query(
@@ -258,10 +281,11 @@ def _tracks_by_artist(user_id, time_range, top_n=5):
             (user_id,),
         )
     }
+    album_img = "al.image_url" if has_image_columns()["albums"] else "NULL"
     out = defaultdict(list)
     seen = defaultdict(set)
 
-    def add(artist_id, track_id, name, rank):
+    def add(artist_id, track_id, name, rank, image_url):
         # Skip repeats by name too: Spotify can have two versions of one song
         key = (name or track_id).lower()
         if len(out[artist_id]) < top_n and key not in seen[artist_id]:
@@ -270,14 +294,16 @@ def _tracks_by_artist(user_id, time_range, top_n=5):
                 "track": name or "(removed from Spotify)",
                 "rank": rank,
                 "plays": plays.get(track_id, 0),
+                "image_url": image_url,
             })
 
     # 1. Spotify top tracks for this time range
     for r in query(
-        """
-        SELECT ta.artist_id, tt.track_id, t.name, tt.rank
+        f"""
+        SELECT ta.artist_id, tt.track_id, t.name, tt.rank, {album_img} AS image_url
         FROM top_tracks tt
         JOIN tracks t ON t.track_id = tt.track_id
+        LEFT JOIN albums al ON al.album_id = t.album_id
         JOIN track_artists ta ON ta.track_id = tt.track_id
         WHERE tt.user_id = :user AND tt.time_range = :range
           AND tt.snapshot_date = (SELECT MAX(snapshot_date) FROM top_tracks
@@ -286,14 +312,15 @@ def _tracks_by_artist(user_id, time_range, top_n=5):
         """,
         {"user": user_id, "range": time_range},
     ):
-        add(r["artist_id"], r["track_id"], r["name"], r["rank"])
+        add(r["artist_id"], r["track_id"], r["name"], r["rank"], r["image_url"])
 
     # 2. Fill up with the most-played recorded songs
     for r in query(
-        """
-        SELECT ta.artist_id, p.track_id, t.name, COUNT(*) AS n
+        f"""
+        SELECT ta.artist_id, p.track_id, t.name, {album_img} AS image_url, COUNT(*) AS n
         FROM plays p
         JOIN tracks t ON t.track_id = p.track_id
+        LEFT JOIN albums al ON al.album_id = t.album_id
         JOIN track_artists ta ON ta.track_id = p.track_id
         WHERE p.user_id = ?
         GROUP BY ta.artist_id, p.track_id
@@ -301,7 +328,7 @@ def _tracks_by_artist(user_id, time_range, top_n=5):
         """,
         (user_id,),
     ):
-        add(r["artist_id"], r["track_id"], r["name"], None)
+        add(r["artist_id"], r["track_id"], r["name"], None, r["image_url"])
     return out
 
 
@@ -344,11 +371,13 @@ def liked_vs_played(user_id):
         """,
         (user_id, user_id),
     )[0]
+    album_img = "a.image_url" if has_image_columns()["albums"] else "NULL"
     not_liked = query(
-        """
-        SELECT t.name AS track, ar.name AS artist, COUNT(*) AS plays
+        f"""
+        SELECT t.name AS track, ar.name AS artist, {album_img} AS image_url, COUNT(*) AS plays
         FROM plays p
         JOIN tracks t ON t.track_id = p.track_id
+        LEFT JOIN albums a ON a.album_id = t.album_id
         LEFT JOIN track_artists ta ON ta.track_id = p.track_id AND ta.artist_order = 0
         LEFT JOIN artists ar ON ar.artist_id = ta.artist_id
         LEFT JOIN saved_tracks s ON s.user_id = p.user_id AND s.track_id = p.track_id
@@ -377,8 +406,15 @@ def index():
     if user_id not in user_ids:
         user_id = user_ids[0] if user_ids else None
 
+    selected_user = None
+    user_index = 0
     data = None
     if user_id:
+        user_index = user_ids.index(user_id)
+        selected_user = {
+            **users[user_index],
+            "initial": (users[user_index]["display_name"].strip()[:1] or "?").upper(),
+        }
         data = {
             "summary": summary(user_id),
             "mood": mood_over_time(user_id),
@@ -387,4 +423,11 @@ def index():
             "top": top_lists(user_id),
             "liked_vs_played": liked_vs_played(user_id),
         }
-    return render_template("individual.html", users=users, user_id=user_id, data=data)
+    return render_template(
+        "individual.html",
+        users=users,
+        user_id=user_id,
+        selected_user=selected_user,
+        user_index=user_index,
+        data=data,
+    )

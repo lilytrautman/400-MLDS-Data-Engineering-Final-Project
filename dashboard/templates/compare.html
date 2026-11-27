@@ -49,7 +49,10 @@
   {% for p in data.personalities %}
   <section class="card span-{{ col }} cmp-persona">
     <div class="cmp-persona-head">
-      <div class="cmp-persona-initial" aria-hidden="true" style="background: var(--series-{{ p.i % 8 + 1 }})">{{ p.initial }}</div>
+      <span class="thumb thumb-circle thumb-lg thumb-listener thumb-ring" style="--ring: var(--series-{{ p.i % 8 + 1 }})" aria-hidden="true">
+        <span class="thumb-fallback">{{ p.initial }}</span>
+        {% if p.image_url %}<img src="{{ p.image_url }}" alt="" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">{% endif %}
+      </span>
       <h3 class="cmp-persona-name">{{ p.name }}</h3>
     </div>
     <p class="cmp-persona-title">{{ p.title }}</p>
@@ -58,7 +61,17 @@
       {% for s in p.stats %}
       <div>
         <dt>{{ s.label }}</dt>
+        {% if s.is_artist %}
+        <dd class="media-row compact">
+          <span class="thumb thumb-circle thumb-xs" aria-hidden="true">
+            <span class="thumb-fallback">{{ s.initial }}</span>
+            {% if s.image_url %}<img src="{{ s.image_url }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">{% endif %}
+          </span>
+          <span class="media-text">{{ s.value }}{% if s.note %}<span class="secondary"> · {{ s.note }}</span>{% endif %}</span>
+        </dd>
+        {% else %}
         <dd>{{ s.value }}{% if s.note %}<span class="secondary"> · {{ s.note }}</span>{% endif %}</dd>
+        {% endif %}
       </div>
       {% endfor %}
     </dl>
@@ -155,7 +168,18 @@
           <thead><tr><th>Artist</th>{% for l in data.listeners %}<th class="num">{{ l.name }}</th>{% endfor %}</tr></thead>
           <tbody>
           {% for a in data.galaxy.table %}
-            <tr><td>{{ a.artist }}</td>{% for n in a.songs %}<td class="num">{{ n if n else "–" }}</td>{% endfor %}</tr>
+            <tr>
+              <td>
+                <div class="media-row compact">
+                  <span class="thumb thumb-circle thumb-xs" aria-hidden="true">
+                    <span class="thumb-fallback">{{ (a.artist[:1] or "?") | upper }}</span>
+                    {% if a.image_url %}<img src="{{ a.image_url }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">{% endif %}
+                  </span>
+                  <span class="media-text">{{ a.artist }}</span>
+                </div>
+              </td>
+              {% for n in a.songs %}<td class="num">{{ n if n else "–" }}</td>{% endfor %}
+            </tr>
           {% endfor %}
           </tbody>
         </table>
@@ -228,18 +252,14 @@
 
   /* Listener profiles */
   .cmp-persona { display: flex; flex-direction: column; gap: 10px; }
-  .cmp-persona-head { display: flex; gap: 12px; align-items: center; }
-  .cmp-persona-initial {
-    font-size: 24px; font-weight: 700; width: 52px; height: 52px; flex: none; display: grid; place-items: center;
-    color: #0b0b0b; border-radius: 50%;  /* dark ink reads on every listener color */
-  }
+  .cmp-persona-head { display: flex; gap: 14px; align-items: center; }
   .cmp-persona-name { margin: 0; font-size: 22px; line-height: 1.2; overflow-wrap: anywhere; }
   .cmp-persona-title { margin: 4px 0 0; font-size: 24px; font-weight: 700; line-height: 1.15; text-wrap: balance; }
   .cmp-persona-blurb { margin: 0; font-size: 16px; color: var(--text-2); text-wrap: pretty; }
   .cmp-stats { margin: 0; display: grid; gap: 8px; }
   .cmp-stats div { border-top: 1px solid var(--grid); padding-top: 8px; }
   .cmp-stats dt { font-size: 15px; color: var(--text-2); }
-  .cmp-stats dd { margin: 0; font-size: 20px; font-weight: 650; overflow-wrap: anywhere; }
+  .cmp-stats dd { margin: 2px 0 0; font-size: 20px; font-weight: 650; overflow-wrap: anywhere; }
   .cmp-stats dd .secondary { font-weight: 400; }
   .cmp-why { margin-top: auto; font-size: 15px; }
   .cmp-why summary { cursor: pointer; color: var(--text-2); }
@@ -254,6 +274,8 @@
   }
   .cmp-pair:hover { background: var(--hover); }
   .cmp-pair[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 2px var(--accent); background: var(--accent-soft); }
+  .cmp-pair-info { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; min-width: 0; }
+  .cmp-pair-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .cmp-pair .names { font-size: 19px; font-weight: 700; }
   .cmp-pair .tag { font-size: 15px; color: var(--text-2); }
   .cmp-ring { flex: none; }
@@ -268,17 +290,21 @@
   .cmp-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
 
   .cmp-soul-top { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; margin: 0 0 20px; }
-  .cmp-soul-names { margin: 0; font-size: 28px; line-height: 1.2; }
-  .cmp-soul-desc { font-size: 20px; font-weight: 600; max-width: 640px; margin: 6px 0 0; color: var(--text-2); }
+  .cmp-soul-names { margin: 0; font-size: 28px; line-height: 1.2; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .cmp-soul-names .cmp-amp { color: var(--text-2); font-weight: 500; }
+  .cmp-soul-desc { font-size: 20px; font-weight: 600; max-width: 640px; margin: 8px 0 0; color: var(--text-2); }
   .cmp-parts { display: grid; gap: 10px; margin: 0 0 20px; max-width: 760px; }
   .cmp-part { display: grid; grid-template-columns: 170px 1fr 48px; gap: 12px; align-items: center; font-size: 16px; }
   .cmp-part b { font-variant-numeric: tabular-nums; text-align: right; }
   .cmp-meter { height: 12px; background: var(--grid); border-radius: 999px; overflow: hidden; }
   .cmp-meter span { display: block; height: 100%; width: 0; background: var(--text); border-radius: 999px; transition: width .8s cubic-bezier(.2, .8, .2, 1); }
   .cmp-cols { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-  .cmp-cols h3 { font-size: 18px; margin: 0 0 6px; }
+  .cmp-cols h3 { font-size: 18px; margin: 0 0 8px; }
   .cmp-cols ol, .cmp-cols ul { margin: 0; padding-left: 20px; font-size: 16px; }
   .cmp-cols li + li { margin-top: 4px; }
+  .cmp-cols .cmp-media-list { list-style: none; padding-left: 0; display: grid; gap: 8px; }
+  .cmp-cols .cmp-media-list li + li { margin-top: 0; }
+  .cmp-dna-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
 
   /* Head-to-head */
   .cmp-scoreboard { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; font-size: 20px; font-weight: 700; margin: 4px 0 8px; }
@@ -320,16 +346,35 @@
   .cmp-galaxy .link { stroke: var(--text); stroke-opacity: .18; transition: stroke-opacity .2s; }
   .cmp-galaxy .link.hi { stroke-opacity: .85; stroke-width: 2; }
   .cmp-galaxy text { pointer-events: none; font-family: var(--font); font-weight: 700; }
+  /* Solo bubble label ink: white on deeper Light-mode fills, dark on amber & all bright Dark-mode fills */
+  :root {
+    --solo-ink-1: #ffffff; --solo-ink-2: #0b0b0b; --solo-ink-3: #ffffff; --solo-ink-4: #ffffff;
+    --solo-ink-5: #ffffff; --solo-ink-6: #ffffff; --solo-ink-7: #ffffff; --solo-ink-8: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --solo-ink-1: #0b0b0b; --solo-ink-2: #0b0b0b; --solo-ink-3: #0b0b0b; --solo-ink-4: #0b0b0b;
+      --solo-ink-5: #0b0b0b; --solo-ink-6: #0b0b0b; --solo-ink-7: #0b0b0b; --solo-ink-8: #0b0b0b;
+    }
+  }
+  :root[data-theme="dark"] {
+    --solo-ink-1: #0b0b0b; --solo-ink-2: #0b0b0b; --solo-ink-3: #0b0b0b; --solo-ink-4: #0b0b0b;
+    --solo-ink-5: #0b0b0b; --solo-ink-6: #0b0b0b; --solo-ink-7: #0b0b0b; --solo-ink-8: #0b0b0b;
+  }
   .cmp-galaxy .node.shared text { fill: #0b0b0b; }
   .cmp-galaxy text.halo { fill: var(--text); paint-order: stroke; stroke: var(--surface); stroke-width: 5px; stroke-linejoin: round; }
   .cmp-galaxy .hub text.initial { fill: #0b0b0b; }
-  .cmp-galaxy .hub circle { stroke: var(--surface); stroke-width: 3; }
+  .cmp-galaxy .hub circle.hub-bg { stroke: var(--surface); stroke-width: 3; }
+  .cmp-galaxy .hub circle.hub-ring { fill: none; stroke-width: 4; pointer-events: none; }
   .cmp-panel { padding: 4px 0 0; align-self: start; font-size: 16px; }
-  .cmp-panel h3 { margin: 0 0 4px; font-size: 22px; }
-  .cmp-panel ul { margin: 4px 0 12px; padding-left: 18px; }
+  .cmp-panel-head { margin-bottom: 14px; }
+  .cmp-panel h3 { margin: 0 0 2px; font-size: 22px; line-height: 1.2; }
+  .cmp-panel-head p { margin: 0; }
+  .cmp-panel ul { margin: 6px 0 12px; padding-left: 18px; }
+  .cmp-panel-fan { margin-top: 10px; }
 
   /* Listening clock */
-  .cmp-clock-meta { font-size: 16px; display: grid; gap: 2px; }
+  .cmp-clock-meta { font-size: 16px; display: grid; gap: 4px; }
   .cmp-clock-tag { font-weight: 700; font-size: 17px; }
 
   @media (max-width: 900px) {
@@ -378,7 +423,25 @@ function ring(score, size = 96) {
 function animateRings(root) {
   nextFrame(() => root.querySelectorAll(".cmp-ring .arc").forEach((a) => { a.style.strokeDashoffset = a.dataset.offset; }));
 }
-const who = (i) => `<span class="cmp-dot" style="background:${cssColor(i)}"></span>${esc(names[i])}`;
+const listenerAvatar = (i, size = "xs") => {
+  const l = DATA.listeners[i];
+  const img = l.image_url
+    ? `<img src="${esc(l.image_url)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">`
+    : "";
+  return `<span class="thumb thumb-circle thumb-${size} thumb-listener thumb-ring" style="--ring:${cssColor(i)}" aria-hidden="true">`
+    + `<span class="thumb-fallback">${esc(l.initial)}</span>${img}</span>`;
+};
+const entityThumb = (url, label, { circle = false, size = "sm", eager = false } = {}) => {
+  const shape = circle ? "thumb-circle" : "thumb-square";
+  const fallback = circle ? esc((String(label ?? "").trim().slice(0, 1) || "?").toUpperCase()) : "&#9834;";
+  const loading = eager ? "" : ' loading="lazy"';
+  const img = url
+    ? `<img src="${esc(url)}" alt=""${loading} decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">`
+    : "";
+  return `<span class="thumb ${shape} thumb-${size}" aria-hidden="true"><span class="thumb-fallback">${fallback}</span>${img}</span>`;
+};
+const who = (i, size = "xs") => `<span class="who-inline">${listenerAvatar(i, size)}<span>${esc(names[i])}</span></span>`;
+const whoDot = (i) => `<span class="cmp-dot" style="background:${cssColor(i)}"></span>${esc(names[i])}`;
 
 // ======================= Head-to-head rows for one pair =======================
 const renderBattle = (() => {
@@ -415,7 +478,7 @@ const renderBattle = (() => {
           ${r.a === null ? "" : `<i style="left:${width(cat, r.a)}%;background:${cssColor(a)}"></i>`}
           ${r.b === null ? "" : `<i style="left:${width(cat, r.b)}%;background:${cssColor(b)}"></i>`}
         </div><span>${Math.round(cat.scale[1])}</span></div>
-      <div class="cmp-years-vals">${who(a)} ${esc(r.a_text)} · ${who(b)} ${esc(r.b_text)}</div>`;
+      <div class="cmp-years-vals">${whoDot(a)} ${esc(r.a_text)} · ${whoDot(b)} ${esc(r.b_text)}</div>`;
 
     rowsEl.innerHTML = categories.map((cat, k) => {
       const r = rows[k];
@@ -446,10 +509,13 @@ const renderBattle = (() => {
     <button type="button" class="card cmp-pair" data-a="${p.a}" data-b="${p.b}" aria-pressed="false"
       aria-label="${esc(names[p.a])} and ${esc(names[p.b])}: score ${p.score ?? "not available"}">
       ${ring(p.score, 84)}
-      <span>
-        <span class="names">${esc(names[p.a])} &amp; ${esc(names[p.b])}</span><br>
+      <span class="cmp-pair-info">
+        <span class="cmp-pair-head">
+          <span class="avatar-pair">${listenerAvatar(p.a, "sm")}${listenerAvatar(p.b, "sm")}</span>
+          <span class="names">${esc(names[p.a])} &amp; ${esc(names[p.b])}</span>
+        </span>
         <span class="tag">${p.shared_count} shared artists · ${p.shared_tracks_count} shared songs</span>
-        ${p === best && DATA.pairs.length > 1 ? '<br><span class="cmp-chip best">Most similar</span>' : ""}
+        ${p === best && DATA.pairs.length > 1 ? '<span class="cmp-chip best">Most similar</span>' : ""}
       </span>
     </button>`).join("");
   animateRings(cards);
@@ -460,12 +526,12 @@ const renderBattle = (() => {
     cards.querySelectorAll(".cmp-pair").forEach((c) =>
       c.setAttribute("aria-pressed", String(pairKey(+c.dataset.a, +c.dataset.b) === pairKey(p.a, p.b))));
     const [na, nb] = [names[p.a], names[p.b]];
-    const list = (items, empty) => (items.length ? `<ol>${items.join("")}</ol>` : `<p class="secondary">${empty}</p>`);
+    const mediaList = (items, empty) => (items.length ? `<ul class="cmp-media-list">${items.join("")}</ul>` : `<p class="secondary">${empty}</p>`);
     body.innerHTML = `
       <div class="cmp-soul-top">
         ${ring(p.score, 132)}
         <div>
-          <h2 class="cmp-soul-names">${who(p.a)} &amp; ${who(p.b)}</h2>
+          <h2 class="cmp-soul-names">${who(p.a, "md")} <span class="cmp-amp">&amp;</span> ${who(p.b, "md")}</h2>
           <p class="cmp-soul-desc">${esc(p.description)}</p>
         </div>
       </div>
@@ -477,9 +543,17 @@ const renderBattle = (() => {
       </div>
       <div class="cmp-cols">
         <div><h3>Shared artists</h3>
-          ${list(p.common.slice(0, 5).map((c) => `<li>${esc(c.artist)}</li>`), "None yet.")}</div>
+          ${mediaList(p.common.slice(0, 5).map((c) => `
+            <li class="media-row compact">
+              ${entityThumb(c.image_url, c.artist, { circle: true, size: "sm" })}
+              <span class="media-text">${esc(c.artist)}</span>
+            </li>`), "None yet.")}</div>
         <div><h3>Shared songs</h3>
-          ${list(p.shared_tracks.slice(0, 5).map((t) => `<li>${esc(t)}</li>`), "None yet.")}</div>
+          ${mediaList(p.shared_tracks.slice(0, 5).map((t) => `
+            <li class="media-row compact">
+              ${entityThumb(t.image_url, t.track, { size: "sm" })}
+              <div class="media-text">${esc(t.track)}${t.artist ? `<div class="secondary">${esc(t.artist)}</div>` : ""}</div>
+            </li>`), "None yet.")}</div>
         <div><h3>Biggest differences</h3>
           ${p.differences.length ? `<ul>${p.differences.map((d) => `<li>${esc(d)}</li>`).join("")}</ul>` : '<p class="secondary">None clear.</p>'}</div>
         <div><h3>Top artists only one of them likes</h3>
@@ -520,7 +594,7 @@ const renderBattle = (() => {
 
   grid.innerHTML = dna.listeners.map((l) => `
     <div class="span-${COL}">
-      <div><b>${who(l.i)}</b> <span class="secondary">· ${l.songs.toLocaleString()} songs</span></div>
+      <div class="cmp-dna-head"><b>${who(l.i)}</b> <span class="secondary">· ${l.songs.toLocaleString()} songs</span></div>
       <div id="dna-${l.i}" class="chart"></div>
     </div>`).join("");
 
@@ -785,61 +859,146 @@ const renderBattle = (() => {
       return;
     }
     panel.innerHTML = `
-      <h3>${esc(a.name)}</h3>
-      <p class="secondary">${a.songs} liked song${a.songs === 1 ? "" : "s"} across ${a.fans.length} listener${a.fans.length === 1 ? "" : "s"}</p>
+      <div class="media-row cmp-panel-head">
+        ${entityThumb(a.image_url, a.name, { circle: true, size: "xl" })}
+        <div class="media-text">
+          <h3>${esc(a.name)}</h3>
+          <p class="secondary">${a.songs} liked song${a.songs === 1 ? "" : "s"} across ${a.fans.length} listener${a.fans.length === 1 ? "" : "s"}</p>
+        </div>
+      </div>
       ${a.fans.map((f) => `
-        <div><b>${who(f.i)}</b> · ${f.songs} liked song${f.songs === 1 ? "" : "s"}
+        <div class="cmp-panel-fan"><b>${who(f.i)}</b> <span class="secondary">· ${f.songs} liked song${f.songs === 1 ? "" : "s"}</span>
           <ul>${f.tracks.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>
           ${f.songs > f.tracks.length ? `<p class="secondary">Showing the ${f.tracks.length} most recently liked.</p>` : ""}</div>`).join("")}`;
   }
 
+  // Instant rounded hover tooltip for artist bubbles (matches Charts.plot tooltips)
+  const tipEl = document.createElement("div");
+  tipEl.className = "chart-tip";
+  tipEl.setAttribute("role", "tooltip");
+  document.body.appendChild(tipEl);
+  const placeTip = (x, y) => {
+    const r = tipEl.getBoundingClientRect();
+    const left = x + 16 + r.width > window.innerWidth - 8 ? x - r.width - 16 : x + 16;
+    const top = y + 16 + r.height > window.innerHeight - 8 ? y - r.height - 16 : y + 16;
+    tipEl.style.left = `${Math.max(8, left)}px`;
+    tipEl.style.top = `${Math.max(8, top)}px`;
+  };
+  const showTip = (a, x, y) => {
+    const counts = a.fans.map((f) => `${esc(names[f.i])} (${f.songs})`).join(" · ");
+    tipEl.innerHTML = `<div class="media-row compact">
+      ${entityThumb(a.image_url, a.name, { circle: true, size: "sm", eager: true })}
+      <div class="media-text"><b>${esc(a.name)}</b><div class="secondary">${counts}</div></div>
+    </div>`;
+    tipEl.style.display = "block";
+    placeTip(x, y);
+  };
+  const hideTip = () => { tipEl.style.display = "none"; };
+
+  // Fit 1-line or balanced 2-line label inside a circle, picking whichever allows larger text
+  function fitBubbleLabel(name, r) {
+    if (r < 14.5) return null;
+    let best = null;
+    for (const fs of [14, 13, 12, 11, 10, 9.5]) {
+      if (name.length * 0.58 * fs <= 2 * r - 6) {
+        best = { lines: [name], fs };
+        break;
+      }
+    }
+    const words = name.trim().split(/\s+/);
+    if (words.length >= 2) {
+      let split = null;
+      for (let i = 1; i < words.length; i++) {
+        const l1 = words.slice(0, i).join(" "), l2 = words.slice(i).join(" ");
+        const maxLen = Math.max(l1.length, l2.length);
+        if (!split || maxLen < split.maxLen) split = { maxLen, lines: [l1, l2] };
+      }
+      for (const fs of [14, 13, 12, 11, 10, 9.5, 9]) {
+        if (best && fs <= best.fs) break;
+        const halfY = 0.9 * fs;
+        if (2.35 * fs > 2 * r - 6 || halfY >= r) continue;
+        const chord = 2 * Math.sqrt(r * r - halfY * halfY) - 6;
+        if (split.maxLen * 0.58 * fs <= chord) {
+          best = { lines: split.lines, fs };
+          break;
+        }
+      }
+    }
+    return best;
+  }
+
+  function renderBubbleLabel(n, shared) {
+    const fit = fitBubbleLabel(n.a.name, n.r);
+    if (!fit) return "";
+    const fillAttr = shared ? "" : ` style="fill:var(--solo-ink-${(n.a.fans[0].i % 8) + 1})"`;
+    if (fit.lines.length === 1) {
+      return `<text text-anchor="middle" dominant-baseline="central" font-size="${fit.fs}"${fillAttr}>${esc(fit.lines[0])}</text>`;
+    }
+    const dy = +(fit.fs * 0.58).toFixed(1);
+    return `<text text-anchor="middle" dominant-baseline="central" font-size="${fit.fs}"${fillAttr}>`
+      + `<tspan x="0" y="${-dy}">${esc(fit.lines[0])}</tspan>`
+      + `<tspan x="0" y="${dy}">${esc(fit.lines[1])}</tspan></text>`;
+  }
+
   function draw() {
+    hideTip();
     const list = visible();
     const nodes = layout(list);
+    // Keep the right panel populated on initial load and after filter changes
+    if (!nodes.some((n) => n.a.id === selected)) {
+      selected = nodes.length ? nodes[0].a.id : null;
+    }
     const links = nodes.flatMap((n, k) => n.a.fans.map((f) =>
       `<line class="link" data-k="${k}" x1="${hubs[f.i].x}" y1="${hubs[f.i].y}" x2="${n.x}" y2="${n.y}"/>`));
-    // Names are drawn only inside shared circles big enough to hold the whole name,
-    // so no label ever overlaps another circle. Every other artist shows its name
-    // on hover or focus, and in the panel when selected.
-    const fits = (n) => n.a.name.length * 7.8 <= 2 * n.r - 6;
-    const labelled = new Set(nodes.filter((n) => n.a.fans.length >= 2 && fits(n)).map((n) => n.a.id));
     el.innerHTML = `
       <svg viewBox="0 0 ${W} ${H}" role="group" aria-label="Artist network: ${list.length} artists">
+        <defs><clipPath id="hub-clip"><circle cx="0" cy="0" r="28"/></clipPath></defs>
         <g>${links.join("")}</g>
         <g>${nodes.map((n, k) => {
           const shared = n.a.fans.length >= 2;
-          const showLabel = labelled.has(n.a.id);
-          // Shared artists: name inside the white circle. One listener's: name under the colored circle.
-          const label = showLabel ? `<text text-anchor="middle" dy="5" font-size="14">${esc(n.a.name)}</text>` : "";
+          const label = renderBubbleLabel(n, shared);
           return `<g class="node ${shared ? "shared" : "solo"}${selected === n.a.id ? " sel" : ""}" data-k="${k}" tabindex="0" role="button"
               style="transform: translate(${n.x}px, ${n.y}px)"
               aria-label="${esc(n.a.name)}: ${n.a.songs} liked songs, ${n.a.fans.map((f) => esc(names[f.i])).join(", ")}">
-            <title>${esc(n.a.name)} · ${n.a.fans.map((f) => `${esc(names[f.i])} ${f.songs}`).join(", ")}</title>
             <circle r="${n.r}"${shared ? "" : ` style="fill:${cssColor(n.a.fans[0].i)}"`}/>
             ${label}
           </g>`;
         }).join("")}</g>
-        <g>${hubs.map((h, i) => `
+        <g>${hubs.map((h, i) => {
+          const l = DATA.listeners[i];
+          const photo = l.image_url
+            ? `<image href="${esc(l.image_url)}" x="-28" y="-28" width="56" height="56" clip-path="url(#hub-clip)" preserveAspectRatio="xMidYMid slice" referrerpolicy="no-referrer" onerror="this.remove()"/>`
+            : "";
+          return `
           <g class="hub" transform="translate(${h.x},${h.y})">
-            <circle r="30" style="fill:${cssColor(i)}"/>
-            <text class="initial" text-anchor="middle" dy="7" font-size="20">${esc(DATA.listeners[i].initial)}</text>
+            <circle class="hub-bg" r="30" style="fill:${cssColor(i)}"/>
+            <text class="initial" text-anchor="middle" dy="7" font-size="20">${esc(l.initial)}</text>
+            ${photo}
+            <circle class="hub-ring" r="29" style="stroke:${cssColor(i)}"/>
             <text class="halo" text-anchor="middle" dy="54" font-size="18">${esc(names[i])}</text>
-          </g>`).join("")}</g>
+          </g>`;
+        }).join("")}</g>
       </svg>`;
 
     const svg = el.querySelector("svg");
     const highlight = (k, on) => svg.querySelectorAll(`.link[data-k="${k}"]`).forEach((l) => l.classList.toggle("hi", on));
     svg.querySelectorAll(".node").forEach((g) => {
       const k = +g.dataset.k;
+      const artist = nodes[k].a;
       const pick = () => {
-        selected = nodes[k].a.id;
+        selected = artist.id;
         svg.querySelectorAll(".node").forEach((x) => x.classList.toggle("sel", x === g));
-        showPanel(nodes[k].a);
+        showPanel(artist);
       };
-      g.addEventListener("mouseenter", () => highlight(k, true));
-      g.addEventListener("mouseleave", () => highlight(k, false));
-      g.addEventListener("focus", () => highlight(k, true));
-      g.addEventListener("blur", () => highlight(k, false));
+      g.addEventListener("mouseenter", (e) => { highlight(k, true); showTip(artist, e.clientX, e.clientY); });
+      g.addEventListener("mousemove", (e) => { if (tipEl.style.display === "block") placeTip(e.clientX, e.clientY); });
+      g.addEventListener("mouseleave", () => { highlight(k, false); hideTip(); });
+      g.addEventListener("focus", () => {
+        highlight(k, true);
+        const rect = g.getBoundingClientRect();
+        showTip(artist, rect.right, rect.top);
+      });
+      g.addEventListener("blur", () => { highlight(k, false); hideTip(); });
       g.addEventListener("click", pick);
       g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
     });
